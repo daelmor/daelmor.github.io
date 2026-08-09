@@ -1,0 +1,189 @@
+[
+  {
+    "slug": "n1co-fintech-app",
+    "title": "n1co: FinTech App",
+    "date": "2024-12-30",
+    "lead": "I led the development of FinTech services from concept to deployment for the n1co app, a cutting-edge financial platform providing seamless digital banking experiences. My primary focus was on building robust and scalable backend systems that supported key functionalities",
+    "hero": "projects/n1co-fintech-app/n1co_app_card.png",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_app_card.png",
+        "local": "projects/n1co-fintech-app/n1co_app_card.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_cashback.jpg",
+        "local": "projects/n1co-fintech-app/n1co_cashback.jpg"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_cashin_cash.png",
+        "local": "projects/n1co-fintech-app/n1co_cashin_cash.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_loyalty.png",
+        "local": "projects/n1co-fintech-app/n1co_loyalty.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_kyc.png",
+        "local": "projects/n1co-fintech-app/n1co_kyc.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_referral.png",
+        "local": "projects/n1co-fintech-app/n1co_referral.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_tap.png",
+        "local": "projects/n1co-fintech-app/n1co_tap.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_otp.png",
+        "local": "projects/n1co-fintech-app/n1co_otp.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/n1co_qr.jpg",
+        "local": "projects/n1co-fintech-app/n1co_qr.jpg"
+      }
+    ]
+  },
+  {
+    "slug": "nicetech-heyy-fintech-ecosystem",
+    "title": "Nicetech: Heyy FinTech ecosystem",
+    "date": "2019-11-30",
+    "lead": "I lead the architectural design and development of the Wallet Ecosystem, a state-of-the-art digital wallet platform designed to provide users with a seamless and secure financial experience.",
+    "hero": "projects/nicetech-heyy-fintech-ecosystem/heyy3-1.jpg",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/heyy3-1.jpg",
+        "local": "projects/nicetech-heyy-fintech-ecosystem/heyy3-1.jpg"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/m1nt-animation-es.gif",
+        "local": "projects/nicetech-heyy-fintech-ecosystem/m1nt-animation-es.gif"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/heyy2-1.jpg",
+        "local": "projects/nicetech-heyy-fintech-ecosystem/heyy2-1.jpg"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/m1nt.png",
+        "local": "projects/nicetech-heyy-fintech-ecosystem/m1nt.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/heyy1-1.jpg",
+        "local": "projects/nicetech-heyy-fintech-ecosystem/heyy1-1.jpg"
+      }
+    ]
+  },
+  {
+    "slug": "hugo-fintech-wallet-app",
+    "title": "Hugo: FinTech Wallet App",
+    "date": "2022-03-31",
+    "lead": "I focused on developing and scaling the HugoPay Wallet, an innovative fintech digital wallet solution enabling seamless financial transactions for users.",
+    "hero": "projects/hugo-fintech-wallet-app/hugopayments7.jpg",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopayments7.jpg",
+        "local": "projects/hugo-fintech-wallet-app/hugopayments7.jpg"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopaydesing-1.webp",
+        "local": "projects/hugo-fintech-wallet-app/hugopaydesing-1.webp"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopayments6.png",
+        "local": "projects/hugo-fintech-wallet-app/hugopayments6.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopay8.webp",
+        "local": "projects/hugo-fintech-wallet-app/hugopay8.webp"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopayments1.png",
+        "local": "projects/hugo-fintech-wallet-app/hugopayments1.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/hugopayments2.png",
+        "local": "projects/hugo-fintech-wallet-app/hugopayments2.png"
+      }
+    ]
+  },
+  {
+    "slug": "hugo-payments-service",
+    "title": "Hugo: Payments Service",
+    "date": "2021-05-31",
+    "lead": "At Hugo Technologies, I specialized in building and optimizing the Payments Service, a crucial component of the platform that handled all financial transactions across multiple countries.",
+    "hero": "projects/hugo-payments-service/Hugo-Payments-showcase--cuadrado-.png",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/Hugo-Payments-showcase--cuadrado-.png",
+        "local": "projects/hugo-payments-service/Hugo-Payments-showcase--cuadrado-.png"
+      }
+    ]
+  },
+  {
+    "slug": "hugo-delivery-service",
+    "title": "Hugo: Delivery Service",
+    "date": "2022-09-30",
+    "lead": "I played a key role in designing and enhancing backend systems for the Delivery Services platform, a core component of Hugo’s app ecosystem.",
+    "hero": "projects/hugo-delivery-service/Hugo-delivery-showcase--cuadrado-.png",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/Hugo-delivery-showcase--cuadrado-.png",
+        "local": "projects/hugo-delivery-service/Hugo-delivery-showcase--cuadrado-.png"
+      }
+    ]
+  },
+  {
+    "slug": "fegora-digital-invoicing",
+    "title": "Fegora: Digital Invoicing",
+    "date": "2021-09-15",
+    "lead": "Fegora is an innovative digital invoicing service and platform designed specifically for companies and contributors in Central America. It streamlines the invoicing process, offering users a comprehensive solution to manage their financial transactions with ease and efficiency.",
+    "hero": "projects/fegora-digital-invoicing/Fegora-showcase--cuadrado-.png",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/Fegora-showcase--cuadrado-.png",
+        "local": "projects/fegora-digital-invoicing/Fegora-showcase--cuadrado-.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/api-1.jpg",
+        "local": "projects/fegora-digital-invoicing/api-1.jpg"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/fegora_create_invoice_postman-1.png",
+        "local": "projects/fegora-digital-invoicing/fegora_create_invoice_postman-1.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/fegora_single_invoice_xml2-1.png",
+        "local": "projects/fegora-digital-invoicing/fegora_single_invoice_xml2-1.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/fegora_invoices_filter-1.png",
+        "local": "projects/fegora-digital-invoicing/fegora_invoices_filter-1.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/fegora_single_invoice-1.png",
+        "local": "projects/fegora-digital-invoicing/fegora_single_invoice-1.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/fegora_single_invoice_mail-1.png",
+        "local": "projects/fegora-digital-invoicing/fegora_single_invoice_mail-1.png"
+      }
+    ]
+  },
+  {
+    "slug": "tigo-selfservice-web-portal",
+    "title": "Tigo: SelfService Web Portal",
+    "date": "2017-11-30",
+    "lead": "I led the design and implementation of the public website, eCommerce platform, and customer portal for Tigo Guatemala, one of the leading telecommunications providers in Central America.",
+    "hero": "projects/tigo-selfservice-web-portal/Tigo-SelfService-showcase--cuadrado-.png",
+    "images": [
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/Tigo-SelfService-showcase--cuadrado-.png",
+        "local": "projects/tigo-selfservice-web-portal/Tigo-SelfService-showcase--cuadrado-.png"
+      },
+      {
+        "url": "https://theseusthread.com/content/images/2025/01/tigoss1-1.png",
+        "local": "projects/tigo-selfservice-web-portal/tigoss1-1.png"
+      }
+    ]
+  }
+]

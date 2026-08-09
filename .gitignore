@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Jekyll / GitHub Pages build output, if a site is added later
+_site/
+.jekyll-cache/
+.jekyll-metadata
