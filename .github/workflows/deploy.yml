@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-publish from the Actions tab without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Queue deploys instead of cancelling them. `cancel-in-progress: true` would be
+# wrong here: interrupting a Pages deployment part-way can leave the live site
+# serving a half-uploaded artifact.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # Detects the package manager, installs, runs `astro build`, and uploads
+      # dist/ as the Pages artifact. Nothing else to configure.
+      - name: Build
+        uses: withastro/action@v6
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        # Pinned to v4 as specified. Astro's docs now recommend v5; v4 still
+        # works, and moving up is a one-line change if you want it.
+        uses: actions/deploy-pages@v4
