@@ -1,0 +1,32 @@
+---
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
+import { entryPath, getPublished } from '../lib/content';
+
+const projects = await getPublished('projects');
+---
+
+<Base title={SITE_TITLE}>
+	<h1>{SITE_TITLE}</h1>
+
+	<section aria-labelledby="projects-heading">
+		<h2 id="projects-heading"><a href="/projects/">Projects</a></h2>
+		{
+			projects.length === 0 ? (
+				<p>No entries yet.</p>
+			) : (
+				<ul>
+					{projects.map(({ id, data }) => (
+						<li>
+							<a href={entryPath('projects', id)}>
+								{data.company}: {data.title}
+							</a>
+							<FormattedDate date={data.date} monthOnly />
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</section>
+</Base>

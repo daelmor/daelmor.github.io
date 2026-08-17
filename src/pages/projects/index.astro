@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Base from '../../layouts/Base.astro';
+import { entryPath, getPublished } from '../../lib/content';
+
+const projects = await getPublished('projects');
+---
+
+<Base title="Projects" description="Engineering project write-ups.">
+	<h1>Projects</h1>
+	{
+		projects.length === 0 ? (
+			<p>No entries yet.</p>
+		) : (
+			<ul>
+				{projects.map(({ id, data }) => (
+					<li>
+						<article>
+							<a href={entryPath('projects', id)}>
+								<Image src={data.hero} alt={data.heroAlt} width={480} height={360} />
+								<h2>
+									{data.company}: {data.title}
+								</h2>
+							</a>
+							<p>{data.role}</p>
+							<FormattedDate date={data.date} monthOnly />
+							<p>{data.summary}</p>
+						</article>
+					</li>
+				))}
+			</ul>
+		)
+	}
+</Base>

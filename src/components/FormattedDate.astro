@@ -1,0 +1,22 @@
+---
+/** Renders a real <time> element with a machine-readable datetime attribute. */
+interface Props {
+	date: Date;
+	/** Month-and-year only, for entries where the day is not meaningful. */
+	monthOnly?: boolean;
+}
+
+const { date, monthOnly = false } = Astro.props;
+
+const iso = date.toISOString();
+const machine = monthOnly ? iso.slice(0, 7) : iso.slice(0, 10);
+
+const label = date.toLocaleDateString('en-GB', {
+	timeZone: 'UTC',
+	year: 'numeric',
+	month: 'long',
+	...(monthOnly ? {} : { day: 'numeric' }),
+});
+---
+
+<time datetime={machine}>{label}</time>

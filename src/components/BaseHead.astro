@@ -1,0 +1,66 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+	/** Per-page social card. Falls back to no og:image rather than a stock one. */
+	image?: ImageMetadata;
+	/** `article` for a single entry, `website` for an index. */
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+}
+
+const {
+	title,
+	description = SITE_DESCRIPTION,
+	image,
+	type = 'website',
+	publishedTime,
+} = Astro.props;
+
+// Astro renders the site title on its own; every other page appends it.
+const fullTitle = title === SITE_TITLE ? title : `${title} — ${SITE_TITLE}`;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Social crawlers cannot read `srcset`, so the card is rendered to one fixed
+// 1200x630 file at build time and referenced by absolute URL.
+const ogImage = image
+	? await getImage({ src: image, width: 1200, height: 630, format: 'jpg' })
+	: undefined;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={SITE_TITLE}
+	href={new URL('rss.xml', Astro.site)}
+/>
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+{ogImage && <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />}
+{ogImage && <meta property="og:image:width" content="1200" />}
+{ogImage && <meta property="og:image:height" content="630" />}
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />

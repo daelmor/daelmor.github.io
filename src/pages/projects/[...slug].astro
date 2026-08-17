@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry, render } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Base from '../../layouts/Base.astro';
+import { getPublished } from '../../lib/content';
+
+export async function getStaticPaths() {
+	const projects = await getPublished('projects');
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: project,
+	}));
+}
+
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<Base
+	title={`${data.company}: ${data.title}`}
+	description={data.summary}
+	image={data.hero}
+	type="article"
+	publishedTime={data.date}
+>
+	<article>
+		<header>
+			<p>{data.company}</p>
+			<h1>{data.title}</h1>
+			<p>{data.summary}</p>
+			<p>{data.role}</p>
+			<FormattedDate date={data.date} monthOnly />
+			<Image src={data.hero} alt={data.heroAlt} widths={[480, 960, 1440]} />
+		</header>
+
+		<Content />
+
+		<footer>
+			<h2>Technologies</h2>
+			<ul>
+				{data.tech.map((item) => <li>{item}</li>)}
+			</ul>
+		</footer>
+	</article>
+</Base>
