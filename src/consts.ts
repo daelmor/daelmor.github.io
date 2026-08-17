@@ -28,3 +28,17 @@ export const SECTIONS = [
 ] as const;
 
 export type SectionSlug = (typeof SECTIONS)[number]['slug'];
+
+/**
+ * Everything except `projects`, which has bespoke routes because it carries
+ * hero images, a stack and an engagement span. These four share one generic
+ * pair of routes, so the first file dropped into any of them is immediately
+ * live at its own URL with no extra wiring.
+ */
+export const WRITING_SECTIONS = ['tech', 'philosophy', 'books', 'music'] as const;
+
+export type WritingSection = (typeof WRITING_SECTIONS)[number];
+
+export const SECTION_LABELS: Record<SectionSlug, string> = Object.fromEntries(
+	SECTIONS.map((s) => [s.slug, s.label]),
+) as Record<SectionSlug, string>;

@@ -1,0 +1,25 @@
+---
+import { getPopulatedSections } from '../lib/content';
+
+const sections = await getPopulatedSections();
+const path = Astro.url.pathname;
+---
+
+{
+	sections.length > 0 && (
+		<nav class="site-nav" aria-label="Sections">
+			<ul>
+				{sections.map((section) => (
+					<li>
+						<a
+							href={`/${section.slug}/`}
+							aria-current={path.startsWith(`/${section.slug}`) ? 'page' : undefined}
+						>
+							{section.label}
+						</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+	)
+}

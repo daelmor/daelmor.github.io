@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry, type CollectionKey } from 'astro:content';
+import { SECTIONS } from '../consts';
 
 /**
  * Drafts render in `astro dev` so work-in-progress is previewable, and are
@@ -33,4 +34,21 @@ export async function getAllPublished() {
 /** Canonical path for an entry, e.g. `/projects/n1co-fintech-app/`. */
 export function entryPath(collection: string, id: string) {
 	return `/${collection}/${id}/`;
+}
+
+/**
+ * Sections that actually have something to read.
+ *
+ * Four of the five collections are empty scaffolding. Their routes exist so
+ * that dropping in one file is the whole job, but linking to them from the nav
+ * before then would just advertise empty pages.
+ */
+export async function getPopulatedSections() {
+	const counts = await Promise.all(
+		SECTIONS.map(async (section) => ({
+			...section,
+			count: (await getPublished(section.slug)).length,
+		})),
+	);
+	return counts.filter((section) => section.count > 0);
 }

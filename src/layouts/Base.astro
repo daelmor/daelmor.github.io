@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
 import { SITE_LANG, SITE_TITLE } from '../consts';
 
 interface Props {
@@ -9,9 +10,11 @@ interface Props {
 	image?: ImageMetadata;
 	type?: 'website' | 'article';
 	publishedTime?: Date;
+	/** The homepage's own H1 is the name, so it suppresses the wordmark. */
+	hideWordmark?: boolean;
 }
 
-const { title, description, image, type, publishedTime } = Astro.props;
+const { title, description, image, type, publishedTime, hideWordmark = false } = Astro.props;
 const year = new Date().getUTCFullYear();
 ---
 
@@ -28,17 +31,33 @@ const year = new Date().getUTCFullYear();
 	</head>
 	<body>
 		<a class="skip-link" href="#main">Skip to content</a>
-		<header>
-			<a href="/">{SITE_TITLE}</a>
-			<nav aria-label="Sections">
-				<slot name="nav" />
-			</nav>
+
+		<header class="site-header shell">
+			{
+				hideWordmark ? (
+					<span class="wordmark-placeholder" aria-hidden="true"></span>
+				) : (
+					<a class="wordmark" href="/">
+						{SITE_TITLE}
+					</a>
+				)
+			}
+			<Nav />
 		</header>
-		<main id="main">
+
+		<main id="main" class="shell">
 			<slot />
 		</main>
-		<footer>
+
+		<footer class="site-footer shell">
 			<p>&copy; {year} {SITE_TITLE}</p>
+			<p><a href="/rss.xml">RSS</a></p>
 		</footer>
+
+		<style>
+			.wordmark-placeholder {
+				display: block;
+			}
+		</style>
 	</body>
 </html>

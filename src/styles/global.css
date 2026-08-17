@@ -1,10 +1,60 @@
 /*
- * Phase 1 baseline only — a reset plus the accessibility floor.
+ * Design system.
  *
- * The palette, typography and layout land in Phase 3. Nothing here expresses a
- * design decision; it exists so the routing skeleton is legible and so the
- * keyboard/motion guarantees are in place before any visual work starts.
+ * The organising idea is a time axis, not a card grid: these engagements
+ * overlapped and three of them never ended, which is a fact a list cannot
+ * state. Everything else stays quiet so the span chart carries the identity.
+ *
+ * Sans for headings, serif for reading — the inverse of the usual pairing.
  */
+
+/* ── tokens ──────────────────────────────────────────────────────────────── */
+
+:root {
+	/* Ground. Pale and faintly cool-green, the tone of carbon-copy form stock.
+	   Cool on purpose: a warm cream here would land somewhere very familiar. */
+	--sheet: #edefea;
+	/* Near-black with a green cast. Never #000. 14.8:1 on --sheet. */
+	--ink: #191d18;
+	/* Metadata, captions, axis labels. 5.15:1 — AA, and only used at >=16px. */
+	--graphite: #5c6660;
+	/* Rules, table edges, the axis itself. Non-text, decorative. */
+	--rule: #c4cbc2;
+	/* Stamp blue. Links and focus rings. Almost nothing else. 7.36:1. */
+	--carbon: #2b4c7e;
+
+	--sheet-raised: #f5f6f3;
+
+	--font-display: var(--font-archivo), sans-serif;
+	--font-body: var(--font-literata), Georgia, serif;
+
+	/* Fluid type. Body sits at 17px, which suits Literata's generous x-height. */
+	--text-xs: 0.8125rem;
+	--text-sm: 0.9375rem;
+	--text-base: 1.0625rem;
+	--text-lg: 1.1875rem;
+	--text-xl: clamp(1.3rem, 0.9rem + 1.2vw, 1.6rem);
+	--text-2xl: clamp(1.6rem, 1rem + 2vw, 2.1rem);
+	/* The one genuinely large size, reserved for a page H1. */
+	--text-display: clamp(2.1rem, 1.2rem + 4.4vw, 3.9rem);
+
+	--space-2xs: 0.25rem;
+	--space-xs: 0.5rem;
+	--space-sm: 0.75rem;
+	--space-md: 1.25rem;
+	--space-lg: 2rem;
+	--space-xl: 3.25rem;
+	--space-2xl: 5rem;
+
+	/* One reading measure, used everywhere prose appears. */
+	--measure: 66ch;
+	--page: 74rem;
+
+	/* Not a doctrinaire zero — just small enough to read as precise. */
+	--radius: 2px;
+}
+
+/* ── reset ───────────────────────────────────────────────────────────────── */
 
 *,
 *::before,
@@ -18,12 +68,24 @@
 
 html {
 	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
 }
 
 body {
 	min-height: 100dvh;
-	line-height: 1.6;
+	display: flex;
+	flex-direction: column;
+	background: var(--sheet);
+	color: var(--ink);
+	font-family: var(--font-body);
+	font-size: var(--text-base);
+	font-weight: 400;
+	line-height: 1.65;
+	font-optical-sizing: auto;
 	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	/* Tabular figures everywhere: this site is mostly dates and quantities. */
+	font-variant-numeric: tabular-nums;
 }
 
 img,
@@ -53,13 +115,77 @@ h6 {
 	overflow-wrap: break-word;
 }
 
-/* Keyboard focus must always be visible. Phase 3 restyles this; it never removes it. */
-:focus-visible {
-	outline: 2px solid currentColor;
-	outline-offset: 2px;
+/* ── typography ──────────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--font-display);
+	font-weight: 600;
+	line-height: 1.12;
+	text-wrap: balance;
 }
 
-/* Available to screen readers, absent from the visual layout. */
+/* The display face appears at exactly one size, and only here. Pushed to
+   Archivo's expanded width axis with tight tracking — that is where its
+   character actually lives. */
+h1 {
+	font-size: var(--text-display);
+	font-weight: 700;
+	font-variation-settings: 'wdth' 118;
+	letter-spacing: -0.022em;
+}
+
+h2 {
+	font-size: var(--text-xl);
+	letter-spacing: -0.01em;
+}
+
+h3 {
+	font-size: var(--text-lg);
+	letter-spacing: -0.005em;
+}
+
+a {
+	color: var(--carbon);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+	text-decoration-color: color-mix(in oklab, var(--carbon) 40%, transparent);
+	transition: text-decoration-color 120ms ease;
+}
+
+a:hover {
+	text-decoration-color: var(--carbon);
+}
+
+strong,
+b {
+	font-weight: 600;
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid var(--rule);
+	margin-block: var(--space-lg);
+}
+
+code,
+kbd,
+samp,
+pre {
+	font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, monospace;
+	font-size: 0.9em;
+}
+
+/* ── accessibility floor ─────────────────────────────────────────────────── */
+
+:focus-visible {
+	outline: 2px solid var(--carbon);
+	outline-offset: 3px;
+	border-radius: var(--radius);
+}
+
 .visually-hidden {
 	position: absolute;
 	width: 1px;
@@ -72,28 +198,184 @@ h6 {
 	border: 0;
 }
 
-/* Skip link: off-screen until focused. */
 .skip-link {
 	position: absolute;
-	left: -9999px;
-	top: 0;
-	padding: 0.5rem 1rem;
-	background: #fff;
-	color: #000;
+	left: var(--space-md);
+	top: -4rem;
 	z-index: 100;
+	padding: var(--space-xs) var(--space-md);
+	background: var(--ink);
+	color: var(--sheet);
+	border-radius: var(--radius);
+	text-decoration: none;
+	transition: top 120ms ease;
 }
 
 .skip-link:focus {
-	left: 0;
+	top: var(--space-md);
 }
 
 @media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
 	*,
 	*::before,
 	*::after {
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
 	}
+}
+
+/* ── page frame ──────────────────────────────────────────────────────────── */
+
+.shell {
+	width: 100%;
+	max-width: var(--page);
+	margin-inline: auto;
+	padding-inline: var(--space-md);
+}
+
+@media (min-width: 40rem) {
+	.shell {
+		padding-inline: var(--space-lg);
+	}
+}
+
+.site-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-sm) var(--space-lg);
+	padding-block: var(--space-md);
+	border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+	font-family: var(--font-display);
+	font-weight: 700;
+	font-size: var(--text-lg);
+	font-variation-settings: 'wdth' 112;
+	letter-spacing: -0.015em;
+	color: var(--ink);
+	text-decoration: none;
+}
+
+.wordmark:hover {
+	color: var(--carbon);
+}
+
+.site-nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-md);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: var(--text-sm);
+}
+
+.site-nav a {
+	color: var(--graphite);
+	text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current='page'] {
+	color: var(--ink);
+}
+
+.site-nav a[aria-current='page'] {
+	box-shadow: inset 0 -1px 0 var(--ink);
+}
+
+main {
+	flex: 1;
+	padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.site-footer {
+	border-top: 1px solid var(--rule);
+	padding-block: var(--space-md);
+	color: var(--graphite);
+	font-size: var(--text-sm);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs) var(--space-lg);
+	justify-content: space-between;
+}
+
+/* ── prose ───────────────────────────────────────────────────────────────── */
+
+/*
+ * A single reading measure, centred, with figures allowed to break wider.
+ * One measure only — never columns. This is deliberately not a broadsheet.
+ */
+.prose {
+	display: grid;
+	grid-template-columns: 1fr min(var(--measure), 100%) 1fr;
+}
+
+.prose > * {
+	grid-column: 2;
+}
+
+.prose > * + * {
+	margin-block-start: var(--space-md);
+}
+
+.prose h2 {
+	margin-block-start: var(--space-xl);
+}
+
+.prose h3 {
+	margin-block-start: var(--space-lg);
+}
+
+.prose :is(ul, ol) {
+	padding-inline-start: 1.35em;
+}
+
+.prose li + li {
+	margin-block-start: var(--space-xs);
+}
+
+.prose li::marker {
+	color: var(--rule);
+}
+
+.prose blockquote {
+	border-inline-start: 2px solid var(--rule);
+	padding-inline-start: var(--space-md);
+	color: var(--graphite);
+}
+
+.prose blockquote strong {
+	color: var(--ink);
+}
+
+/* Screenshots break out past the measure. Markdown wraps images in <p>. */
+.prose > p:has(> img:only-child) {
+	grid-column: 1 / -1;
+	margin-block: var(--space-xl);
+	display: flex;
+	justify-content: center;
+}
+
+.prose img {
+	border: 1px solid var(--rule);
+	border-radius: var(--radius);
+	background: var(--sheet-raised);
+	width: auto;
+	max-height: 42rem;
+	object-fit: contain;
+}
+
+.prose hr {
+	grid-column: 1 / -1;
+	max-width: var(--measure);
+	margin-inline: auto;
 }

@@ -1,12 +1,10 @@
-<!-- Placeholder. Phase 3 replaces this with the real mark. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-	<rect width="32" height="32" fill="#111111" />
-	<text
-		x="16"
-		y="22"
-		font-family="ui-monospace, monospace"
-		font-size="18"
-		fill="#ffffff"
-		text-anchor="middle">d</text
-	>
+<!--
+  The span chart in miniature: three engagements at different offsets, the last
+  one running off the right edge because it has not ended.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Overlapping engagement spans">
+	<rect width="32" height="32" fill="#191d18" />
+	<rect x="4" y="7.5" width="13" height="3.5" rx="1" fill="#edefea" />
+	<rect x="8" y="14.25" width="11" height="3.5" rx="1" fill="#edefea" />
+	<path d="M13 21h19v3.5H13a1 1 0 0 1-1-1v-1.5a1 1 0 0 1 1-1z" fill="#edefea" />
 </svg>

@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { getImage } from 'astro:assets';
+import { Font, getImage } from 'astro:assets';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import '../styles/global.css';
 
@@ -37,6 +37,22 @@ const ogImage = image
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#edefea" />
+
+{/*
+  Self-hosted and subset to latin at build time — nothing is fetched from a font
+  CDN at runtime.
+
+  Only Archivo is preloaded. It carries two variable axes and is the largest
+  face, and it renders the page H1, where a late swap would be most visible.
+  Literata is deliberately not preloaded: `preload` applies per family, so it
+  would also pull in the italic face, which is never above the fold. Astro
+  generates a metric-matched fallback (size-adjust plus ascent/descent
+  overrides) for both, so the swap costs no layout shift either way.
+*/}
+<Font cssVariable="--font-archivo" preload />
+<Font cssVariable="--font-literata" />
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
