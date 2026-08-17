@@ -319,6 +319,33 @@ async function planProject(slug) {
 		edits.push(`removed "${durationLine[0].trim()}" — superseded by the date fields`);
 	}
 
+	// The "Technologies Used" section is now the `tech` field, rendered as the
+	// STACK row at the top of the page. Left in place it appears twice.
+	//
+	// Only the heading and its own bullet list go: several articles place images
+	// immediately after the list, and those must survive.
+	const techHeading = /^(?:#{2,4}\s*)?\*\*Technologies Used:?\*\*:?\s*$/m.exec(out);
+	if (techHeading) {
+		const after = out.slice(techHeading.index + techHeading[0].length);
+		let consumed = 0;
+		for (const line of after.split('\n')) {
+			const trimmed = line.trim();
+			// Stop at the first line that is neither blank nor a list item, but
+			// only once at least one list item has been taken.
+			if (!trimmed) {
+				if (consumed > 0 && !/^\s*-/.test(after.slice(consumed).split('\n')[1] ?? '')) {
+					break;
+				}
+				consumed += line.length + 1;
+				continue;
+			}
+			if (!trimmed.startsWith('-')) break;
+			consumed += line.length + 1;
+		}
+		out = out.slice(0, techHeading.index) + after.slice(consumed).replace(/^\s*\n/, '');
+		edits.push('removed the "Technologies Used" section — now the `tech` field');
+	}
+
 	// Rewrite image references to their new homes.
 	const referenced = new Set();
 	out = out.replace(/!\[([^\]]*)\]\(\.\/([^)]+)\)/g, (_full, alt, target) => {

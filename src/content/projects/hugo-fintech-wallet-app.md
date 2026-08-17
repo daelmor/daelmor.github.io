@@ -39,13 +39,6 @@ source: "https://theseusthread.com/showcase/hugo-fintech-wallet-app/"
 
 ![](../../assets/projects/hugo-fintech-wallet-app/hugopayments6.png)
 
-## **Technologies Used**
-
--   **Backend:** .NET Core, C#,
--   **Database Management:** MongoDB, Redis, Microsoft SQLServer
--   **Cloud Infrastructure:** Google Cloud Platform (GCP)
--   **Messaging & Tools:** Google PubSub, Docker, Kubernetes
-
 ![](../../assets/projects/hugo-fintech-wallet-app/hugopay8.webp)
 
 ![](../../assets/projects/hugo-fintech-wallet-app/hugopayments1.png)

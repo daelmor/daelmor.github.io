@@ -48,13 +48,6 @@ At Nicetech, I lead the architectural design and development of the **Wallet Eco
 
 ![](../../assets/projects/nicetech-heyy-fintech-ecosystem/m1nt.png)
 
-**Technologies Used:**
-
--   **Backend:** .NET, C#, Node.js
--   **Database Management:** PostgreSQL, MongoDB, Redis
--   **Cloud Infrastructure:** AWS (Lambda, S3, DynamoDB), Azure
--   **Messaging & Tools:** RabbitMQ, Kafka, Docker, Kubernetes
-
 ![](../../assets/projects/nicetech-heyy-fintech-ecosystem/heyy1-1.jpg)
 
 **Impact:**  

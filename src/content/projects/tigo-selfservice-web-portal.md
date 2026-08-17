@@ -44,11 +44,5 @@ I spearheaded the design and development of the **public website, eCommerce plat
 -   Streamlined the eCommerce checkout process, resulting in a significant boost in online sales and reduced cart abandonment rates.
 -   Ensured compliance with accessibility standards and implemented multilingual support to serve a diverse user base.
 
-**Technologies Used:**
-
--   **Frontend & Backend:** Drupal, PHP, JavaScript, Node.js, Java
--   **Database Management:** MySQL, PostgreSQL
--   **Additional Tools:** Git, Jenkins, Docker
-
 **Impact:**  
 The revamped website, eCommerce platform, and customer portal significantly enhanced Tigo Guatemala’s digital presence, driving customer satisfaction and business growth. My leadership in this project ensured the delivery of a scalable, secure, and user-friendly digital ecosystem.

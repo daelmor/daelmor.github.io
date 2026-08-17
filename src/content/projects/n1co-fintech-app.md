@@ -57,14 +57,6 @@ My primary focus was on building robust and scalable backend systems that suppor
 
 ![](../../assets/projects/n1co-fintech-app/n1co-tap.png)
 
-## **Technologies Used**
-
--   **Architecture:** Clean Architecture, Microservices, CQRS, Serverless, Messaging Bus
--   **Backend:** .NET, AspNet.Core, C#
--   **DevOps & Cloud:** Google Cloud Platform (GCP), Microsoft Azure, Docker, Kubernetes
--   **Database:** Microsoft SQL Server, MongoDB, Azure Cosmos DB, Redis
--   **Additional Tools:** Flutter, Visual Studio
-
 ![](../../assets/projects/n1co-fintech-app/n1co-otp.png)
 
 ![](../../assets/projects/n1co-fintech-app/n1co-qr.jpg)

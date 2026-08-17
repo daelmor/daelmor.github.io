@@ -40,12 +40,5 @@ At Hugo Technologies, I specialized in building and optimizing the **Payments Se
 -   Implemented security best practices, including tokenization and encryption, to protect sensitive financial data and ensure PCI DSS compliance.
 -   Enhanced system reliability and reduced errors by introducing thorough testing frameworks and real-time monitoring.
 
-**Technologies Used:**
-
--   **Backend:** .NET, C#
--   **Database Management:** PostgreSQL, MongoDB
--   **Cloud Infrastructure:** AWS (S3, EC2, RDS), Azure
--   **Messaging & Tools:** RabbitMQ, Docker, Kubernetes
-
 **Impact:**  
 My contributions to Hugo’s Payments Service directly supported the company’s financial operations, enabling a seamless payment experience for users and ensuring the platform’s reliability as it scaled to meet increasing demand. My efforts played a key role in establishing trust and convenience in Hugo’s financial ecosystem.

@@ -45,13 +45,6 @@ I co-founded **Fegora**, a pioneering digital invoicing platform that streamline
 -   Provided 15 years of technical customer support, ensuring a high level of client satisfaction and retention.
 -   Created **custom LLBLGen Pro templates** and tools that optimized database design and performance for invoicing workflows.
 
-**Technologies Used:**
-
--   **Backend:** .NET, C#
--   **ORM:** LLBLGen Pro
--   **Databases:** Microsoft SQL Server, Oracle, MySQL, PostgreSQL
--   **Additional Tools:** Visual Studio, REST APIs
-
 ![](../../assets/projects/fegora-digital-invoicing/fegora-invoices-filter-1.png)
 
 ![](../../assets/projects/fegora-digital-invoicing/fegora-single-invoice-1.png)

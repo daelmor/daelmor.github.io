@@ -39,13 +39,6 @@ source: "https://theseusthread.com/showcase/hugo-delivery-service/"
 -   Enhanced **delivery scheduling capabilities**, increasing daily deliveries by **15%** by introducing **cron-based background jobs** for scheduling recurring orders and reminders.
 -   **Mentored cross-platform engineers**, conducting workshops on **RESTful API development**, **TypeScript best practices**, and **mobile API integrations**, contributing to a **25% improvement in code quality and productivity**.
 
-## **Technologies Used**
-
--   **Programming Languages:** JavaScript, TypeScript, Node.js, Android SDK, Swift
--   **Cloud Services:** Google Cloud Platform
--   **Database Management:** MySQL, MongoDB
--   **Tools & Frameworks:** Docker, Kubernetes, Redis, Google PubSub
-
 ## **Impact**  
 
 My contributions significantly improved Hugo’s delivery efficiency, scalability, and user experience. By building and optimizing critical backend services, I ensured the platform could meet the demands of a growing customer base while maintaining a high standard of service reliability.
