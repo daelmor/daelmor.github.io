@@ -3,6 +3,15 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Page not found" description="That page does not exist.">
-	<h1>Page not found</h1>
+	<h1>404</h1>
+	<p class="lede">That page does not exist.</p>
 	<p><a href="/">Back to the index</a></p>
 </Base>
+
+<style>
+	.lede {
+		margin-block: var(--space-md);
+		font-size: var(--text-xl);
+		color: var(--graphite);
+	}
+</style>

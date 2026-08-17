@@ -1,0 +1,95 @@
+---
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
+import Base from '../../layouts/Base.astro';
+import { entryPath, getPublished } from '../../lib/content';
+
+/**
+ * Index for the four collections that are still empty. `projects` is excluded
+ * deliberately — it has its own route rather than relying on Astro giving
+ * static paths priority over dynamic ones.
+ */
+export async function getStaticPaths() {
+	return WRITING_SECTIONS.map((section) => ({ params: { section }, props: { section } }));
+}
+
+interface Props {
+	section: WritingSection;
+}
+
+const { section } = Astro.props;
+const label = SECTION_LABELS[section];
+const entries = await getPublished(section);
+---
+
+<Base title={label}>
+	<h1>{label}</h1>
+
+	{
+		entries.length === 0 ? (
+			<p class="empty">Nothing here yet.</p>
+		) : (
+			<ul class="list">
+				{entries.map((entry) => (
+					<li>
+						<a class="row" href={entryPath(section, entry.id)}>
+							<span class="row-title">{entry.data.title}</span>
+							<span class="row-date">
+								<FormattedDate date={entry.data.date} />
+							</span>
+						</a>
+						<p class="row-summary">{entry.data.summary}</p>
+					</li>
+				))}
+			</ul>
+		)
+	}
+</Base>
+
+<style>
+	.empty {
+		margin-block-start: var(--space-lg);
+		color: var(--graphite);
+	}
+
+	.list {
+		list-style: none;
+		margin-block-start: var(--space-xl);
+		padding: 0;
+		max-width: var(--measure);
+	}
+
+	.list li + li {
+		margin-block-start: var(--space-lg);
+	}
+
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.25rem var(--space-md);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.row-title {
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: var(--text-lg);
+	}
+
+	.row:hover .row-title {
+		color: var(--carbon);
+	}
+
+	.row-date {
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.row-summary {
+		margin-block-start: var(--space-2xs);
+		color: var(--graphite);
+	}
+</style>

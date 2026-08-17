@@ -1,0 +1,97 @@
+---
+import { type CollectionEntry, render } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
+import Base from '../../layouts/Base.astro';
+import { getPublished } from '../../lib/content';
+
+/** Generates nothing today; every one of these four collections is empty. */
+export async function getStaticPaths() {
+	const paths = [];
+	for (const section of WRITING_SECTIONS) {
+		for (const entry of await getPublished(section)) {
+			paths.push({ params: { section, slug: entry.id }, props: { section, entry } });
+		}
+	}
+	return paths;
+}
+
+interface Props {
+	section: WritingSection;
+	entry: CollectionEntry<WritingSection>;
+}
+
+const { section, entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+// `books` is the one collection with an extra required field. Narrowed rather
+// than cast, so adding a field to another collection cannot silently break it.
+const bookAuthor = 'bookAuthor' in data ? data.bookAuthor : undefined;
+---
+
+<Base
+	title={data.title}
+	description={data.summary}
+	type="article"
+	publishedTime={data.date}
+>
+	<article>
+		<header class="head">
+			<p class="back"><a href={`/${section}/`}>← {SECTION_LABELS[section]}</a></p>
+			<h1>{data.title}</h1>
+			{bookAuthor && <p class="byline">{bookAuthor}</p>}
+			<p class="meta"><FormattedDate date={data.date} /></p>
+			<p class="summary">{data.summary}</p>
+		</header>
+
+		<div class="prose">
+			<Content />
+		</div>
+	</article>
+</Base>
+
+<style>
+	.head {
+		display: grid;
+		grid-template-columns: 1fr min(var(--measure), 100%) 1fr;
+		margin-block-end: var(--space-xl);
+	}
+
+	.head > * {
+		grid-column: 2;
+	}
+
+	.back {
+		font-size: var(--text-sm);
+		margin-block-end: var(--space-lg);
+	}
+
+	.back a {
+		color: var(--graphite);
+		text-decoration: none;
+	}
+
+	.back a:hover {
+		color: var(--carbon);
+	}
+
+	.byline {
+		margin-block-start: var(--space-xs);
+		font-family: var(--font-display);
+		color: var(--graphite);
+	}
+
+	.meta {
+		margin-block-start: var(--space-sm);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.summary {
+		margin-block-start: var(--space-md);
+		font-size: var(--text-lg);
+		color: var(--graphite);
+		text-wrap: pretty;
+	}
+</style>

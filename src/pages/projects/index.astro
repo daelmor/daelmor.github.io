@@ -9,23 +9,35 @@ const projects = await getPublished('projects');
 
 <Base title="Projects" description="Engineering project write-ups.">
 	<h1>Projects</h1>
+
 	{
 		projects.length === 0 ? (
 			<p>No entries yet.</p>
 		) : (
-			<ul>
+			<ul class="cards">
 				{projects.map(({ id, data }) => (
 					<li>
-						<article>
-							<a href={entryPath('projects', id)}>
-								<Image src={data.hero} alt={data.heroAlt} width={480} height={360} />
-								<h2>
-									{data.company}: {data.title}
+						<article class="card">
+							<a class="card-link" href={entryPath('projects', id)}>
+								<Image
+									class="card-image"
+									src={data.hero}
+									alt={data.heroAlt}
+									widths={[320, 640]}
+									sizes="(min-width: 52rem) 20rem, 100vw"
+								/>
+								<h2 class="card-heading">
+									<span class="card-company">{data.company}</span>
+									<span class="card-title">{data.title}</span>
 								</h2>
 							</a>
-							<p>{data.role}</p>
-							<ProjectPeriod start={data.date} end={data.end} />
-							<p>{data.summary}</p>
+							<p class="card-meta">
+								{data.role}
+								<span class="card-span">
+									<ProjectPeriod start={data.date} end={data.end} />
+								</span>
+							</p>
+							<p class="card-summary">{data.summary}</p>
 						</article>
 					</li>
 				))}
@@ -33,3 +45,80 @@ const projects = await getPublished('projects');
 		)
 	}
 </Base>
+
+<style>
+	.cards {
+		list-style: none;
+		margin-block-start: var(--space-xl);
+		padding: 0;
+		display: grid;
+		gap: var(--space-xl) var(--space-lg);
+	}
+
+	.card {
+		display: grid;
+		gap: var(--space-xs);
+	}
+
+	.card-link {
+		display: grid;
+		gap: var(--space-sm);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.card-image {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border: 1px solid var(--rule);
+		border-radius: var(--radius);
+		background: var(--sheet-raised);
+	}
+
+	.card-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.5ch;
+		font-size: var(--text-xl);
+	}
+
+	.card-company {
+		color: var(--graphite);
+		font-weight: 500;
+	}
+
+	.card-company::after {
+		content: '/';
+		margin-inline-start: 0.5ch;
+		color: var(--rule);
+	}
+
+	.card-link:hover .card-title {
+		color: var(--carbon);
+	}
+
+	.card-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem var(--space-md);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.card-span {
+		color: var(--ink);
+	}
+
+	.card-summary {
+		max-width: 54ch;
+		color: var(--graphite);
+	}
+
+	@media (min-width: 52rem) {
+		.cards {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>
