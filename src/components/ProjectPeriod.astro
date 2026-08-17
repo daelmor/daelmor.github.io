@@ -5,19 +5,37 @@ import FormattedDate from './FormattedDate.astro';
  * An engagement's span. `end` is null for ongoing work.
  *
  * Month precision throughout: no source article recorded a start or end day, so
- * showing one would imply precision the data does not have.
+ * showing one would imply accuracy the data does not have.
  */
 interface Props {
 	start: Date;
 	end: Date | null;
+	/** Abbreviated months, so a range fits one line in the chart's date column. */
+	short?: boolean;
 }
 
-const { start, end } = Astro.props;
+const { start, end, short = false } = Astro.props;
 ---
 
+{/* inline-flex with a gap, not whitespace: `compressHTML: 'jsx'` strips
+    whitespace between elements, so spacing has to come from CSS. */}
 <span class="period">
-	<FormattedDate date={start} monthOnly />
+	<FormattedDate date={start} monthOnly short={short} />
 	<span aria-hidden="true">–</span>
 	<span class="visually-hidden">to</span>
-	{end ? <FormattedDate date={end} monthOnly /> : <span class="ongoing">Present</span>}
+	{end ? <FormattedDate date={end} monthOnly short={short} /> : <span class="ongoing">Present</span>}
 </span>
+
+<style>
+	.period {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.4ch;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.ongoing {
+		color: var(--ink);
+	}
+</style>

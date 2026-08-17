@@ -1,0 +1,299 @@
+---
+import ProjectPeriod from './ProjectPeriod.astro';
+
+/**
+ * The signature element: every engagement drawn against one shared time axis.
+ *
+ * A card grid can list these seven projects but it cannot state the two facts
+ * that actually characterise them — that they overlapped, and that three of
+ * them never ended. This can.
+ *
+ * No JavaScript. Bar geometry is computed at build time into custom properties;
+ * the axis gridlines are one generated gradient, reused by every row so they
+ * line up across the chart for free.
+ */
+interface Item {
+	href: string;
+	company: string;
+	title: string;
+	start: Date;
+	/** null = still in production. The bar runs to the edge and stays open. */
+	end: Date | null;
+}
+
+interface Props {
+	items: Item[];
+	/** Pinned by the caller so the build is reproducible. */
+	now: Date;
+}
+
+const { items, now } = Astro.props;
+
+const startOfYear = (year: number) => Date.UTC(year, 0, 1);
+
+const firstYear = Math.min(...items.map((i) => i.start.getUTCFullYear()));
+const domainStart = startOfYear(firstYear);
+// The axis ends at today, so an ongoing bar reaching 100% is literally current.
+const domainEnd = now.valueOf();
+const span = domainEnd - domainStart;
+
+/** Position of a date along the axis, 0–100. */
+const pct = (date: Date) =>
+	Math.min(100, Math.max(0, ((date.valueOf() - domainStart) / span) * 100));
+
+const rows = items.map((item) => {
+	const from = pct(item.start);
+	const to = item.end ? pct(item.end) : 100;
+	return { ...item, from, width: Math.max(to - from, 1.2), ongoing: item.end === null };
+});
+
+// A label every three years, then the right edge is simply "now".
+const ticks: { at: number; label: string }[] = [];
+for (let year = firstYear; year < now.getUTCFullYear(); year += 3) {
+	ticks.push({ at: pct(new Date(startOfYear(year))), label: String(year) });
+}
+
+// One gradient, every gridline. Stops ascend, so it renders crisp 1px rules.
+const gridlines = `linear-gradient(90deg, ${[
+	'transparent 0',
+	...ticks.map(
+		(t) =>
+			`transparent calc(${t.at}% - 0.5px), var(--rule) calc(${t.at}% - 0.5px), var(--rule) calc(${t.at}% + 0.5px), transparent calc(${t.at}% + 0.5px)`,
+	),
+	'transparent 100%',
+].join(', ')})`;
+---
+
+<figure class="chart">
+	<figcaption class="visually-hidden">
+		Engagements from {firstYear} to the present, drawn against a shared time axis.
+	</figcaption>
+
+	<div class="axis" aria-hidden="true">
+		<div class="axis-spacer"></div>
+		<div class="axis-track">
+			{
+				ticks.map((t) => (
+					<span class="axis-tick" style={`--at:${t.at}%`}>
+						{t.label}
+					</span>
+				))
+			}
+			<span class="axis-now">now</span>
+		</div>
+	</div>
+
+	<ol class="rows">
+		{
+			rows.map((row) => (
+				<li>
+					<a class="row" href={row.href}>
+						<span class="label">
+							<span class="company">{row.company}</span>
+							<span class="title">{row.title}</span>
+						</span>
+						<span class="track" style={`--gridlines:${gridlines}`}>
+							<span
+								class:list={['bar', { ongoing: row.ongoing }]}
+								style={`--from:${row.from}%;--width:${row.width}%`}
+							></span>
+						</span>
+						<span class="dates">
+							<ProjectPeriod start={row.start} end={row.end} short />
+						</span>
+					</a>
+				</li>
+			))
+		}
+	</ol>
+
+	<p class="key">
+		<span class="key-mark" aria-hidden="true"></span>
+		still in production
+	</p>
+</figure>
+
+<style>
+	.chart {
+		--label-col: minmax(8rem, 12rem);
+		--dates-col: 12rem;
+		margin: 0;
+	}
+
+	.axis,
+	.row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-2xs) var(--space-md);
+	}
+
+	.axis {
+		/* The axis is meaningless without the track beside it. */
+		display: none;
+	}
+
+	/* No bottom border here: the first row already draws a full-width rule, and
+	   two adjacent 1px lines make the axis look thicker over the track than
+	   over the label and date columns. */
+	.axis-track {
+		position: relative;
+		height: 1.5rem;
+	}
+
+	.axis-tick,
+	.axis-now {
+		position: absolute;
+		bottom: 0.15rem;
+		font-size: var(--text-xs);
+		color: var(--graphite);
+		white-space: nowrap;
+	}
+
+	.axis-tick {
+		left: var(--at);
+		transform: translateX(-50%);
+	}
+
+	.axis-now {
+		right: 0;
+		font-style: italic;
+	}
+
+	.rows {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.row {
+		align-items: center;
+		padding-block: var(--space-sm);
+		border-block-end: 1px solid var(--rule);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.rows li:first-child .row {
+		border-block-start: 1px solid var(--rule);
+	}
+
+	.label {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.25;
+	}
+
+	.company {
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: var(--text-base);
+		letter-spacing: -0.01em;
+	}
+
+	.title {
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	/*
+	 * No gridlines below the desktop breakpoint: the axis is hidden there, so
+	 * vertical rules would reference a scale the reader cannot see.
+	 */
+	.track {
+		position: relative;
+		display: block;
+		height: 0.85rem;
+		background-repeat: no-repeat;
+	}
+
+	.bar {
+		position: absolute;
+		top: 50%;
+		height: 0.85rem;
+		transform: translateY(-50%);
+		left: var(--from);
+		width: var(--width);
+		background: var(--ink);
+		border-radius: var(--radius);
+		transition: background-color 120ms ease;
+	}
+
+	/* Ongoing work has no right edge: the bar runs to the axis and stays open.
+	   Form rather than colour — a warm accent here would be a different site.
+	   The fade is short on purpose; a long one reads as a blur, not as intent. */
+	.bar.ongoing {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+		background: linear-gradient(90deg, var(--ink) calc(100% - 1.1rem), transparent 100%);
+	}
+
+	.dates {
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.row:hover .bar,
+	.row:focus-visible .bar {
+		background: var(--carbon);
+	}
+
+	.row:hover .bar.ongoing,
+	.row:focus-visible .bar.ongoing {
+		background: linear-gradient(90deg, var(--carbon) calc(100% - 1.1rem), transparent 100%);
+	}
+
+	.row:hover .company {
+		color: var(--carbon);
+	}
+
+	.key {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		margin-block-start: var(--space-md);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+	}
+
+	.key-mark {
+		width: 3.5rem;
+		height: 0.5rem;
+		border-radius: var(--radius) 0 0 var(--radius);
+		background: linear-gradient(90deg, var(--ink) 30%, transparent 100%);
+	}
+
+	/*
+	 * Below this width a horizontal span chart is unreadable, so it stops being
+	 * one: the same rows become a stacked list where each bar is still drawn on
+	 * the shared scale. Same data, same order, different form — not a squeezed
+	 * copy of the desktop chart.
+	 */
+	@media (min-width: 48rem) {
+		.axis {
+			display: grid;
+			grid-template-columns: var(--label-col) 1fr var(--dates-col);
+		}
+
+		.row {
+			grid-template-columns: var(--label-col) 1fr var(--dates-col);
+			align-items: stretch;
+		}
+
+		/* Full-row gridlines here, where the axis above gives them meaning.
+		   One generated gradient per track, so they align across every row. */
+		.track {
+			height: auto;
+			min-height: 2.4rem;
+			background-image: var(--gridlines);
+		}
+
+		.label,
+		.dates {
+			align-self: center;
+		}
+
+		.dates {
+			text-align: end;
+		}
+	}
+</style>

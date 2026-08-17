@@ -1,32 +1,65 @@
 ---
-import FormattedDate from '../components/FormattedDate.astro';
+import SpanChart from '../components/SpanChart.astro';
 import { SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
 import { entryPath, getPublished } from '../lib/content';
 
 const projects = await getPublished('projects');
+
+// Pinned once so every bar and the lede agree, and so the build is stable.
+const now = new Date();
+
+// Derived, never asserted: if the content changes, the sentence changes with it.
+const firstYear = Math.min(...projects.map((p) => p.data.date.getUTCFullYear()));
+const years = now.getUTCFullYear() - firstYear;
+const ongoing = projects.filter((p) => p.data.end === null).length;
+
+const items = projects.map((project) => ({
+	href: entryPath('projects', project.id),
+	company: project.data.company,
+	title: project.data.title,
+	start: project.data.date,
+	end: project.data.end,
+}));
 ---
 
-<Base title={SITE_TITLE}>
+<Base title={SITE_TITLE} hideWordmark>
 	<h1>{SITE_TITLE}</h1>
 
-	<section aria-labelledby="projects-heading">
-		<h2 id="projects-heading"><a href="/projects/">Projects</a></h2>
-		{
-			projects.length === 0 ? (
-				<p>No entries yet.</p>
-			) : (
-				<ul>
-					{projects.map(({ id, data }) => (
-						<li>
-							<a href={entryPath('projects', id)}>
-								{data.company}: {data.title}
-							</a>
-							<FormattedDate date={data.date} monthOnly />
-						</li>
-					))}
-				</ul>
-			)
-		}
-	</section>
+	{
+		projects.length > 0 && (
+			<p class="lede">
+				Payments, invoicing and ledger infrastructure. {years} years,{' '}
+				{ongoing} of {projects.length} systems still in production.
+			</p>
+		)
+	}
+
+	{
+		projects.length > 0 ? (
+			<section class="chart-section" aria-labelledby="engagements">
+				<h2 id="engagements" class="visually-hidden">
+					Engagements
+				</h2>
+				<SpanChart items={items} now={now} />
+			</section>
+		) : (
+			<p>No entries yet.</p>
+		)
+	}
 </Base>
+
+<style>
+	.lede {
+		max-width: 34ch;
+		margin-block-start: var(--space-md);
+		font-size: var(--text-xl);
+		line-height: 1.35;
+		color: var(--graphite);
+		text-wrap: pretty;
+	}
+
+	.chart-section {
+		margin-block-start: var(--space-2xl);
+	}
+</style>

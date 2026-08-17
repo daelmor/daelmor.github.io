@@ -4,17 +4,22 @@ interface Props {
 	date: Date;
 	/** Month-and-year only, for entries where the day is not meaningful. */
 	monthOnly?: boolean;
+	/** Abbreviated month, so date ranges stay on one line in tight columns. */
+	short?: boolean;
 }
 
-const { date, monthOnly = false } = Astro.props;
+const { date, monthOnly = false, short = false } = Astro.props;
 
 const iso = date.toISOString();
 const machine = monthOnly ? iso.slice(0, 7) : iso.slice(0, 10);
 
-const label = date.toLocaleDateString('en-GB', {
+// en-GB for full dates (17 August 2026 reads better than the US ordering), but
+// en-US for abbreviations: en-GB renders September as the four-letter "Sept",
+// which breaks the even rhythm of a column of three-letter months.
+const label = date.toLocaleDateString(short ? 'en-US' : 'en-GB', {
 	timeZone: 'UTC',
 	year: 'numeric',
-	month: 'long',
+	month: short ? 'short' : 'long',
 	...(monthOnly ? {} : { day: 'numeric' }),
 });
 ---
