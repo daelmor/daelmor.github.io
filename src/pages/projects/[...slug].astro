@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { type CollectionEntry, render } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import ProjectPeriod from '../../components/ProjectPeriod.astro';
 import Base from '../../layouts/Base.astro';
 import { getPublished } from '../../lib/content';
 
@@ -33,7 +33,7 @@ const { Content } = await render(project);
 			<h1>{data.title}</h1>
 			<p>{data.summary}</p>
 			<p>{data.role}</p>
-			<FormattedDate date={data.date} monthOnly />
+			<ProjectPeriod start={data.date} end={data.end} />
 			<Image src={data.hero} alt={data.heroAlt} widths={[480, 960, 1440]} />
 		</header>
 

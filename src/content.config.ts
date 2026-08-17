@@ -26,9 +26,14 @@ const common = {
 	/**
 	 * Sorting key for the whole site, newest first.
 	 *
-	 * For `projects` this is the date the work *concluded*, read out of each
-	 * article's own duration line — not the Ghost publish date the archive
-	 * shipped with, which contradicted the body text in five of seven files.
+	 * For `projects` this is the date the engagement *began*. Sorting on the end
+	 * date was the original plan, but three of the seven projects turned out to
+	 * be open-ended, which collapsed them into a tie at today's date and pushed
+	 * a 2017 engagement above current work. Start date has no such degenerate
+	 * case and still reads as reverse-chronological.
+	 *
+	 * Never the Ghost publish date the archive shipped with — that contradicted
+	 * the body text in five of seven files.
 	 */
 	date: z.coerce.date(),
 	tags: z.array(z.string()).default([]),
@@ -43,6 +48,14 @@ const projects = defineCollection({
 			/** Split out of the archived `"Company: Project"` title format. */
 			company: z.string().min(1),
 			role: z.string().min(1),
+			/**
+			 * When the engagement ended, or `null` if it is still ongoing.
+			 *
+			 * Required but nullable, never optional: `end: null` has to be written
+			 * out deliberately, so an omitted end is a build error rather than a
+			 * project silently presenting itself as current work.
+			 */
+			end: z.coerce.date().nullable(),
 			/** Flattened from each article's "Technologies Used" section. */
 			tech: z.array(z.string()).min(1),
 			hero: image(),

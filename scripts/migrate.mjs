@@ -35,26 +35,36 @@ const SHOW = (() => {
 })();
 
 /**
- * Facts read out of each article's own body prose, transcribed here so they are
- * reviewable in one place instead of buried in regexes. The `duration` comment
- * on each entry quotes the source line the `end` value comes from.
+ * Facts about each project, transcribed here so they are reviewable in one place
+ * instead of buried in regexes.
  *
- * `end` becomes the collection's `date` field: the month the work concluded.
- * A `null` is a hard stop, never a guess.
+ *   start  becomes the `date` field — the sort key, when the engagement began.
+ *   end    becomes the `end` field — null means ongoing.
+ *
+ * `start` is never guessed: a null aborts the run naming the file.
+ *
+ * Where these disagree with the archived body prose, the values below win and
+ * the script rewrites the prose to match. The archive's own duration lines were
+ * demonstrably unreliable — one ran backwards, one was an unfilled placeholder,
+ * and two described engagements as finished that are in fact ongoing.
  */
 const PROJECT_META = {
 	'n1co-fintech-app': {
 		company: 'n1co',
 		title: 'FinTech App',
 		role: 'Senior Software Architect',
-		// "October 2022 – November 2023"
-		end: '2023-11-30',
+		// Confirmed: "2023 - present". Supersedes the archive's
+		// "October 2022 – November 2023", which was both stale and closed.
+		start: '2023-01-01',
+		end: null,
+		note: 'Start year confirmed as 2023 but no month given; using January. The archive said October 2022.',
 	},
 	'hugo-delivery-service': {
 		company: 'Hugo',
 		title: 'Delivery Service',
 		role: 'Senior Backend Engineer, Delivery Services',
 		// "August 2021 – September 2022"
+		start: '2021-08-01',
 		end: '2022-09-30',
 	},
 	'hugo-fintech-wallet-app': {
@@ -62,6 +72,7 @@ const PROJECT_META = {
 		title: 'FinTech Wallet App',
 		role: 'Senior Backend Engineer',
 		// "March 2020 – August 2021"
+		start: '2020-03-01',
 		end: '2021-08-31',
 	},
 	'hugo-payments-service': {
@@ -69,32 +80,37 @@ const PROJECT_META = {
 		title: 'Payments Service',
 		role: 'Senior Backend Engineer, Payments Service',
 		// "March 2020 – August 2021"
+		start: '2020-03-01',
 		end: '2021-08-31',
 	},
 	'fegora-digital-invoicing': {
 		company: 'Fegora',
 		title: 'Digital Invoicing',
 		role: 'Co-Founder & Software Architect',
-		// "August 2011 – 2019" — bare year, so the month is an assumption.
-		end: '2019-12-31',
-		note: 'End is a bare year in the source ("August 2011 – 2019"); using December.',
+		// Confirmed: "2011 aug - present". Supersedes the archive's
+		// "August 2011 – 2019". Consistent with the body's claim of 15 years
+		// of technical support.
+		start: '2011-08-01',
+		end: null,
 	},
 	'nicetech-heyy-fintech-ecosystem': {
 		company: 'Nicetech',
 		title: 'Heyy FinTech ecosystem',
 		role: 'Senior Software Architect',
-		// Source reads "August 2021 – December 2019", which runs backwards and
-		// collides with the Hugo roles. Unresolvable without the real dates.
-		end: null,
-		blocked: 'Duration in the source reads "August 2021 – December 2019" (reversed).',
+		// Confirmed: "2019 march - 2022 nov". Replaces the archive's reversed
+		// "August 2021 – December 2019".
+		start: '2019-03-01',
+		end: '2022-11-30',
 	},
 	'tigo-selfservice-web-portal': {
 		company: 'Tigo',
 		title: 'SelfService Web Portal',
 		role: 'Lead Developer',
-		// Source reads "[Specify Duration]" — an unfilled placeholder.
+		// Confirmed: "2017 june - present (the project is in use)". Replaces the
+		// archive's "[Specify Duration]" placeholder.
+		start: '2017-06-01',
 		end: null,
-		blocked: 'Duration in the source is the literal placeholder "[Specify Duration]".',
+		note: 'Marked ongoing because the system is still in use — confirm whether that describes the deployment or your engagement.',
 	},
 };
 
@@ -281,20 +297,26 @@ async function planProject(slug) {
 	// duration line — the period deliberately stays prose rather than becoming a
 	// typed field.
 	const edits = [];
-	const DATE_RANGE = /^([A-Z][a-z]+ \d{4}\s*[–—-]\s*\S.*)$/;
+	const DATE_RANGE = /^[A-Z][a-z]+ \d{4}\s*[–—-]\s*\S.*$/;
 
-	// style B — exact line match, no ambiguity.
-	if (/^\*\*Role:\*\*\s/m.test(out)) {
+	// style A — a role heading followed by a bare date range, at the very top of
+	// what is left of the body. Both are now front-matter fields, so both go.
+	// Guarded on the date range so no ordinary section heading can match.
+	const styleA = /^##\s+\*\*(.+?)\*\*\s*\r?\n+([^\n]+)\r?\n/.exec(out);
+	if (styleA && styleA.index === 0 && DATE_RANGE.test(styleA[2].trim())) {
+		out = out.slice(styleA[0].length);
+		edits.push(`removed role heading "${styleA[1]}" and its date line "${styleA[2].trim()}"`);
+	}
+
+	// style B — exact line matches, no ambiguity.
+	if (/^\*\*Role:\*\*[^\n]*\r?\n/m.test(out)) {
 		out = out.replace(/^\*\*Role:\*\*[^\n]*\r?\n/m, '');
 		edits.push('removed duplicated "**Role:**" line');
 	}
-
-	// style A — only when the heading is the very first thing left in the body
-	// and the line after it is a bare date range, so nothing else can match.
-	const styleA = /^##\s+\*\*(.+?)\*\*\s*\r?\n+([^\n]+)/.exec(out);
-	if (styleA && DATE_RANGE.test(styleA[2].trim())) {
-		out = out.slice(0, styleA.index) + `**Duration:** ${styleA[2].trim()}` + out.slice(styleA.index + styleA[0].length);
-		edits.push(`removed duplicated role heading "${styleA[1]}", kept its date as a duration line`);
+	const durationLine = /^\*\*Duration:\*\*[^\n]*\r?\n/m.exec(out);
+	if (durationLine) {
+		out = out.replace(durationLine[0], '');
+		edits.push(`removed "${durationLine[0].trim()}" — superseded by the date fields`);
 	}
 
 	// Rewrite image references to their new homes.
@@ -329,7 +351,8 @@ async function planProject(slug) {
 		`company: ${yamlString(meta.company)}`,
 		`role: ${yamlString(meta.role)}`,
 		`summary: ${yamlString(data.summary)}`,
-		`date: ${meta.end ?? 'MISSING'}`,
+		`date: ${meta.start ?? 'MISSING'}`,
+		`end: ${meta.end ?? 'null'}`,
 		`hero: ${yamlString(`../../assets/projects/${slug}/${renameOf.get(heroOriginal).next}`)}`,
 		`heroAlt: ${yamlString(heroAlt)}`,
 		'tech:',
@@ -342,7 +365,7 @@ async function planProject(slug) {
 	const orphans = renames.filter((r) => !referenced.has(r.original)).map((r) => r.original);
 
 	const blockers = [];
-	if (!meta.end) blockers.push(`${rel}: ${meta.blocked}`);
+	if (!meta.start) blockers.push(`${rel}: ${meta.blocked ?? 'no start date in PROJECT_META'}`);
 	// The archive escapes the brackets, so match both `[...]` and `\[...\]`.
 	if (/\\?\[Specify Duration\\?\]/.test(out)) {
 		blockers.push(`${rel}: body still contains the "[Specify Duration]" placeholder`);
@@ -404,17 +427,21 @@ async function main() {
 	console.log(`\n${changed} of ${renameRows.length} renamed.\n`);
 
 	// 2. derived front matter
-	console.log('DERIVED FRONT MATTER');
+	console.log('DERIVED FRONT MATTER — listed in the order the site will show them');
 	console.log(
 		table(
-			plans.map((p) => [
-				p.slug,
-				p.meta.company,
-				p.meta.title,
-				p.meta.end ?? '** MISSING **',
-				`${p.tech.length} tech`,
-			]),
-			['project', 'company', 'title', 'date (end)', 'tech'],
+			[...plans]
+				.sort((a, b) => String(b.meta.start).localeCompare(String(a.meta.start)))
+				.map((p, i) => [
+					String(i + 1),
+					p.slug,
+					p.meta.company,
+					p.meta.title,
+					p.meta.start ?? '** MISSING **',
+					p.meta.end ?? 'ongoing',
+					`${p.tech.length} tech`,
+				]),
+			['#', 'project', 'company', 'title', 'date (start)', 'end', 'tech'],
 		),
 	);
 	console.log();

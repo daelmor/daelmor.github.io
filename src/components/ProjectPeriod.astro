@@ -1,0 +1,23 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+/**
+ * An engagement's span. `end` is null for ongoing work.
+ *
+ * Month precision throughout: no source article recorded a start or end day, so
+ * showing one would imply precision the data does not have.
+ */
+interface Props {
+	start: Date;
+	end: Date | null;
+}
+
+const { start, end } = Astro.props;
+---
+
+<span class="period">
+	<FormattedDate date={start} monthOnly />
+	<span aria-hidden="true">–</span>
+	<span class="visually-hidden">to</span>
+	{end ? <FormattedDate date={end} monthOnly /> : <span class="ongoing">Present</span>}
+</span>
