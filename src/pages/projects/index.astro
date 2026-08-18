@@ -34,7 +34,11 @@ const projects = await getPublished('projects');
 							<p class="card-meta">
 								{data.role}
 								<span class="card-span">
-									<ProjectPeriod start={data.date} end={data.end} />
+									<ProjectPeriod
+										start={data.date}
+										end={data.end}
+										inProduction={data.inProduction}
+									/>
 								</span>
 							</p>
 							<p class="card-summary">{data.summary}</p>

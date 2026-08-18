@@ -1,41 +1,80 @@
 ---
+import { endState, type EndValue } from '../lib/period';
 import FormattedDate from './FormattedDate.astro';
 
 /**
- * An engagement's span. `end` is null for ongoing work.
+ * An engagement's span, plus whether the system outlived it.
  *
  * Month precision throughout: no source article recorded a start or end day, so
  * showing one would imply accuracy the data does not have.
  */
 interface Props {
 	start: Date;
-	end: Date | null;
+	end: EndValue;
+	/** Whether the system is still running. null = not known, so say nothing. */
+	inProduction?: boolean | null;
 	/** Abbreviated months, so a range fits one line in the chart's date column. */
 	short?: boolean;
 }
 
-const { start, end, short = false } = Astro.props;
+const { start, end, inProduction = null, short = false } = Astro.props;
+const state = endState(end);
+
+// Only worth stating where it is not already implied by an ongoing engagement.
+const noteProduction = inProduction === true && state.kind !== 'present';
 ---
 
 {/* inline-flex with a gap, not whitespace: `compressHTML: 'jsx'` strips
     whitespace between elements, so spacing has to come from CSS. */}
 <span class="period">
-	<FormattedDate date={start} monthOnly short={short} />
-	<span aria-hidden="true">–</span>
-	<span class="visually-hidden">to</span>
-	{end ? <FormattedDate date={end} monthOnly short={short} /> : <span class="ongoing">Present</span>}
+	<span class="range">
+		<FormattedDate date={start} monthOnly short={short} />
+		<span aria-hidden="true">–</span>
+		<span class="visually-hidden">to</span>
+		{
+			state.kind === 'dated' ? (
+				<FormattedDate date={state.date} monthOnly short={short} />
+			) : state.kind === 'present' ? (
+				<span class="ongoing">Present</span>
+			) : (
+				/* Ended, date not on record. Anything else would be a guess. */
+				<span class="undated" title="End date not recorded">
+					<span aria-hidden="true">?</span>
+					<span class="visually-hidden">end date not recorded</span>
+				</span>
+			)
+		}
+	</span>
+	{noteProduction && <span class="in-production">system still in production</span>}
 </span>
 
 <style>
 	.period {
 		display: inline-flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.range {
+		display: inline-flex;
 		flex-wrap: wrap;
 		align-items: baseline;
 		gap: 0.4ch;
-		font-variant-numeric: tabular-nums;
 	}
 
 	.ongoing {
 		color: var(--ink);
+	}
+
+	.undated {
+		color: var(--graphite);
+		cursor: help;
+	}
+
+	.in-production {
+		font-size: var(--text-xs);
+		color: var(--graphite);
+		font-style: italic;
 	}
 </style>

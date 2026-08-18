@@ -12,7 +12,11 @@ const now = new Date();
 // Derived, never asserted: if the content changes, the sentence changes with it.
 const firstYear = Math.min(...projects.map((p) => p.data.date.getUTCFullYear()));
 const years = now.getUTCFullYear() - firstYear;
-const ongoing = projects.filter((p) => p.data.end === null).length;
+// Counts systems still in production, which is NOT the same as engagements
+// still running — Tigo's engagement ended years ago and its portal is still
+// serving customers. Only confirmed cases are counted; `inProduction: null`
+// means unknown and is deliberately left out of the claim.
+const live = projects.filter((p) => p.data.inProduction === true).length;
 
 const items = projects.map((project) => ({
 	href: entryPath('projects', project.id),
@@ -20,6 +24,7 @@ const items = projects.map((project) => ({
 	title: project.data.title,
 	start: project.data.date,
 	end: project.data.end,
+	inProduction: project.data.inProduction,
 }));
 ---
 
@@ -30,7 +35,7 @@ const items = projects.map((project) => ({
 		projects.length > 0 && (
 			<p class="lede">
 				Payments, invoicing and ledger infrastructure. {years} years,{' '}
-				{ongoing} of {projects.length} systems still in production.
+				{live} of these systems still running in production.
 			</p>
 		)
 	}

@@ -40,7 +40,9 @@ const { Content } = await render(project);
 				<dd>{data.role}</dd>
 
 				<dt>Span</dt>
-				<dd><ProjectPeriod start={data.date} end={data.end} /></dd>
+				<dd>
+					<ProjectPeriod start={data.date} end={data.end} inProduction={data.inProduction} />
+				</dd>
 
 				<dt>Stack</dt>
 				<dd>

@@ -49,13 +49,33 @@ const projects = defineCollection({
 			company: z.string().min(1),
 			role: z.string().min(1),
 			/**
-			 * When the engagement ended, or `null` if it is still ongoing.
+			 * When *the engagement* ended. Three states, each written out
+			 * explicitly, because the archive turned out to contain all three:
 			 *
-			 * Required but nullable, never optional: `end: null` has to be written
-			 * out deliberately, so an omitted end is a build error rather than a
-			 * project silently presenting itself as current work.
+			 *   end: 2022-09-30   ended on this date
+			 *   end: present      still ongoing
+			 *   end: null         ended, but no date on record
+			 *
+			 * Required, never optional. An omitted `end` is a build error rather
+			 * than a project quietly presenting itself as current work — and
+			 * `null` cannot stand in for "ongoing", which is what made Tigo read
+			 * as active for years after the engagement finished.
 			 */
-			end: z.coerce.date().nullable(),
+			// Order matters. `z.coerce.date()` happily coerces null to the Unix
+			// epoch rather than failing, so if it came first every "ended, undated"
+			// project would silently render as January 1970. The literal and null
+			// branches have to be tried before it.
+			end: z.union([z.literal('present'), z.null(), z.coerce.date()]),
+			/**
+			 * Whether *the system* is still running in production, which is a
+			 * different question from whether the engagement is still going. Tigo
+			 * is the case that forced these apart: the engagement ended years ago
+			 * and the portal is still serving customers.
+			 *
+			 * `null` means genuinely not known, and renders as nothing at all —
+			 * better than quietly asserting either state.
+			 */
+			inProduction: z.boolean().nullable(),
 			/** Flattened from each article's "Technologies Used" section. */
 			tech: z.array(z.string()).min(1),
 			hero: image(),

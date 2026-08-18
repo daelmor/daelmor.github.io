@@ -1,12 +1,17 @@
 ---
+import { endState, type EndValue } from '../lib/period';
 import ProjectPeriod from './ProjectPeriod.astro';
 
 /**
  * The signature element: every engagement drawn against one shared time axis.
  *
- * A card grid can list these seven projects but it cannot state the two facts
- * that actually characterise them — that they overlapped, and that three of
- * them never ended. This can.
+ * A card grid can list these projects but it cannot state the two facts that
+ * actually characterise them — that they overlapped, and that several of the
+ * systems are still running.
+ *
+ * Two marks, because these are two different facts:
+ *   heavy bar   the engagement itself
+ *   thin rule   the system still in production, after the engagement ended
  *
  * No JavaScript. Bar geometry is computed at build time into custom properties;
  * the axis gridlines are one generated gradient, reused by every row so they
@@ -17,8 +22,8 @@ interface Item {
 	company: string;
 	title: string;
 	start: Date;
-	/** null = still in production. The bar runs to the edge and stays open. */
-	end: Date | null;
+	end: EndValue;
+	inProduction: boolean | null;
 }
 
 interface Props {
@@ -41,10 +46,34 @@ const span = domainEnd - domainStart;
 const pct = (date: Date) =>
 	Math.min(100, Math.max(0, ((date.valueOf() - domainStart) / span) * 100));
 
+/** Width of the stub drawn when an engagement's end is not on record. */
+const UNDATED_STUB = 3.5;
+
 const rows = items.map((item) => {
+	const state = endState(item.end);
 	const from = pct(item.start);
-	const to = item.end ? pct(item.end) : 100;
-	return { ...item, from, width: Math.max(to - from, 1.2), ongoing: item.end === null };
+
+	const to =
+		state.kind === 'present'
+			? 100
+			: state.kind === 'dated'
+				? pct(state.date)
+				: from + UNDATED_STUB;
+
+	const width = Math.max(to - from, 1.2);
+
+	return {
+		...item,
+		from,
+		width,
+		ongoing: state.kind === 'present',
+		undated: state.kind === 'undated',
+		// The system outlived the engagement: a thin rule from where the bar
+		// stops out to the present. Only drawn where we actually know it.
+		showTail: item.inProduction === true && state.kind !== 'present',
+		tailFrom: from + width,
+		tailWidth: Math.max(100 - (from + width), 0),
+	};
 });
 
 // A label every three years, then the right edge is simply "now".
@@ -62,6 +91,9 @@ const gridlines = `linear-gradient(90deg, ${[
 	),
 	'transparent 100%',
 ].join(', ')})`;
+
+const anyTail = rows.some((r) => r.showTail);
+const anyUndated = rows.some((r) => r.undated);
 ---
 
 <figure class="chart">
@@ -93,13 +125,21 @@ const gridlines = `linear-gradient(90deg, ${[
 							<span class="title">{row.title}</span>
 						</span>
 						<span class="track" style={`--gridlines:${gridlines}`}>
+							{row.showTail && (
+								<span class="tail" style={`--from:${row.tailFrom}%;--width:${row.tailWidth}%`} />
+							)}
 							<span
-								class:list={['bar', { ongoing: row.ongoing }]}
+								class:list={['bar', { ongoing: row.ongoing, undated: row.undated }]}
 								style={`--from:${row.from}%;--width:${row.width}%`}
-							></span>
+							/>
 						</span>
 						<span class="dates">
-							<ProjectPeriod start={row.start} end={row.end} short />
+							<ProjectPeriod
+								start={row.start}
+								end={row.end}
+								inProduction={row.inProduction}
+								short
+							/>
 						</span>
 					</a>
 				</li>
@@ -107,10 +147,32 @@ const gridlines = `linear-gradient(90deg, ${[
 		}
 	</ol>
 
-	<p class="key">
-		<span class="key-mark" aria-hidden="true"></span>
-		still in production
-	</p>
+	<dl class="key">
+		<div>
+			<dt><span class="key-bar" aria-hidden="true"></span></dt>
+			<dd>engagement</dd>
+		</div>
+		{
+			anyTail && (
+				<div>
+					<dt>
+						<span class="key-tail" aria-hidden="true" />
+					</dt>
+					<dd>system still in production</dd>
+				</div>
+			)
+		}
+		{
+			anyUndated && (
+				<div>
+					<dt>
+						<span class="key-undated" aria-hidden="true" />
+					</dt>
+					<dd>end date not recorded</dd>
+				</div>
+			)
+		}
+	</dl>
 </figure>
 
 <style>
@@ -227,6 +289,28 @@ const gridlines = `linear-gradient(90deg, ${[
 		background: linear-gradient(90deg, var(--ink) calc(100% - 1.1rem), transparent 100%);
 	}
 
+	/* End not on record: the bar dissolves almost immediately rather than
+	   asserting a length the data cannot support. */
+	.bar.undated {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+		background: linear-gradient(90deg, var(--ink) 25%, transparent 100%);
+	}
+
+	/*
+	 * The system, still running after the engagement ended. A thin rule rather
+	 * than a bar, so it never competes with the work itself.
+	 */
+	.tail {
+		position: absolute;
+		top: 50%;
+		height: 2px;
+		transform: translateY(-50%);
+		left: var(--from);
+		width: var(--width);
+		background: var(--rule);
+	}
+
 	.dates {
 		font-size: var(--text-sm);
 		color: var(--graphite);
@@ -242,24 +326,59 @@ const gridlines = `linear-gradient(90deg, ${[
 		background: linear-gradient(90deg, var(--carbon) calc(100% - 1.1rem), transparent 100%);
 	}
 
+	.row:hover .bar.undated,
+	.row:focus-visible .bar.undated {
+		background: linear-gradient(90deg, var(--carbon) 25%, transparent 100%);
+	}
+
 	.row:hover .company {
 		color: var(--carbon);
 	}
 
 	.key {
 		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
+		flex-wrap: wrap;
+		gap: var(--space-xs) var(--space-md);
 		margin-block-start: var(--space-md);
 		font-size: var(--text-xs);
 		color: var(--graphite);
 	}
 
-	.key-mark {
-		width: 3.5rem;
+	.key > div {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+	}
+
+	.key dt,
+	.key dd {
+		margin: 0;
+	}
+
+	.key dt {
+		display: flex;
+		align-items: center;
+		width: 2.5rem;
+	}
+
+	.key-bar {
+		width: 100%;
+		height: 0.5rem;
+		border-radius: var(--radius);
+		background: var(--ink);
+	}
+
+	.key-tail {
+		width: 100%;
+		height: 2px;
+		background: var(--rule);
+	}
+
+	.key-undated {
+		width: 100%;
 		height: 0.5rem;
 		border-radius: var(--radius) 0 0 var(--radius);
-		background: linear-gradient(90deg, var(--ink) 30%, transparent 100%);
+		background: linear-gradient(90deg, var(--ink) 25%, transparent 100%);
 	}
 
 	/*
@@ -283,7 +402,7 @@ const gridlines = `linear-gradient(90deg, ${[
 		   One generated gradient per track, so they align across every row. */
 		.track {
 			height: auto;
-			min-height: 2.4rem;
+			min-height: 2.6rem;
 			background-image: var(--gridlines);
 		}
 
