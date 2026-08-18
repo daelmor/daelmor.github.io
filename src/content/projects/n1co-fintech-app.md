@@ -2,11 +2,12 @@
 title: "FinTech App"
 company: "n1co"
 role: "Senior Software Architect"
-summary: "I led the development of FinTech services from concept to deployment for the n1co app, a cutting-edge financial platform providing seamless digital banking experiences. My primary focus was on building robust and scalable backend systems that supported key functionalities"
-date: 2023-01-01
-end: null
+summary: "I led the development of FinTech services from concept to deployment for the n1co app, building the backend systems behind KYC, digital wallets, card issuing, and cashback and loyalty programmes."
+date: 2023-03-01
+end: present
+inProduction: true
 hero: "../../assets/projects/n1co-fintech-app/n1co-app-card.png"
-heroAlt: "n1co: FinTech App"
+heroAlt: "The n1co app home screen beside a black n1co Visa card, showing $155.21 available, buttons to request, top up and send money, and $5.50 of cashback."
 tech:
   - "Clean Architecture"
   - "Microservices"
@@ -37,11 +38,11 @@ My primary focus was on building robust and scalable backend systems that suppor
 -   **Digital Card Issuing:** Engineered systems for issuing and managing both virtual and physical cards, including customization and logistics.
 -   **Cashback and Loyalty Programs:** Created backend logic to support rewards programs, incentivizing user engagement and retention.
 
-![](../../assets/projects/n1co-fintech-app/n1co-cashback.jpg)
+![A hand holding a phone running the n1co app, with a Cashback promotion filling the middle of the home screen.](../../assets/projects/n1co-fintech-app/n1co-cashback.jpg)
 
-![](../../assets/projects/n1co-fintech-app/n1co-cashin-cash.png)
+![A cash top-up voucher in the app: a barcode above the number 47878590584, for a $5.00 top-up, to be presented at an agent.](../../assets/projects/n1co-fintech-app/n1co-cashin-cash.png)
 
-![](../../assets/projects/n1co-fintech-app/n1co-loyalty.png)
+![The referral screen, headed "Refiere y gana $5", explaining that a friend must redeem the code and spend at least $10, with the code T4QXE at the bottom.](../../assets/projects/n1co-fintech-app/n1co-loyalty.png)
 
 ## **Key Achievements**
 
@@ -51,15 +52,15 @@ My primary focus was on building robust and scalable backend systems that suppor
 -   **Enhanced the backend performance** of core FinTech services, resulting in a **25% decrease in API response times** by refactoring critical modules and implementing **caching solutions** using Redis and ASP.NET Core.
 -   **Led the design and implementation** of a **payment reconciliation system** that processed **100,000+ transactions daily** with an accuracy rate of **99.9%** by leveraging **microservices**, Azure Service Bus, and SQL Server.
 
-![](../../assets/projects/n1co-fintech-app/n1co-kyc.png)
+![The identity-capture step of onboarding, photographing the front of an El Salvador national ID card. The card is a printed specimen, not a real identity document.](../../assets/projects/n1co-fintech-app/n1co-kyc.png)
 
-![](../../assets/projects/n1co-fintech-app/n1co-referral.png)
+![The referral-code entry screen, with five masked characters entered and the on-screen keyboard open.](../../assets/projects/n1co-fintech-app/n1co-referral.png)
 
-![](../../assets/projects/n1co-fintech-app/n1co-tap.png)
+![A contactless n1co Visa card held against the back of a phone, which reads "Iniciando Transacción" for USD 5.00.](../../assets/projects/n1co-fintech-app/n1co-tap.png)
 
-![](../../assets/projects/n1co-fintech-app/n1co-otp.png)
+![The sign-in screen asking for a phone number with El Salvador's +503 dialling code, offering to send a one-time code by SMS or by WhatsApp.](../../assets/projects/n1co-fintech-app/n1co-otp.png)
 
-![](../../assets/projects/n1co-fintech-app/n1co-qr.jpg)
+![Four people holding phones around an n1co QR stand reading "Aceptamos todas las tarjetas", each phone showing the same $12.54 payment page.](../../assets/projects/n1co-fintech-app/n1co-qr.jpg)
 
 ## **Impact**  
 

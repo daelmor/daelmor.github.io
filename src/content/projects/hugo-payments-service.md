@@ -5,8 +5,9 @@ role: "Senior Backend Engineer, Payments Service"
 summary: "At Hugo Technologies, I specialized in building and optimizing the Payments Service, a crucial component of the platform that handled all financial transactions across multiple countries."
 date: 2020-03-01
 end: 2021-08-31
+inProduction: null
 hero: "../../assets/projects/hugo-payments-service/hugo-payments-showcase-cuadrado.png"
-heroAlt: "Hugo: Payments Service"
+heroAlt: "Overlapping views of the payments back office: a transaction JSON payload, a list of orders with amounts and Accepted status, a customer record, and the fraud-scoring timeline for one order."
 tech:
   - ".NET"
   - "C#"

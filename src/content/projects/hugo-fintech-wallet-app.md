@@ -5,8 +5,9 @@ role: "Senior Backend Engineer"
 summary: "I focused on developing and scaling the HugoPay Wallet, an innovative fintech digital wallet solution enabling seamless financial transactions for users."
 date: 2020-03-01
 end: 2021-08-31
+inProduction: null
 hero: "../../assets/projects/hugo-fintech-wallet-app/hugopayments7.jpg"
-heroAlt: "Hugo: FinTech Wallet App"
+heroAlt: "A hugoPay promotion: a phone showing a transaction list with two Visa cards floating above it, captioned \"Realiza tus compras con hugoPay\"."
 tech:
   - ".NET Core"
   - "C#"
@@ -29,21 +30,15 @@ source: "https://theseusthread.com/showcase/hugo-fintech-wallet-app/"
 -   **Security and Compliance:** Implemented robust security measures, including encryption, tokenization, and secure authentication, to protect sensitive user data and comply with FinTech regulations.
 -   **User Engagement Features:** Enabled features such as cashback rewards, promotions, and loyalty program integrations to drive user engagement and wallet adoption.
 
-![](../../assets/projects/hugo-fintech-wallet-app/hugopaydesing-1.webp)
+![Slides from the hugoPay product deck, covering user benefits, merchant costs, contactless QR payments and cashback.](../../assets/projects/hugo-fintech-wallet-app/hugopaydesing-1.webp)
 
-## **Key Achievements**
+![Five hugoPay screens for sending money: entering a recipient number and amount, confirming a $20.00 transfer twice, the sent confirmation, and a receipt with the transaction ID.](../../assets/projects/hugo-fintech-wallet-app/hugopayments6.png)
 
--   Developed a **KYC (Know Your Customer) module** that reduced user onboarding time by **65%** through streamlined workflows and automated validation processes using Webhooks, Serverless Functions, Logic Apps, External AI KYC providers, and Kubernetes.
--   Designed and deployed a **digital card issuance system** abstraction that increased card issuance capacity by **50%** using Clean Architecture principles, CQRS, async communication, and external bank gateway providers.
--   Designed and Implemented the **physical card issuance workflow** that increased geographical coverage by **70%** of the national territory with SOLID principles, strong REST and GraphQL API design, integration with delivery providers, and defensive programming.
+![A mockup of a purple hugoPay Visa card carrying a specimen cardholder name and number.](../../assets/projects/hugo-fintech-wallet-app/hugopay8.webp)
 
-![](../../assets/projects/hugo-fintech-wallet-app/hugopayments6.png)
+![A phone showing the hugoPay wallet with a $50.00 balance and a list of recent transactions, next to a purple hugo Visa card on a wooden desk.](../../assets/projects/hugo-fintech-wallet-app/hugopayments1.png)
 
-![](../../assets/projects/hugo-fintech-wallet-app/hugopay8.webp)
-
-![](../../assets/projects/hugo-fintech-wallet-app/hugopayments1.png)
-
-![](../../assets/projects/hugo-fintech-wallet-app/hugopayments2.png)
+![A payment-link checkout on a phone for a shop called Garden Store, listing two items and a total, beside marketing copy describing the payment-links feature.](../../assets/projects/hugo-fintech-wallet-app/hugopayments2.png)
 
 ## **Impact**  
 

@@ -5,8 +5,9 @@ role: "Lead Developer"
 summary: "I led the design and implementation of the public website, eCommerce platform, and customer portal for Tigo Guatemala, one of the leading telecommunications providers in Central America."
 date: 2017-06-01
 end: null
+inProduction: true
 hero: "../../assets/projects/tigo-selfservice-web-portal/tigo-selfservice-showcase-cuadrado.png"
-heroAlt: "Tigo: SelfService Web Portal"
+heroAlt: "A fan of Tigo self-service app screens showing remaining data, a list of services on the account, invoice history, automatic debit setup and saved payment methods."
 tech:
   - "Drupal"
   - "PHP"
@@ -26,7 +27,7 @@ source: "https://theseusthread.com/showcase/tigo-selfservice-web-portal/"
 **Description:**  
 I spearheaded the design and development of the **public website, eCommerce platform, and customer portal** for Tigo Guatemala, one of the leading telecommunications providers in Central America. The project involved creating a dynamic, user-friendly, and scalable digital experience that catered to millions of users while meeting business objectives and enhancing customer engagement.
 
-![](../../assets/projects/tigo-selfservice-web-portal/tigoss1-1.png)
+![The Tigo en Línea sign-in page, offering login by password or by phone number, with quick actions to pay bills and buy packages.](../../assets/projects/tigo-selfservice-web-portal/tigoss1-1.png)
 
 **Key Contributions:**
 

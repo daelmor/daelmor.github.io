@@ -38,8 +38,13 @@ const SHOW = (() => {
  * Facts about each project, transcribed here so they are reviewable in one place
  * instead of buried in regexes.
  *
- *   start  becomes the `date` field — the sort key, when the engagement began.
- *   end    becomes the `end` field — null means ongoing.
+ *   start         becomes `date` — the sort key, when the engagement began.
+ *   end           becomes `end` — a date, 'present', or null meaning
+ *                 "ended, no date on record". null never means ongoing;
+ *                 that conflation is what made Tigo advertise itself as
+ *                 current work for years after the engagement finished.
+ *   inProduction  becomes `inProduction` — whether the SYSTEM still runs,
+ *                 which is independent of whether the engagement does.
  *
  * `start` is never guessed: a null aborts the run naming the file.
  *
@@ -53,11 +58,11 @@ const PROJECT_META = {
 		company: 'n1co',
 		title: 'FinTech App',
 		role: 'Senior Software Architect',
-		// Confirmed: "2023 - present". Supersedes the archive's
+		// Confirmed: March 2023 to present. Supersedes the archive's
 		// "October 2022 – November 2023", which was both stale and closed.
-		start: '2023-01-01',
-		end: null,
-		note: 'Start year confirmed as 2023 but no month given; using January. The archive said October 2022.',
+		start: '2023-03-01',
+		end: 'present',
+		inProduction: true,
 	},
 	'hugo-delivery-service': {
 		company: 'Hugo',
@@ -66,6 +71,8 @@ const PROJECT_META = {
 		// "August 2021 – September 2022"
 		start: '2021-08-01',
 		end: '2022-09-30',
+		// Unknown whether Hugo still runs this. null, deliberately not false.
+		inProduction: null,
 	},
 	'hugo-fintech-wallet-app': {
 		company: 'Hugo',
@@ -74,6 +81,7 @@ const PROJECT_META = {
 		// "March 2020 – August 2021"
 		start: '2020-03-01',
 		end: '2021-08-31',
+		inProduction: null,
 	},
 	'hugo-payments-service': {
 		company: 'Hugo',
@@ -82,36 +90,235 @@ const PROJECT_META = {
 		// "March 2020 – August 2021"
 		start: '2020-03-01',
 		end: '2021-08-31',
+		inProduction: null,
 	},
 	'fegora-digital-invoicing': {
 		company: 'Fegora',
 		title: 'Digital Invoicing',
 		role: 'Co-Founder & Software Architect',
-		// Confirmed: "2011 aug - present". Supersedes the archive's
-		// "August 2011 – 2019". Consistent with the body's claim of 15 years
-		// of technical support.
+		// Confirmed: August 2011 to present. Supersedes the archive's
+		// "August 2011 – 2019", and consistent with the body's claim of fifteen
+		// years of technical support.
 		start: '2011-08-01',
-		end: null,
+		end: 'present',
+		inProduction: true,
 	},
 	'nicetech-heyy-fintech-ecosystem': {
 		company: 'Nicetech',
 		title: 'Heyy FinTech ecosystem',
 		role: 'Senior Software Architect',
-		// Confirmed: "2019 march - 2022 nov". Replaces the archive's reversed
-		// "August 2021 – December 2019".
+		// Confirmed: March 2019 to November 2022. Replaces the archive's
+		// reversed "August 2021 – December 2019".
 		start: '2019-03-01',
 		end: '2022-11-30',
+		inProduction: null,
 	},
 	'tigo-selfservice-web-portal': {
 		company: 'Tigo',
 		title: 'SelfService Web Portal',
 		role: 'Lead Developer',
-		// Confirmed: "2017 june - present (the project is in use)". Replaces the
-		// archive's "[Specify Duration]" placeholder.
+		// The engagement ended; the portal is still serving customers. No end
+		// date is on record, so null records exactly that rather than inventing
+		// one — and crucially not 'present', which is what previously made this
+		// read as current work under David's name.
 		start: '2017-06-01',
 		end: null,
-		note: 'Marked ongoing because the system is still in use — confirm whether that describes the deployment or your engagement.',
+		inProduction: true,
+		note: 'Engagement ended but no end date on record, so the span renders as indeterminate. Supply a date to close it.',
 	},
+};
+
+/**
+ * Summaries rewritten here rather than in the archive, so `projects/` stays a
+ * faithful copy of what was published and every deviation is recorded in one
+ * place. The script asserts each result ends in terminal punctuation.
+ */
+const SUMMARY_OVERRIDES = {
+	// The archived summary stopped mid-sentence on "...that supported key
+	// functionalities", with no full stop. Completed from the four functional
+	// areas the article itself goes on to describe, with the archive's
+	// "cutting-edge" and "seamless" filler dropped.
+	'n1co-fintech-app':
+		'I led the development of FinTech services from concept to deployment for the n1co app, building the backend systems behind KYC, digital wallets, card issuing, and cashback and loyalty programmes.',
+};
+
+/** A literal newline, spelled this way so no escaping can mangle it. */
+const NEWLINE = String.fromCharCode(10);
+
+/**
+ * Targeted body repairs, applied after heading levels are promoted so the
+ * anchors below match the transformed text.
+ *
+ * Each fix asserts its anchor is present and aborts the run if it is not, so a
+ * change upstream in `projects/` can never silently skip a repair.
+ */
+const BODY_FIXES = {
+	'hugo-fintech-wallet-app': [
+		{
+			// These three bullets are word-for-word identical to n1co's, and the
+			// stack they cite gives it away: Logic Apps and Serverless Functions
+			// are Azure, and n1co is the Azure project, while this one ran on GCP
+			// and PubSub. They were pasted onto the wrong article, so they come
+			// off rather than being rewritten with metrics nobody can verify.
+			//
+			// The article keeps its own "Key features" section, which is unique.
+			why: 'removed Key Achievements — verbatim duplicate of n1co, citing the wrong cloud stack for this project',
+			find: [
+				'## **Key Achievements**',
+				'',
+				'-   Developed a **KYC (Know Your Customer) module** that reduced user onboarding time by **65%** through streamlined workflows and automated validation processes using Webhooks, Serverless Functions, Logic Apps, External AI KYC providers, and Kubernetes.',
+				'-   Designed and deployed a **digital card issuance system** abstraction that increased card issuance capacity by **50%** using Clean Architecture principles, CQRS, async communication, and external bank gateway providers.',
+				'-   Designed and Implemented the **physical card issuance workflow** that increased geographical coverage by **70%** of the national territory with SOLID principles, strong REST and GraphQL API design, integration with delivery providers, and defensive programming.',
+				'',
+				'',
+			].join(NEWLINE),
+			replace: '',
+		},
+	],
+
+	'fegora-digital-invoicing': [
+		{
+			// Three Ghost bookmark cards, flattened by the export into heading +
+			// bold link + orphaned description + italic caption.
+			why: 'merged three flattened Ghost bookmark cards into one annotated link list',
+			find: [
+				'## Restful API',
+				'',
+				'**[Fegora](https://developer.fegora.com/)**',
+			].join(NEWLINE),
+			replace: [
+				'## API and open-source connectors',
+				'',
+				'**[Fegora API reference](https://developer.fegora.com/)**',
+			].join(NEWLINE),
+		},
+		{
+			// One of these descriptions is GitHub's own repository blurb, which
+			// the export left sitting in the article as if it were David's prose.
+			why: "removed Ghost caption residue, including GitHub's own blurb presented as prose",
+			find: [
+				'',
+				'_Fegora API Reference_',
+				'',
+				'## Json Structure',
+				'',
+				'**[Estructura DTE](https://github.com/fegora/fegora.github.io/wiki/Estructura-DTE)**',
+				'',
+				'Contribute to fegora/fegora.github.io development by creating an account on GitHub.',
+				'',
+				'_Fegora json structure repository_',
+				'',
+				'## Open source connectors',
+				'',
+				'**[GitHub - fegora/fegora-dotnet: Conector o librería para clientes .NET4.5+ del API de Fegora](https://github.com/fegora/fegora-dotnet)**',
+				'',
+				'Conector o librería para clientes .NET4.5+ del API de Fegora - fegora/fegora-dotnet',
+				'',
+				'_Fegora .NET connector repository_',
+			].join(NEWLINE),
+			replace: [
+				'',
+				'**[Estructura DTE](https://github.com/fegora/fegora.github.io/wiki/Estructura-DTE)** — the JSON document structure the API accepts.',
+				'',
+				'**[fegora-dotnet](https://github.com/fegora/fegora-dotnet)** — client library for .NET 4.5 and above.',
+			].join(NEWLINE),
+		},
+	],
+};
+
+/**
+ * Alt text for every image, keyed by its normalised filename.
+ *
+ * Written by looking at each image at full resolution, not inferred from
+ * filenames — which would have gone wrong, because several filenames describe
+ * the wrong screen. `n1co-loyalty.png` is the referral screen, and
+ * `n1co-cashin-cash.png` is a barcode top-up voucher.
+ *
+ * These describe what is visible. They deliberately do not restate the project
+ * title, which is already the page's H1, and they avoid "image of" / "screenshot
+ * of" openings that screen readers announce redundantly.
+ *
+ * Every image must have an entry: the script blocks on any that does not, so a
+ * new screenshot cannot ship with an empty alt attribute.
+ */
+const ALT_TEXT = {
+	// --- n1co ---------------------------------------------------------------
+	'n1co-app-card.png':
+		'The n1co app home screen beside a black n1co Visa card, showing $155.21 available, buttons to request, top up and send money, and $5.50 of cashback.',
+	'n1co-cashback.jpg':
+		'A hand holding a phone running the n1co app, with a Cashback promotion filling the middle of the home screen.',
+	'n1co-cashin-cash.png':
+		'A cash top-up voucher in the app: a barcode above the number 47878590584, for a $5.00 top-up, to be presented at an agent.',
+	'n1co-loyalty.png':
+		'The referral screen, headed "Refiere y gana $5", explaining that a friend must redeem the code and spend at least $10, with the code T4QXE at the bottom.',
+	'n1co-referral.png':
+		'The referral-code entry screen, with five masked characters entered and the on-screen keyboard open.',
+	'n1co-tap.png':
+		'A contactless n1co Visa card held against the back of a phone, which reads "Iniciando Transacción" for USD 5.00.',
+	'n1co-otp.png':
+		'The sign-in screen asking for a phone number with El Salvador\'s +503 dialling code, offering to send a one-time code by SMS or by WhatsApp.',
+	'n1co-qr.jpg':
+		'Four people holding phones around an n1co QR stand reading "Aceptamos todas las tarjetas", each phone showing the same $12.54 payment page.',
+	'n1co-kyc.png':
+		'The identity-capture step of onboarding, photographing the front of an El Salvador national ID card. The card is a printed specimen, not a real identity document.',
+
+	// --- Fegora -------------------------------------------------------------
+	'fegora-showcase-cuadrado.png':
+		'Overlapping Fegora screens: a list of issued invoices, one certified invoice, its signed XML, an emailed notification, and the REST API reference.',
+	'api-1.jpg':
+		'The Fegora API reference for authentication: endpoint list on the left, request headers and body in the middle, and example cURL requests with JSON responses on the right.',
+	'fegora-create-invoice-postman-1.png':
+		'API reference for creating a commercial invoice, with the document-type endpoints listed down the left and the JSON request body for the recipient on the right.',
+	'fegora-single-invoice-xml2-1.png':
+		'The signed XML of a Guatemalan electronic tax document, showing the SAT schema namespaces and the XML digital signature block.',
+	'fegora-invoices-filter-1.png':
+		'Fegora\'s electronic document list: date, status and establishment filters above a table of issued invoices with recipients and totals in quetzales.',
+	'fegora-single-invoice-1.png':
+		'A single certified invoice, showing issuer and recipient tax details, four line items and a total of 975 quetzales, with buttons to download the PDF or void it.',
+	'fegora-single-invoice-mail-1.png':
+		'An automated Fegora email notifying a customer that electronic documents have been issued, with a link to each one.',
+
+	// --- Hugo: Delivery Service ---------------------------------------------
+	'hugo-delivery-showcase-cuadrado.png':
+		'Promotional cards for the Hugo app\'s verticals — hugoGroceries, hugoShop and hugoDelivery — arranged around a hand holding a phone on the app\'s home screen.',
+
+	// --- Hugo: FinTech Wallet App -------------------------------------------
+	'hugopayments7.jpg':
+		'A hugoPay promotion: a phone showing a transaction list with two Visa cards floating above it, captioned "Realiza tus compras con hugoPay".',
+	'hugopaydesing-1.webp':
+		'Slides from the hugoPay product deck, covering user benefits, merchant costs, contactless QR payments and cashback.',
+	'hugopayments6.png':
+		'Five hugoPay screens for sending money: entering a recipient number and amount, confirming a $20.00 transfer twice, the sent confirmation, and a receipt with the transaction ID.',
+	'hugopay8.webp':
+		'A mockup of a purple hugoPay Visa card carrying a specimen cardholder name and number.',
+	'hugopayments1.png':
+		'A phone showing the hugoPay wallet with a $50.00 balance and a list of recent transactions, next to a purple hugo Visa card on a wooden desk.',
+	'hugopayments2.png':
+		'A payment-link checkout on a phone for a shop called Garden Store, listing two items and a total, beside marketing copy describing the payment-links feature.',
+
+	// --- Hugo: Payments Service ---------------------------------------------
+	'hugo-payments-showcase-cuadrado.png':
+		'Overlapping views of the payments back office: a transaction JSON payload, a list of orders with amounts and Accepted status, a customer record, and the fraud-scoring timeline for one order.',
+
+	// --- Nicetech: Heyy -----------------------------------------------------
+	'heyy3-1.jpg':
+		'A hand holding a heyy! card printed with a QR code and the address azulrosa.heyy.one, being scanned by a phone across a bar table.',
+	'heyy2-1.jpg':
+		'A heyy! illustration headed "Consolidated Wallet Systems", listing ticketing, cashless, prepaid event currency with tokenization, and loyalty programmes.',
+	'heyy1-1.jpg':
+		'The heyy! website home page, describing how it streamlines event organisation and customer-service workflows.',
+	'm1nt.png':
+		'A m1nt landing page in Spanish presenting m1nt as the currency of the 1001 Noches venue, with a button to top up a m1nt card online.',
+
+	// --- Tigo ---------------------------------------------------------------
+	'tigo-selfservice-showcase-cuadrado.png':
+		'A fan of Tigo self-service app screens showing remaining data, a list of services on the account, invoice history, automatic debit setup and saved payment methods.',
+	'tigoss1-1.png':
+		'The Tigo en Línea sign-in page, offering login by password or by phone number, with quick actions to pay bills and buy packages.',
+
+	// --- served from public/, animated ---------------------------------------
+	'm1nt-animation-es.gif':
+		'An animated Spanish-language promotion for the m1nt prepaid card.',
 };
 
 /**
@@ -348,9 +555,13 @@ async function planProject(slug) {
 
 	// Rewrite image references to their new homes.
 	const referenced = new Set();
-	out = out.replace(/!\[([^\]]*)\]\(\.\/([^)]+)\)/g, (_full, alt, target) => {
+	out = out.replace(/!\[([^\]]*)\]\(\.\/([^)]+)\)/g, (_full, _alt, target) => {
 		const name = decodeURIComponent(target);
 		referenced.add(name);
+		// The archive left 24 of 31 inline images with alt="". The alt text is
+		// replaced wholesale from ALT_TEXT rather than preserved.
+		const entry = renameOf.get(name);
+		const alt = entry ? (ALT_TEXT[entry.next] ?? '') : '';
 		return `![${alt}](${referenceFor(name)})`;
 	});
 
@@ -359,6 +570,25 @@ async function planProject(slug) {
 		lead === '?' && !tail ? '' : lead,
 	);
 
+	for (const fix of BODY_FIXES[slug] ?? []) {
+		if (!out.includes(fix.find)) {
+			throw new Error(
+				`${rel}: a BODY_FIXES anchor no longer matches (${fix.why}). The source article changed; update the fix.`,
+			);
+		}
+		out = out.replace(fix.find, () => fix.replace);
+		edits.push(fix.why);
+	}
+
+	// Wrap the one Spanish paragraph so assistive tech switches pronunciation.
+	// Located by line scan rather than a regex: the paragraph is a whole line,
+	// and a line scan cannot be broken by escaping.
+	const spanishLine = out.split(NEWLINE).find((line) => line.startsWith('Fegora hace accesible'));
+	if (spanishLine) {
+		out = out.replace(spanishLine, () => `<p lang="es">${spanishLine}</p>`);
+		edits.push('wrapped the Spanish paragraph in <p lang="es">');
+	}
+
 	out = `${out.trim()}\n`;
 
 	// --- front matter -------------------------------------------------------
@@ -366,20 +596,33 @@ async function planProject(slug) {
 	if (!renameOf.has(heroOriginal)) throw new Error(`${rel}: hero "${heroOriginal}" not on disk`);
 	referenced.add(heroOriginal);
 
-	// The archive's hero alt text is the article title. Carried over verbatim
-	// rather than invented, and flagged in the report for a human rewrite.
-	const heroAlt = data.title;
+	// The archive used the article title as hero alt text, which tells a screen
+	// reader nothing the H1 has not already said. Replaced from ALT_TEXT.
+	const heroAlt = ALT_TEXT[renameOf.get(heroOriginal).next] ?? '';
 
 	const tech = extractTech(body, rel);
+
+	const summary = SUMMARY_OVERRIDES[slug] ?? data.summary;
+	if (SUMMARY_OVERRIDES[slug]) edits.push('replaced the summary (see SUMMARY_OVERRIDES)');
+	// A summary that does not end in terminal punctuation is almost certainly
+	// truncated, which is how n1co's shipped. Fail rather than publish it.
+	if (!/["')\]]?[.!?]["')\]]?$/.test(summary)) {
+		throw new Error(
+			`${rel}: summary does not end in a full stop, so it is probably truncated. Add an entry to SUMMARY_OVERRIDES.`,
+		);
+	}
 
 	const frontMatter = [
 		'---',
 		`title: ${yamlString(meta.title)}`,
 		`company: ${yamlString(meta.company)}`,
 		`role: ${yamlString(meta.role)}`,
-		`summary: ${yamlString(data.summary)}`,
+		`summary: ${yamlString(summary)}`,
 		`date: ${meta.start ?? 'MISSING'}`,
-		`end: ${meta.end ?? 'null'}`,
+		// A bare `present` parses as that string and a bare `null` as YAML null,
+		// which is exactly the three-state distinction the schema expects.
+		`end: ${meta.end === null ? 'null' : meta.end}`,
+		`inProduction: ${meta.inProduction === null ? 'null' : String(meta.inProduction)}`,
 		`hero: ${yamlString(`../../assets/projects/${slug}/${renameOf.get(heroOriginal).next}`)}`,
 		`heroAlt: ${yamlString(heroAlt)}`,
 		'tech:',
@@ -391,7 +634,14 @@ async function planProject(slug) {
 
 	const orphans = renames.filter((r) => !referenced.has(r.original)).map((r) => r.original);
 
+	const missingAlt = renames.filter((r) => !ALT_TEXT[r.next]).map((r) => r.next);
+
 	const blockers = [];
+	if (missingAlt.length) {
+		blockers.push(
+			`${rel}: no ALT_TEXT entry for ${missingAlt.join(', ')} — look at the image and describe it`,
+		);
+	}
 	if (!meta.start) blockers.push(`${rel}: ${meta.blocked ?? 'no start date in PROJECT_META'}`);
 	// The archive escapes the brackets, so match both `[...]` and `\[...\]`.
 	if (/\\?\[Specify Duration\\?\]/.test(out)) {
@@ -419,10 +669,20 @@ function table(rows, headers) {
 async function main() {
 	if (!existsSync(SRC_DIR)) throw new Error(`source directory not found: ${SRC_DIR}`);
 
-	const slugs = (await readdir(SRC_DIR, { withFileTypes: true }))
+	const dirs = (await readdir(SRC_DIR, { withFileTypes: true }))
 		.filter((d) => d.isDirectory())
 		.map((d) => d.name)
 		.sort();
+
+	// A directory without an index.md is not an archived article. Skipped rather
+	// than crashed on, but always reported — silently ignoring a folder here
+	// would be how a real project goes missing from the site.
+	const slugs = [];
+	const skipped = [];
+	for (const dir of dirs) {
+		if (existsSync(path.join(SRC_DIR, dir, 'index.md'))) slugs.push(dir);
+		else skipped.push(dir);
+	}
 
 	if (SHOW) {
 		if (!slugs.includes(SHOW)) throw new Error(`unknown project "${SHOW}"; expected one of ${slugs.join(', ')}`);
@@ -465,13 +725,23 @@ async function main() {
 					p.meta.company,
 					p.meta.title,
 					p.meta.start ?? '** MISSING **',
-					p.meta.end ?? 'ongoing',
+					p.meta.end === null ? 'ended, undated' : p.meta.end,
+					p.meta.inProduction === true ? 'live' : p.meta.inProduction === false ? 'retired' : '?',
 					`${p.tech.length} tech`,
 				]),
-			['#', 'project', 'company', 'title', 'date (start)', 'end', 'tech'],
+			['#', 'project', 'company', 'title', 'date (start)', 'end', 'system', 'tech'],
 		),
 	);
 	console.log();
+
+	if (skipped.length) {
+		console.log('NOT MIGRATED — no index.md, so not an archived article:');
+		for (const dir of skipped) {
+			const files = (await readdir(path.join(SRC_DIR, dir))).length;
+			console.log(`  - projects/${dir}/ — ${files} file(s), left where they are`);
+		}
+		console.log();
+	}
 
 	// 3. notes worth a human eye
 	const notes = plans.filter((p) => p.meta.note);
@@ -490,7 +760,7 @@ async function main() {
 	}
 	console.log();
 
-	console.log('HERO ALT TEXT — carried over from the archive, all need rewriting');
+	console.log('HERO ALT TEXT');
 	console.log(table(plans.map((p) => [p.slug, p.heroAlt]), ['project', 'heroAlt']));
 	console.log();
 

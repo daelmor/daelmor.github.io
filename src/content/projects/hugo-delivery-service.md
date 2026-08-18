@@ -5,8 +5,9 @@ role: "Senior Backend Engineer, Delivery Services"
 summary: "I played a key role in designing and enhancing backend systems for the Delivery Services platform, a core component of Hugo’s app ecosystem."
 date: 2021-08-01
 end: 2022-09-30
+inProduction: null
 hero: "../../assets/projects/hugo-delivery-service/hugo-delivery-showcase-cuadrado.png"
-heroAlt: "Hugo: Delivery Service"
+heroAlt: "Promotional cards for the Hugo app's verticals — hugoGroceries, hugoShop and hugoDelivery — arranged around a hand holding a phone on the app's home screen."
 tech:
   - "JavaScript"
   - "TypeScript"
