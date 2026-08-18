@@ -112,9 +112,6 @@ const BRUSH = {
 const PACE_MS = 700;
 const THROTTLE_BACKOFF_MS = 4000;
 
-/** Wayback snapshots to try for an image, oldest first. */
-const IMAGE_SNAPSHOTS = ['2010', '2012', '2014', '2011', '2013', '2009'];
-
 // ---------------------------------------------------------------------------
 // fetching, cached
 // ---------------------------------------------------------------------------
@@ -183,29 +180,74 @@ function isImage(buf) {
 }
 
 /**
- * Fetches one image, trying each snapshot in turn.
+ * Asks the CDX index which captures of a URL exist, and what each one actually
+ * contains.
  *
- * Returns a Buffer, `'absent'` when the archive answered for every snapshot and
- * none held the file, or `'unverified'` when it would not answer at all.
+ * Returns an array of timestamps whose capture is a real image, or null if the
+ * index itself could not be reached.
  *
- * That distinction is the whole point. The archive throttles aggressively once
- * you have made a few dozen requests, and an earlier version read a refused
- * connection as "not archived" — reporting 26 of 30 images permanently lost
- * when a slower run had already recovered 21 of them. Writing that verdict into
- * the content would have quietly discarded real figures, so an unverified
- * image now blocks `--apply` instead.
+ * This replaces guessing at snapshot years, which was worse than it looked.
+ * llblgening.com lapsed and was parked, so Wayback's later captures of the 2009
+ * image paths are GoDaddy parking pages served with HTTP 200 — a status-only
+ * check counts those as recovered files. An early measurement reported 21 of 30
+ * images recoverable on exactly that basis, and it was wrong. CDX reports the
+ * mimetype of each capture, which settles it: a path whose only capture is
+ * text/html was never archived as an image at all.
+ */
+async function imageCaptures(imgPath) {
+	const key = `cdx/${path.basename(imgPath)}.txt`;
+	const file = path.join(CACHE, key);
+
+	if (!existsSync(file)) {
+		await mkdir(path.dirname(file), { recursive: true });
+		const url =
+			'http://web.archive.org/cdx/search/cdx?url=' +
+			encodeURIComponent(`llblgening.com${imgPath}`) +
+			'&output=text&fl=timestamp,statuscode,mimetype&limit=40';
+		const tmp = `${file}.part`;
+		let ok = false;
+		for (let attempt = 0; attempt < 3 && !ok; attempt += 1) {
+			if (curlToFile(url, tmp) === 'ok') ok = true;
+			else await sleep(THROTTLE_BACKOFF_MS * (attempt + 1));
+		}
+		if (!ok) {
+			await rm(tmp, { force: true });
+			return null;
+		}
+		await rename(tmp, file);
+		await sleep(PACE_MS);
+	}
+
+	const text = await readFile(file, 'utf8');
+	return text
+		.split('\n')
+		.map((line) => line.trim().split(/\s+/))
+		.filter(([ts, status, mime]) => ts && status === '200' && mime?.startsWith('image/'))
+		.map(([ts]) => ts);
+}
+
+/**
+ * Fetches one image.
+ *
+ * Returns a Buffer, `'absent'` when CDX shows no capture that is actually an
+ * image, or `'unverified'` when the archive would not answer at all — which
+ * blocks `--apply`, because throttling must never be recorded as loss.
  */
 async function fetchImage(imgPath) {
 	const name = path.basename(imgPath);
 	const file = path.join(CACHE, 'img', name);
 	if (existsSync(file)) return readFile(file);
 
+	const captures = await imageCaptures(imgPath);
+	if (captures === null) return 'unverified';
+	if (captures.length === 0) return 'absent';
+
+	await mkdir(path.dirname(file), { recursive: true });
+	const tmp = `${file}.part`;
 	let sawRefusal = false;
 
-	for (const snap of IMAGE_SNAPSHOTS) {
-		const url = `https://web.archive.org/web/${snap}id_/http://www.llblgening.com${imgPath}`;
-		const tmp = `${file}.part`;
-		await mkdir(path.dirname(file), { recursive: true });
+	for (const ts of captures) {
+		const url = `https://web.archive.org/web/${ts}id_/http://www.llblgening.com${imgPath}`;
 
 		for (let attempt = 0; attempt < 3; attempt += 1) {
 			const result = curlToFile(url, tmp);
@@ -216,13 +258,12 @@ async function fetchImage(imgPath) {
 					await rename(tmp, file);
 					return buf;
 				}
-				// A 200 HTML stub standing in for a missing file.
 				await rm(tmp, { force: true });
 				break;
 			}
 
 			await rm(tmp, { force: true });
-			if (result === 'missing') break; // a real answer; try the next snapshot
+			if (result === 'missing') break;
 
 			sawRefusal = true;
 			await sleep(THROTTLE_BACKOFF_MS * (attempt + 1));
@@ -230,6 +271,7 @@ async function fetchImage(imgPath) {
 		await sleep(PACE_MS);
 	}
 
+	// CDX promised an image and the fetch never delivered one.
 	return sawRefusal ? 'unverified' : 'absent';
 }
 

@@ -78,6 +78,15 @@ const essay = {
 	prize: z.string().min(1).optional(),
 	/** Where it was written for or first presented. */
 	venue: z.string().min(1).optional(),
+	/** A second line of title, where the document carries one. */
+	subtitle: z.string().min(1).optional(),
+	/**
+	 * The pen name a piece was submitted under. Recorded so a reader comparing
+	 * the site with the source document does not think the byline is wrong.
+	 */
+	penName: z.string().min(1).optional(),
+	/** The contest category it was entered in. */
+	category: z.string().min(1).optional(),
 	/** Source document in projects/philosophy-writings/, for provenance. */
 	sourceFile: z.string().min(1).optional(),
 };

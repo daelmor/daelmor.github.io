@@ -57,19 +57,18 @@ const ESSAYS = [
 		title: 'Del Rhin al Ganges: la resonancia de la filosofía india en la música de Beethoven',
 		slug: 'del-rhin-al-ganges',
 		date: '2024-02-25',
+		prize: 'Premiado',
 		composer: 'Ludwig van Beethoven',
 		// The document opens with a Word field-code table of contents that
 		// extraction renders as "TOC \o 1-3 \h \z \u Introducción PAGEREF ..."
 		dropTableOfContents: true,
-		// Taken from that same table of contents, which lists the sections and
-		// their nesting. Using the document's own outline rather than guessing.
-		headings: {
-			2: [
-				'El interés de Beethoven en la India',
-				'Descifrando la Resonancia de Beethoven en la India',
-			],
-			3: ['Lucha personal y búsqueda del Dharma', 'Influencia en su música'],
-		},
+		// The cover splits the title across two lines; the second half survives
+		// reflowing as a stray body line, and the title is front matter here.
+		dropLines: ['La Resonancia de la Filosofía India en la Música de Beethoven'],
+		// No `headings` list: this document styles every section as Heading1, so
+		// the sections come through flat, which is what the author actually marked.
+		// An earlier version declared two of them as subsections based on how the
+		// table of contents looked indented, and the Word styles disagree.
 	},
 	{
 		work: 'blavatsky-y-la-musica',
@@ -79,6 +78,7 @@ const ESSAYS = [
 		title: 'Blavatsky y la música',
 		slug: 'blavatsky-y-la-musica',
 		date: '2017-02-26',
+		prize: 'Premiado',
 		composer: 'Helena Petrovna Blavatsky',
 	},
 	{
@@ -99,7 +99,25 @@ const ESSAYS = [
 		title: 'Filosofía práctica: ejercicios de ayer, hoy y mañana',
 		slug: 'filosofia-practica',
 		date: '2019-01-27',
+		prize: 'Premiado',
 		venue: 'Organización Internacional Nueva Acrópolis — Guatemala',
+		/**
+		 * The eight exercises are the substance of this essay, and every one of
+		 * their headings was absorbed into the surrounding prose by the PDF's
+		 * layout — some opening a paragraph, two swept onto the end of the one
+		 * before, the rest standing alone but unmarked.
+		 */
+		splitHeadings: [
+			'Atención',
+			'Meditación y rememoración de lo beneficioso',
+			'Lectura',
+			'Estudio y examen en profundidad',
+			'Dominio de uno mismo',
+			'Cumplimiento de los deberes',
+			'Indiferencia ante las cosas indiferentes',
+			'Aprender a dialogar',
+		],
+		splitLevel: 3,
 	},
 	{
 		work: 'budismo-aplicado',
@@ -109,6 +127,7 @@ const ESSAYS = [
 		title: 'Budismo aplicado para entender la vida',
 		slug: 'budismo-aplicado',
 		date: '2018-01-28',
+		prize: 'Premiado',
 		/**
 		 * This essay is built on a grid — three domains of suffering, each read
 		 * through the four noble truths, each truth with its focusing questions
@@ -140,10 +159,53 @@ const ESSAYS = [
 		alsoIn: [],
 		title: 'Plotino y la política',
 		slug: 'plotino-y-la-politica',
-		// The only document with no date anywhere in it. Left null so the run
-		// stops here rather than a date being guessed from the file mtime.
-		date: null,
-		note: 'No date appears anywhere in the source document.',
+		// No date appears anywhere in the document; supplied by David.
+		date: '2021-03-01',
+		note: 'Date supplied by David (March 2021); the document itself carries none.',
+		// This PDF sets its section headings on the same line as the text that
+		// follows them, so reflowing produced sentences like "Plotino en Roma En
+		// Roma, Plotino fue recibido...".
+		splitHeadings: ['Plotino en Roma', 'Política', 'Divinización y política'],
+	},
+	{
+		work: 'la-elegancia-matematica-de-la-naturaleza',
+		file: 'La elegancia matematica de la naturaleza - Pironmines de Decapolis.docx',
+		section: 'philosophy',
+		alsoIn: ['music'],
+		title: 'La elegancia matemática de la naturaleza',
+		subtitle:
+			'De Pitágoras a la ciencia contemporánea: proporción áurea, armonía y estructura del cosmos',
+		slug: 'la-elegancia-matematica-de-la-naturaleza',
+		date: '2026-01-01',
+		prize: 'Premiado',
+		// Submitted under a pen name, as the contest requires. Recorded because
+		// the byline inside the document is not David's own name, and a reader
+		// comparing the two would otherwise think the attribution was wrong.
+		//
+		// Spelled from the document itself: PIRÓMENES. Both the filename
+		// ("Pironmines") and a first transcription of the mojibake TOC
+		// ("Pirámenes") had it wrong.
+		penName: 'Pirómenes de Decápolis',
+		category: 'Categoría Hdos',
+		/**
+		 * The cover block is direct-formatted rather than styled, so it arrives as
+		 * a run of ALL-CAPS lines that otherwise get promoted to headings. Title,
+		 * subtitle, pen name, category and the contents heading are all front
+		 * matter here, so they are dropped from the body.
+		 */
+		dropLines: [
+			'LA ELEGANCIA MATEMÁTICA',
+			'DE LA NATURALEZA',
+			'De Pitágoras a la Ciencia Contemporánea:',
+			'Proporción Áurea, Armonía y Estructura del Cosmos',
+			'PIRÓMENES DE DECÁPOLIS',
+			'Categoría Hdos',
+			'ÍNDICE',
+			// The cover year. Four digits, so the page-number filter lets it past.
+			'2026',
+		],
+		// Cross-listed into music: half of it is Pythagorean interval theory.
+		note: 'Only the year (2026) is stated in the document; using 1 January.',
 	},
 ];
 
@@ -203,16 +265,48 @@ async function extractDocx(file) {
 	const xml = readDocxEntry(buf, 'word/document.xml');
 	if (!xml) throw new Error(`${path.basename(file)}: no word/document.xml inside`);
 
-	return xml
-		.replace(/<w:tab[^>]*\/>/g, ' ')
-		.replace(/<w:br[^>]*\/>/g, '\n')
-		.replace(/<\/w:p>/g, '\n\n')
-		.replace(/<[^>]+>/g, '')
-		.replace(/&amp;/g, '&')
-		.replace(/&lt;/g, '<')
-		.replace(/&gt;/g, '>')
-		.replace(/&quot;/g, '"')
-		.replace(/&apos;/g, "'");
+	// Word records real heading levels in w:pStyle, which is far better evidence
+	// than any guess from capitalisation. Each paragraph is examined for its
+	// style, and headings are emitted with an ATX marker the line-based pass
+	// below then passes straight through.
+	const paragraphs = xml.match(/<w:p[ >][\s\S]*?<\/w:p>/g) ?? [];
+	const out = [];
+
+	for (const p of paragraphs) {
+		const style = /<w:pStyle\s+w:val="([^"]+)"/.exec(p)?.[1] ?? '';
+		const text = p
+			.replace(/<w:tab[^>]*\/>/g, ' ')
+			.replace(/<w:br[^>]*\/>/g, '\n')
+			.replace(/<[^>]+>/g, '')
+			.replace(/&amp;/g, '&')
+			.replace(/&lt;/g, '<')
+			.replace(/&gt;/g, '>')
+			.replace(/&quot;/g, '"')
+			.replace(/&apos;/g, "'")
+			.replace(/[ \t]+/g, ' ')
+			.trim();
+
+		if (!text) {
+			out.push('');
+			continue;
+		}
+
+		// Table-of-contents entries are generated, and the real headings follow.
+		if (/^TOC\d*$/i.test(style)) continue;
+
+		const level = /^Heading(\d)$/i.exec(style)?.[1];
+		if (level) {
+			// Word's Heading1 is the document title's peer; the page already has an
+			// h1, so everything shifts down one.
+			const depth = Math.min(Number(level) + 1, 6);
+			out.push('', `${'#'.repeat(depth)} ${text}`, '');
+			continue;
+		}
+
+		out.push(text, '');
+	}
+
+	return out.join('\n');
 }
 
 /** Minimal zip reader: finds one stored/deflated entry by name. */
@@ -280,6 +374,8 @@ function toMarkdown(raw, essay, report) {
 	 */
 	let droppedPageNumbers = 0;
 	let droppedTitleHeadings = 0;
+	let droppedDeclared = 0;
+	const dropSet = new Set((essay.dropLines ?? []).map(normaliseForMatch));
 	let overridden = 0;
 	let headings = 0;
 	let bullets = 0;
@@ -295,6 +391,28 @@ function toMarkdown(raw, essay, report) {
 
 		if (!line) {
 			flush();
+			continue;
+		}
+
+		// Cover-block lines the essay declares as front matter. Checked before
+		// anything else, so they cannot be promoted to headings on the way past.
+		if (dropSet.has(normaliseForMatch(line.replace(/^#{2,6}\s+/, '')))) {
+			flush();
+			droppedDeclared += 1;
+			continue;
+		}
+
+		// Already a heading, emitted from a Word style. Trust it.
+		if (/^#{2,6}\s/.test(line)) {
+			flush();
+			const label = line.replace(/^(#{2,6})\s+/, '');
+			const marker = /^#+/.exec(line)[0];
+			if (isTitleish(label, essay.title)) {
+				droppedTitleHeadings += 1;
+				continue;
+			}
+			out.push(`${marker} ${label.replace(/[:]$/, '')}`);
+			headings += 1;
 			continue;
 		}
 
@@ -369,12 +487,62 @@ function toMarkdown(raw, essay, report) {
 	flush();
 
 	if (droppedPageNumbers) report.push(`dropped ${droppedPageNumbers} page number line(s)`);
+	if (droppedDeclared) report.push(`dropped ${droppedDeclared} declared cover-block line(s)`);
 	if (droppedTitleHeadings) {
 		report.push(`dropped ${droppedTitleHeadings} heading(s) that restated the title`);
 	}
 	if (headings) report.push(`promoted ${headings} line(s) to headings`);
 	if (bullets) report.push(`recognised ${bullets} bullet(s)`);
 	if (overridden) report.push(`applied ${overridden} heading casing override(s)`);
+
+	/**
+	 * Headings the PDF put on the same visual line as the text that follows, so
+	 * that reflowing produced "Plotino en Roma En Roma, Plotino fue recibido…".
+	 * Declared per essay and split back out, requiring the next character to be
+	 * an uppercase letter so an ordinary sentence opening with the same words is
+	 * left alone.
+	 */
+	if (essay.splitHeadings?.length) {
+		const level = essay.splitLevel ?? 2;
+		const marker = '#'.repeat(level);
+		const split = [];
+
+		for (let block of out) {
+			// A heading that opened the line: "Plotino en Roma En Roma, ..."
+			const leading = essay.splitHeadings.find((h) =>
+				new RegExp(`^${escapeRegex(h)}\\s+\\p{Lu}`, 'u').test(block),
+			);
+			if (leading) {
+				split.push(`${marker} ${leading}`, block.slice(leading.length).trim());
+				headings += 1;
+				continue;
+			}
+
+			// A heading that got swept onto the end of the previous paragraph:
+			// "...su propio corazón". Lectura"
+			const trailing = essay.splitHeadings.find((h) =>
+				new RegExp(`[.!?”"]\\s+${escapeRegex(h)}\\s*$`, 'u').test(block),
+			);
+			if (trailing) {
+				block = block.slice(0, block.length - trailing.length).trim();
+				split.push(block, `${marker} ${trailing}`);
+				headings += 1;
+				continue;
+			}
+
+			// A heading standing alone as its own paragraph.
+			if (essay.splitHeadings.some((h) => normaliseForMatch(h) === normaliseForMatch(block))) {
+				split.push(`${marker} ${block.replace(/[:]$/, '')}`);
+				headings += 1;
+				continue;
+			}
+
+			split.push(block);
+		}
+
+		out.length = 0;
+		out.push(...split.filter(Boolean));
+	}
 
 	// Drop the byline block: the author's name, place and date sit at the top of
 	// every document and are front matter here.
@@ -436,6 +604,11 @@ function explicitLevel(line, essay) {
 		if (lines.some((l) => normaliseForMatch(l) === key)) return Number(level);
 	}
 	return 0;
+}
+
+/** Escapes a literal string for use inside a RegExp. */
+function escapeRegex(s) {
+	return s.replace(/[.*+?^${}()|[]\]/g, "\function normaliseForMatch");
 }
 
 function normaliseForMatch(s) {
@@ -517,6 +690,9 @@ async function planEssay(essay) {
 		...(essay.composer ? [`composer: ${yamlString(essay.composer)}`] : []),
 		...(essay.venue ? [`venue: ${yamlString(essay.venue)}`] : []),
 		...(essay.prize ? [`prize: ${yamlString(essay.prize)}`] : []),
+		...(essay.penName ? [`penName: ${yamlString(essay.penName)}`] : []),
+		...(essay.category ? [`category: ${yamlString(essay.category)}`] : []),
+		...(essay.subtitle ? [`subtitle: ${yamlString(essay.subtitle)}`] : []),
 		`sourceFile: ${yamlString(essay.file)}`,
 		'---',
 		'',

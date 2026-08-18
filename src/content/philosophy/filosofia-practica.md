@@ -5,6 +5,7 @@ date: 2019-01-27
 lang: es
 work: "filosofia-practica"
 venue: "Organización Internacional Nueva Acrópolis — Guatemala"
+prize: "Premiado"
 sourceFile: "FILOSOFÍA PRÁCTICA, EJERCICIOS DE AYER, HOY Y MAÑANA - David Elizondo.pdf"
 ---
 ## Introducción
@@ -29,11 +30,11 @@ Epicteto recomienda actuar directamente en el momento que se presenten los deseo
 
 Musonio Rufo escribió un tratado “Sobre la práctica”. Tras una introducción general frente a la necesidad de la práctica de la filosofía, recomienda el ejercicio físico (habituarse a los rigores de la intemperie, del hambre, de la sed), beneficioso también para el alma al dotarla de fuerza y templanza, además de aquellos otros ejercicios exclusivos de ella. Gracias a este doble ejercicio, uno se acostumbra a no temer aquello que la mayoría de los hombres considera infortunio: la pobreza, el sufrimiento, la muerte. Sin embargo, fue Filón de Alejandría el que dispuso dos textos con listados de ejercicios. Uno y otro no coinciden exactamente, aunque sí mencionan en su mayoría los mismos ejercicios. Estos son: “Legum Allegoriae” (Alegoría de las leyes) y “El heredero de los bienes divinos” (Quis rerum divinarum heres sit). En ambos, recopila explicativamente, prácticas platónicas, pitagóricas y estoicas. A estas prácticas nos dedicaremos en las siguientes líneas, junto con otras más puntuales de algunos filósofos como Sócrates y Platón.
 
-Atención
+### Atención
 
 La atención supone la actitud espiritual fundamental del estoico. Consiste en una continua vigilancia y presencia de ánimo, en una consciencia de uno mismo siempre alerta, en una constante tensión espiritual. Gracias a la atención el filósofo conoce plenamente cómo obra en cada instante. Gracias a la atención advertimos lo que depende y lo que no depende de nosotros. A este respecto, algunos consejos de manos de: “No debes apartarte de tus principios cuando duermes, ni al despertar, ni cuando comes, bebes o conversas con otros hombres”. Epícteto (IV, 12, 7). La idea de la tensión (tonos) aparece en especial en Epícteto (IV, 12, 1-21). Este concepto resulta fundamental en el estoicismo. La atención también puede ser vista como vigilancia, como concentración centrada en el momento presente: “Ante cualquier situación y de manera constante depende de ti regocijarte piadosamente por lo que sucede en ese momento concreto, conducirte ecuánimemente con cuantos tienes a tu alrededor y examinar con cierto rigor la representación presente, con tal de que tu pensamiento no admita lo que sea inadmisible.” (Marco Aurelio, Meditaciones, VII, 54). Las ventajas de la atención, entre otras son: facilita la vigilancia concentrándola sobre un breve instante, siempre dominable, siempre soportable; abre nuestra consciencia la la consciencia cósmica, obligándonos a descubrir el valor infinito en cada instante y aceptando cada momento de la existencia. Para desarrollar la atención es necesario tener los principios filosóficos que adoptemos siempre a mano (memorización), la imaginación, afectividad y meditación deben colaborar para permitirnos ponernos ante los ojos espirituales el momento que estamos viviendo. Es aquí en donde nos apoyaremos de otros ejercicios en este listado.
 
-Meditación y rememoración de lo beneficioso
+### Meditación y rememoración de lo beneficioso
 
 El ejercicio de la meditación facilita el estar preparado para el momento en que una circunstancia imprevista, quizá dramática, se presente (Pierre Hadot). Uno debe presentarse anticipadamente a los problemas propios de la existentica: pobreza, sufrimiento, muerto; hay que verlos de frente recordando que no son males, puesto que no dependen de nosotros. En la memoria rescataremos aquellas máximas contundentes que nos ayudarán, llegado el momento, a aceptar esos acontecimientos que forman parte del curso de la Naturaleza.
 
@@ -47,25 +48,29 @@ también recurriendo a la escritura.  Exigen entrenamiento, por lo que es rec
 
 poder hacerlo de forma diaria.  Es bueno también recordar y escribir un pequeño diario que recoja las
 
-experiencias y enseñanzas vividas cada día para poder controlar nuestros avances. Esto es vivir como un filósofo, consciente del sentido y del precio de su existencia. Como dice Delia Steinberg Guzmán: “El que sabe ir al corazón de todas las cosas, podrá ir a su propio corazón”. Lectura
+experiencias y enseñanzas vividas cada día para poder controlar nuestros avances. Esto es vivir como un filósofo, consciente del sentido y del precio de su existencia. Como dice Delia Steinberg Guzmán: “El que sabe ir al corazón de todas las cosas, podrá ir a su propio corazón”.
+
+### Lectura
 
 La lectura de sentencias de poetas y filósofos son las prácticas que ayudarán a que nuestra reflexión o meditación sea nutrida. También la lectura incluiría la explicación de los textos propiamente filosóficas, de obras redactadas por los maestros de las escuelas filosóficas.
 
-Estudio y examen en profundidad
+### Estudio y examen en profundidad
 
 Suponen la puesta en práctica de tales enseñanzas leídas y aprendidas de instructores.
 
-Dominio de uno mismo
+### Dominio de uno mismo
 
-Posiblemente una de los más difíciles por nuestra incomprensión de la ley vital acerca de lo que depende y lo que no depende de nosotros. Acerca de esto hay muchos escritos que pudieran ayudar. De Plutarco: Del control de la cólera, De la tranquilidad del alma, Del amor fraterno, Del amor a los niños, De las habladurías, De la curiosidad, Del amor a las riquezas, De la falsa humildad, De la envidia y el odio. Séneca, por su parte, también compondría obras del mismo género: De la cólera, De las buenas acciones, De la tranquilidad del alma, De la ociosidad. Cumplimiento de los deberes
+Posiblemente una de los más difíciles por nuestra incomprensión de la ley vital acerca de lo que depende y lo que no depende de nosotros. Acerca de esto hay muchos escritos que pudieran ayudar. De Plutarco: Del control de la cólera, De la tranquilidad del alma, Del amor fraterno, Del amor a los niños, De las habladurías, De la curiosidad, Del amor a las riquezas, De la falsa humildad, De la envidia y el odio. Séneca, por su parte, también compondría obras del mismo género: De la cólera, De las buenas acciones, De la tranquilidad del alma, De la ociosidad.
+
+### Cumplimiento de los deberes
 
 En el cumplimiento de los deberes, se recomienda comenzar a ejercitarse con las cosas más sencillas para implantar progresiva y sólidamente el hábito.
 
-Indiferencia ante las cosas indiferentes
+### Indiferencia ante las cosas indiferentes
 
 Esta expresión corresponde a los ejercicios de Marco Aurelio: “Vivir siempre en una perfecta felicidad: el alma puede encontrar vigor dentro de sí misma si demuestra indiferencia en relación con las cosas indiferentes”. También hace eco de la definición de la finalidad de la vida humana acuñada por Aristón. La indiferencia no se entiendo por “ausencia de interés”, sino por el contrario sentir idéntico afecto (sin establecer “diferencia” alguna) por cada uno de los instantes de la existencia.
 
-Aprender a dialogar
+### Aprender a dialogar
 
 La práctica de ejercicios se desarrolló probablemente en tradiciones que se remontan a tiempos inmemoriales, pero será Sócrates quien los sacará a la superficie de la consciencia occidentales, puesto que su figura fue, y sigue siendo, una llamada viviente al despertar de la consciencia moral. (Pierre Hadot, Ejercicios Espirituales, p34) Resulta destacable que tal llamada se diera a oír en forma de diálogo. En el diálogo “socrático” la verdadera cuestión no es “de qué se habla, sino “aquel que habla”. Cuando uno observa a Sócrates de cerca y comienza a dialogar con él, incluso en el caso que se haya comenzado primero por hablar de cualquier tema, al final es llevado por el hilo del discurso hacia múltiples direcciones, hasta el momento en que uno se ve obligado a rendir cuentas de sí mismo, tanto de la manera en que vive en la actualidad como de la forma en que condujo su existencia en el pasado. Llegado este punto, Sócrates no nos dejará irnos ates de haber sometido todo esto a la prueba de su autoridad.
 

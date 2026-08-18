@@ -1,0 +1,220 @@
+---
+title: "Auditing in LLBLGen Pro (Introduction)"
+summary: "In this first article I will expose some introductory information, some of this information is quoted directly from the LLBLGen Pro Documentation, so you can go there for more detail information."
+date: 2009-08-25
+tags:
+  - "articles"
+source: "http://www.llblgening.com/archive/2009/08/auditing-in-llblgen-pro-introduction/"
+sourceArchive: "https://web.archive.org/web/20100117180819/http://www.llblgening.com/archive/2009/08/auditing-in-llblgen-pro-introduction/"
+---
+## Since LLBLGen Pro added this great feature, I thought would be a really nice idea to post my own experiences about it. This is the first article of the series “Auditing in LLBLGen Pro”. Why series? well it’s a little long to post in a single article
+
+In this first article I will expose some introductory information, some of this information is quoted directly from the [LLBLGen Pro Documentation](http://llblgen.com/documentation/2.6/hh_start.htm), so you can go there for more detail information.
+
+These articles will use the LLBLGen Pro Auditing Example as explanation. You can download the source code at [LLBLGen Pro Site – Examples section (Auditing example)](http://llblgen.com/pages/examples.aspx). I will focus on the “Adapter example” that include a GUI project made in ASP.NET. Even though the SelfServicing example is pretty the same in concern to auditing functionality.
+
+**In this article:**
+
+- Background
+
+- Requirements
+
+- Installation
+
+- Code at a glance
+
+- Introduction to LLBLGen Pro Auditor classes
+
+- References
+
+**Keep reading the next related articles**
+
+- [Auditing to a text file](/tech/auditing-in-llblgen-pro-text-file/)
+
+- Auditing to Database -> comming soon
+
+- Auditing to Database (entity specific) -> comming soon
+
+---
+
+## Background
+
+### What is LLBLGen Pro?
+
+LLBLGen Pro, an O/R mapper and data-access tier generator for .NET, generates a complete data-access tier and business façade/support tier for you (in C# or VB.NET), using an existing database schema set. In seconds. The generated .NET code is compiler-ready and can, being compiled by the .NET C# or VB.NET compiler, be used immediately by other applications. LLBLGen Pro is much more, for more information [visit the LLBLGen Pro site](http://www.llblgen.com).
+
+### What is Auditing?
+
+There are two parts of auditing which are essential: Recording of changes and the actions causing the changes, and persisting the recorded data.
+ For auditing we consider something a change if the entity is altered in the database. So auditing, while tempting, isn’t meant to simply track changes to fields of entities in-memory, it’s meant to track changes to entities in the database. Though to be able to persist / log verbose auditing information, it’s necessary to track the field changes in-memory first, to know who changed what and when. LLBLGen Pro’s runtime framework will, when one of the auditable actions occurs, call into the audit logic and let the audit logic record the action and the relevant information passed in. From then on it’s up to the audit logic what to do with it: store it for persistence later on, or log it directly somewhere. When the transaction the entity participates in is committed, the auditor logic is asked for any entities it wants to persist as well inside that transaction. This mechanism is meant for audit logic to produce entities of their choice in which they’ll store the recorded data and which are then persisted in the same transaction as the audited entity.
+
+##
+
+## Requirements
+
+- .Net Framework 2.0 or higher
+
+- Visual Studio 2005 SP1 or higher (to compile the sources)
+
+- LLBLGen Pro v2.6 Runtime Libraries. These can be found on the demo zip. If you have LLBLGen Pro v2.6
+ installed you only need to re-check the references. If you want to try LLBLGen Pro you can
+ download it at [LLBLGen Pro site](http://www.llblgen.com).
+
+- SQL Server 2k or higher.
+
+---
+
+## Installation
+
+- Download the source code at [LLBGen Pro Site – Example section](http://llblgen.com/pages/examples.aspx) (click on Auditing example).
+
+- Install Northwind DB and Auditor tables. Run script “SQLScrips\instwnd_auditor_sample.sql” in your local SQLServer
+ If you already have a Northwind DB installed, only run the last section of the script named
+ _“START LLBLGENPRO AUDITOR EXAMPLE TABLE STRUCTURE AND DATA”_. That section creates AuditInfo and User tables and fill some useful information for audit. Also fill a couple of test users.
+
+- Open, compile and run solutions:
+
+  “Code\Adapter\LLBLGenPro – Auditing Example – Adapter.sln”
+
+- Adjust the connection string to meet your environment in the web.config file in the GUI project.
+
+---
+
+## Code at a glance
+
+These are the projects you will encounter at the solution:
+
+Image 1. Projects included in the solution (Adapter example).
+
+**SD.LLBLGen.Pro.Examples.Auditing**
+ The DBGeneric project and classes generated by LLBLGenPro.
+ This contains the entity model. Here are the objects we want to audit further.
+
+**SD.LLBLGen.Pro.Examples.AuditingDBSpecific**
+ The persistence logic project and classes generated by LLBLGenPro.
+ Here is the specific logic to go and back from the database. In this such project is generated SQLServer specific.
+
+**SD.LLBLGen.Pro.Examples.Auditing.Auditors.DatabaseAuditor**
+ This project contains the DatabaseAuditor class.
+ Here is our custom logic for auditing. This auditor will grab to the database (AuditInfo table) the user actions
+ performed to CustomerEntity objects.
+
+**SD.LLBLGen.Pro.Examples.Auditing.Auditors.DatabaseAuditorSpecific**
+ Other auditor class. This time we audit to specific
+ audit tables that allow us to reference the OrderEntity involved, this is useful if we want to reach such order form an
+ audit record later.
+
+**SD.LLBLGen.Pro.Examples.Auditing.Auditors.SimpleTextFileAuditor**
+ The project that contains the SimpleTextFileAuditor,
+ an auditor that logs the actions performed at EmployeeEntity objects to a text file.
+
+**SD.LLBLGen.Pro.Examples.Auditing.GUI**
+ The User interface to test the auditors. Though you can make other GUIs (ConsoleApp,
+ WinForms, etc) that use the auditors. This project contains the web.config file where we configure some audit options.
+
+**SD.LLBLGen.Pro.Examples.Auditing.SessionHelper**
+ This contains an util class that let us get/set the current logged
+ user information from/to session.
+
+---
+
+## Introduction to LLBLGen Pro Auditor Classes
+
+### Auditors
+
+To keep concerns separated, it’s often desirable to have the auditing logic placed in a separate class, even in a separate VS.NET project. To be able to do so in the LLBLGen Pro runtime framework, the Auditing functionality has been designed around the _Auditor_ classes, which implement a common interface, **IAuditor**.[1]
+
+Once we have our generated code by LLBLGen Pro, we can easly start writing our Auditing logic. We can do this either at a partial class or at a separated project.
+ This time we write the auditors in a separate project so will be easly to set/unset the auditor via Dependency Injection.[1]
+
+### Auditable actions
+
+To be able to have some kind of auditing, there has to be a way to record changes and the actions causing the changes so these can be persisted later on (to the database, to a logfile etc.) as audit data. This means LLBLGen Pro has to notify the audit data recorder logic (in short: recorder) that some change took place and which action caused that change, as well as who made that change.[1]
+
+To be able to make auditing as flexible as possible, the recorder is notified with as much changes as possible, so the developer can make the right decision what to record as audit information and what to ignore.[1]
+
+The following changes and actions are recognized to be useful auditing information.[1]>
+
+- **Setting a field value.** This action is audited if an entity field is set through an entity property or through
+ SetNewFieldValue, but also if an FK field is synced with a PK field during a recursive save action. Setting an entity field’s
+ CurrentValue property or calling an entity field’s ForcedCurrentValueWrite isn’t recorded.
+
+- **De-referencing a related entity.** An example of this action is when the OrderEntity instance X is no longer referencing
+ the CustomerEntity instance C. Another example is removing OrderEntity instance X from the Orders collection of CustomerEntity instance C.
+
+- **Referencing a related entity.** An example of this action is when the OrderEntity instance X is now referencing the
+ CustomerEntity instance C. Another example is adding OrderEntity instance X to the Orders collection of CustomerEntity instance c.
+
+- **Saving a new entity.**
+
+- **Updating an existing entity.** This action also means updating an entity or set of entities directly in the database
+ using a batch statement (entitycollection.UpdateMulti() (SelfServicing) or DataAccessAdapter.UpdateEntitiesDirectly() (Adapter)).
+
+- **Deleting an entity.** This action also means deleting an entity or set of entities directly from the database using
+ a batch statement (entitycollection.DeleteMulti() (SelfServicing) or DataAccessAdapter.DeleteEntitiesDirectly() (Adapter)).
+
+- **Getting a field value.** This action is audited if the value of an entity field is read through the entity property or when
+ entity.GetCurrentFieldValue() is called. Getting a field’s value through the EntityField(2).CurrentValue property isn’t recorded.
+
+- **Loading an entity.** This action is audited both when an entity is loaded as an individual entity or when it is loaded
+ inside a collection.
+
+Action 7 and 8 are special operations, as there’s nothing really changed. These operations are auditable because the complete set of actions is now useful for journalling. Action 7 and 8 are not necessarily useful to be used to produce entities with audit data to persist into the database, because it doesn’t necessarily have to be the case that the audited entity in question is saved/deleted later on, so the audit information is in that situation not persisted to the database as well, as the audit logic, the recorder, isn’t asked for entities with audit data to persist in the same transaction as there is no transaction in progress. To be able to have reliable journalling, the information has to be logged by an external service. Also take into acount for action 7, it might be a lot of audit information is logged, as entity properties can be read a lot of times during the lifetime of an entity.[1]
+
+### Setting an entity’s Auditor
+
+If you’ve decided to use Auditor classes to place your auditing logic in, you’ll be confronted with the question: how to set the right Auditor in every entity object? You’ve three options:[1]
+
+- Setting the `AuditorToUse` property of an entity object manually. This is straight forward, but error prone: if you
+ forget to set an auditor, auditing isn’t performed. Also, entities fetched in bulk into a collection are created using the factories
+ so you have to alter these as well. You could opt for overriding `OnInitializing` in an entity to add the creation of
+ the Auditor class.
+
+- By overriding the Entity method `CreateAuditor`. This is a `protected virtual` (`Protected Overridable`) method which by
+ default returns `null` / `Nothing`. You can override this method in a partial class or user code region of the Entity class to create the
+ Auditor to use for the entity. The LLBLGen Pro runtime framework will take care of calling the method. One way to create an override
+ for most entities is by using a template. Please see the LLBLGen Pro SDK documentation for details about how to write templates to generate
+ additional code into entities and in separate files. Also please see Adding Adding your own code to the generated classes for details.
+
+- By using Dependency Injection. Using the Dependency Injection mechanism build into LLBLGen Pro, the
+ defined Auditors are injected into the entity objects for you. This option is the least amount of work.
+
+### Auto-persisting recorded data
+
+One of the main issues with auditing is how to store the recorded audit data in the same database as the entities audited in such a way that it’s transparent, automatic and thus always works? LLBLGen Pro’s Auditing functionality therefore asks every Auditor object inside all entities participating in the current Transaction if they’ve any entities to persist additionally to the entities already in the transaction. This is the case if the Auditor object wants to store the recorded data in audit entities, designed for that purpose. You’re free to decide the layout and type of the audit entities you want to use or if you want to use audit entities at all: for example if you decide to log the audit data using a logging service, you don’t need to persist the data also into the database.[1]
+
+When the transaction in progress is about to be committed, the LLBLGen Pro runtime framework will call the method `GetAuditEntitiesToSave` on all Auditor objects in the entities participating in the transaction. If your Auditor classes have any entities to persist inside the transaction, they should return them when that method is called. Use an override of the AuditorBase class’ version to do so. Do not remove the entities / audit data from the Auditor object after the call to this method, wait for the call to TransactionCommitted. This is because a transaction can fail and be rolled back, which would make your Auditor become empty in a second attempt to persist the entities.[1]
+
+Be sure that audit entities don’t reference normal entities which are new or changed. This is because the save logic will do a graph sort and the audit entities would make entities which might have been deleted already to be inserted again.[1]
+
+---
+
+## References
+
+[1] _Setting up and using Auditing_
+
+[2] _Adding your own code to the generated classes_
+
+[3] _Dependency Injection and Inversion of Control (Concepts)_
+
+[4] _Setting up and using Dependency Injection (Generated code)_
+
+**Keep reading the related articles**
+
+- [Auditing to a text file](/tech/auditing-in-llblgen-pro-text-file/)
+
+- Auditing to Database -> comming soon
+
+- Auditing to Database (entity specific) -> comming soon
+
+You can download the source code at [LLBLGen Pro Site – Examples section (Auditing example)](http://llblgen.com/pages/examples.aspx)
+
+
+
+Tags: [adapter](https://web.archive.org/web/2012/http://www.llblgening.com/archive/tag/adapter/), [auditing](https://web.archive.org/web/2012/http://www.llblgening.com/archive/tag/auditing/), [DI](https://web.archive.org/web/2012/http://www.llblgening.com/archive/tag/dependency-injection/)
+
+
+				<p class="
+
+> 1 of this post's 1 figures were not preserved by the Internet Archive and are missing here.
+

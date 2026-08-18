@@ -4,8 +4,11 @@ summary: "En su primer sermón, Buda enseño las Cuatro Nobles Verdades: la verd
 date: 2018-01-28
 lang: es
 work: "budismo-aplicado"
+prize: "Premiado"
 sourceFile: "Monografia_DavidElizondo_BudismoAplicado.docx"
 ---
+#### David Elizondo
+
 ## Introducción
 
 En su primer sermón, Buda enseño las Cuatro Nobles Verdades: la verdad acerca del dolor, la verdad acerca del origen o la causa del dolor, la verdad acerca de la cesación del dolor, y la verdad acerca del camino que lleva a la cesación (el noble óctuple sendero). Los presentó en dos grupos: la causa y resultado del Samsara, y la causa y resultado del nirvana. Samsara se refiere a un estado de existencia caracterizado por la preeminencia del dolor. Nirvana se refiere al estado de liberación del dolor y también a la cesación de sus causas. [7]

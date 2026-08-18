@@ -39,6 +39,6 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        # Pinned to v4 as specified. Astro's docs now recommend v5; v4 still
-        # works, and moving up is a one-line change if you want it.
-        uses: actions/deploy-pages@v4
+        # v5, not v4. v4 targets Node 20, which the runners now force onto
+        # Node 24 while printing a deprecation warning on every run.
+        uses: actions/deploy-pages@v5
