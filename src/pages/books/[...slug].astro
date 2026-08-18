@@ -1,0 +1,233 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry, render } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Base from '../../layouts/Base.astro';
+import { getPublished } from '../../lib/content';
+
+export async function getStaticPaths() {
+	const books = await getPublished('books');
+	return books.map((book) => ({ params: { slug: book.id }, props: book }));
+}
+
+const book = Astro.props as CollectionEntry<'books'>;
+const { data } = book;
+// Empty for every entry today — nobody has written a note yet — so the body is
+// rendered only when there is something in it.
+const { Content } = await render(book);
+
+const SHELF_LABEL = {
+	read: 'Read',
+	'currently-reading': 'Reading now',
+	'to-read': 'On the reading list',
+} as const;
+
+const year =
+	data.published === undefined
+		? null
+		: data.published < 0
+			? `${Math.abs(data.published)} BC`
+			: String(data.published);
+---
+
+<Base
+	title={`${data.title} — ${data.bookAuthor}`}
+	description={data.summary}
+	image={data.cover}
+	type="article"
+>
+	<article class="book">
+		<p class="back"><a href="/books/">← Books</a></p>
+
+		<div class="head">
+			{
+				data.cover && (
+					<Image
+						class="cover"
+						src={data.cover}
+						alt={data.coverAlt ?? `Cover of ${data.title}`}
+						widths={[200, 400]}
+						sizes="(min-width: 40rem) 12rem, 8rem"
+					/>
+				)
+			}
+
+			<div class="facts">
+				<h1>{data.title}</h1>
+				<p class="author">{data.bookAuthor}</p>
+
+				<dl>
+					<dt>Shelf</dt>
+					<dd>
+						{SHELF_LABEL[data.shelf]}
+						{data.shelf === 'read' && data.date && (
+							<>
+								{' · '}
+								<FormattedDate date={data.date} monthOnly />
+							</>
+						)}
+					</dd>
+
+					{year && <dt>Published</dt>}
+					{year && <dd>{year}</dd>}
+
+					{data.pages !== undefined && <dt>Pages</dt>}
+					{data.pages !== undefined && <dd>{data.pages}</dd>}
+
+					{data.rating !== undefined && <dt>Rating</dt>}
+					{data.rating !== undefined && (
+						<dd>
+							<span aria-hidden="true">{'★'.repeat(data.rating)}{'☆'.repeat(5 - data.rating)}</span>
+							<span class="visually-hidden">{data.rating} out of 5</span>
+						</dd>
+					)}
+
+					{data.isbn && <dt>ISBN</dt>}
+					{data.isbn && <dd>{data.isbn}</dd>}
+				</dl>
+
+				{
+					data.goodreads && (
+						<p class="out">
+							<a href={data.goodreads} rel="nofollow noopener">
+								On Goodreads
+							</a>
+						</p>
+					)
+				}
+			</div>
+		</div>
+
+		{
+			data.synopsis && (
+				<section class="synopsis" aria-labelledby="synopsis-heading">
+					<h2 id="synopsis-heading">Synopsis</h2>
+					{/* Publisher copy, not David's writing, so it is quoted and credited. */}
+					<blockquote lang={data.synopsisLang}>
+						{data.synopsis.split('\n').map((para) => (
+							<p>{para}</p>
+						))}
+					</blockquote>
+					<p class="credit">Synopsis via {data.synopsisSource ?? 'the publisher'}.</p>
+				</section>
+			)
+		}
+
+		<div class="prose notes">
+			<Content />
+		</div>
+	</article>
+</Base>
+
+<style>
+	.book {
+		max-width: var(--measure);
+		margin-inline: auto;
+	}
+
+	.back {
+		font-size: var(--text-sm);
+		margin-block-end: var(--space-lg);
+	}
+
+	.back a {
+		color: var(--graphite);
+		text-decoration: none;
+	}
+
+	.back a:hover {
+		color: var(--carbon);
+	}
+
+	.head {
+		display: grid;
+		grid-template-columns: 8rem 1fr;
+		gap: var(--space-lg);
+		align-items: start;
+	}
+
+	.cover {
+		width: 100%;
+		border: 1px solid var(--rule);
+		border-radius: var(--radius);
+		background: var(--sheet-raised);
+	}
+
+	h1 {
+		font-size: var(--text-2xl);
+		text-wrap: balance;
+	}
+
+	.author {
+		margin-block-start: var(--space-xs);
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		color: var(--graphite);
+	}
+
+	dl {
+		display: grid;
+		grid-template-columns: 5.5rem 1fr;
+		gap: var(--space-2xs) var(--space-md);
+		margin-block-start: var(--space-md);
+		padding-block-start: var(--space-md);
+		border-block-start: 1px solid var(--rule);
+		font-size: var(--text-sm);
+	}
+
+	dt {
+		font-family: var(--font-display);
+		font-size: var(--text-xs);
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--graphite);
+		padding-block-start: 0.15em;
+	}
+
+	dd {
+		margin: 0;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.out {
+		margin-block-start: var(--space-md);
+		font-size: var(--text-sm);
+	}
+
+	.synopsis {
+		margin-block-start: var(--space-xl);
+	}
+
+	.synopsis h2 {
+		font-size: var(--text-lg);
+	}
+
+	.synopsis blockquote {
+		margin-block-start: var(--space-sm);
+		padding-inline-start: var(--space-md);
+		border-inline-start: 2px solid var(--rule);
+		color: var(--graphite);
+	}
+
+	.synopsis blockquote p + p {
+		margin-block-start: var(--space-sm);
+	}
+
+	.credit {
+		margin-block-start: var(--space-xs);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+	}
+
+	.notes {
+		margin-block-start: var(--space-xl);
+	}
+
+	@media (max-width: 32rem) {
+		.head {
+			grid-template-columns: 6rem 1fr;
+			gap: var(--space-md);
+		}
+	}
+</style>

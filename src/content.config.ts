@@ -182,6 +182,11 @@ const books = defineCollection({
 			 */
 			synopsis: z.string().min(1).optional(),
 			synopsisSource: z.string().min(1).optional(),
+			/**
+			 * Language of the synopsis. Spanish editions carry Spanish blurbs, and a
+			 * screen reader needs to know before it starts reading one aloud.
+			 */
+			synopsisLang: z.enum(['es','en']).optional(),
 			/** Canonical Goodreads page for the edition. */
 			goodreads: z.url().optional(),
 		}),

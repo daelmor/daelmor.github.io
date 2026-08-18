@@ -42,3 +42,13 @@ export type WritingSection = (typeof WRITING_SECTIONS)[number];
 export const SECTION_LABELS: Record<SectionSlug, string> = Object.fromEntries(
 	SECTIONS.map((s) => [s.slug, s.label]),
 ) as Record<SectionSlug, string>;
+
+/**
+ * Sections served by the generic `[section]` routes.
+ *
+ * `books` is excluded: 78 entries with cover art need a grid grouped by shelf
+ * and a detail page that renders an attributed synopsis, so it has its own
+ * routes under src/pages/books/. Leaving it here as well would mean two route
+ * files racing to build the same URL.
+ */
+export const GENERIC_SECTIONS = WRITING_SECTIONS.filter((s) => s !== 'books');

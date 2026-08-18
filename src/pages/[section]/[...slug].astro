@@ -1,14 +1,14 @@
 ---
 import { type CollectionEntry, render } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
+import { GENERIC_SECTIONS, SECTION_LABELS, type WritingSection } from '../../consts';
 import Base from '../../layouts/Base.astro';
 import { getPublished, getTranslations } from '../../lib/content';
 
 /** Generates nothing today; every one of these four collections is empty. */
 export async function getStaticPaths() {
 	const paths = [];
-	for (const section of WRITING_SECTIONS) {
+	for (const section of GENERIC_SECTIONS) {
 		for (const entry of await getPublished(section)) {
 			paths.push({ params: { section, slug: entry.id }, props: { section, entry } });
 		}

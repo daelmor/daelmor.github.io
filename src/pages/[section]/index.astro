@@ -1,6 +1,6 @@
 ---
 import FormattedDate from '../../components/FormattedDate.astro';
-import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
+import { GENERIC_SECTIONS, SECTION_LABELS, type WritingSection } from '../../consts';
 import Base from '../../layouts/Base.astro';
 import { getSectionEntries } from '../../lib/content';
 
@@ -9,7 +9,7 @@ import { getSectionEntries } from '../../lib/content';
  * carries hero images, a stack and an engagement span.
  */
 export async function getStaticPaths() {
-	return WRITING_SECTIONS.map((section) => ({ params: { section }, props: { section } }));
+	return GENERIC_SECTIONS.map((section) => ({ params: { section }, props: { section } }));
 }
 
 interface Props {

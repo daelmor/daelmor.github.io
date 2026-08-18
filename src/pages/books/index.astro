@@ -1,0 +1,215 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { entryPath, getPublished } from '../../lib/content';
+
+/**
+ * The books index, which needs its own route rather than the generic section
+ * listing: 78 entries with covers want a grid, and they group by shelf rather
+ * than running in one date-sorted column.
+ */
+const books = await getPublished('books');
+
+const SHELVES = [
+	{
+		key: 'currently-reading' as const,
+		label: 'Reading now',
+		note: 'Open at the moment, or open often.',
+	},
+	{ key: 'read' as const, label: 'Read', note: null },
+	{ key: 'to-read' as const, label: 'Next', note: null },
+];
+
+const grouped = SHELVES.map((shelf) => ({
+	...shelf,
+	items: books.filter((b) => b.data.shelf === shelf.key),
+})).filter((group) => group.items.length > 0);
+
+const total = books.length;
+---
+
+<Base
+	title="Books"
+	description={`${total} books across three shelves, with covers and publisher synopses.`}
+>
+	<h1>Books</h1>
+
+	{
+		total === 0 ? (
+			<p class="empty">Nothing here yet.</p>
+		) : (
+			<>
+				<p class="lede">
+					{total} books, kept in step with{' '}
+					<a href="https://www.goodreads.com/user/show/35915255" rel="me noopener">
+						my Goodreads shelves
+					</a>
+					.
+				</p>
+
+				{grouped.map((group) => (
+					<section class="shelf" aria-labelledby={`shelf-${group.key}`}>
+						<h2 id={`shelf-${group.key}`}>
+							{group.label}
+							<span class="count">{group.items.length}</span>
+						</h2>
+						{group.note && <p class="shelf-note">{group.note}</p>}
+
+						<ul class="grid">
+							{group.items.map(({ id, data }) => (
+								<li>
+									<a class="book" href={entryPath('books', id)}>
+										{data.cover ? (
+											<Image
+												class="cover"
+												src={data.cover}
+												alt={data.coverAlt ?? `Cover of ${data.title}`}
+												widths={[120, 240]}
+												sizes="120px"
+											/>
+										) : (
+											<span class="cover cover-missing" aria-hidden="true" />
+										)}
+										<span class="text">
+											<span class="book-title">{data.title}</span>
+											<span class="book-author">{data.bookAuthor}</span>
+											<span class="book-meta">
+												{data.published !== undefined && (
+													<span>
+														{data.published < 0
+															? `${Math.abs(data.published)} BC`
+															: data.published}
+													</span>
+												)}
+												{data.rating !== undefined && (
+													<span class="rating" title={`${data.rating} out of 5`}>
+														<span aria-hidden="true">{'★'.repeat(data.rating)}</span>
+														<span class="visually-hidden">
+															rated {data.rating} out of 5
+														</span>
+													</span>
+												)}
+											</span>
+										</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</section>
+				))}
+			</>
+		)
+	}
+</Base>
+
+<style>
+	.empty,
+	.lede {
+		margin-block-start: var(--space-md);
+		color: var(--graphite);
+	}
+
+	.lede {
+		max-width: var(--measure);
+	}
+
+	.shelf {
+		margin-block-start: var(--space-2xl);
+	}
+
+	.shelf h2 {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-xs);
+		padding-block-end: var(--space-xs);
+		border-block-end: 1px solid var(--rule);
+	}
+
+	.count {
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: 400;
+		color: var(--graphite);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.shelf-note {
+		margin-block-start: var(--space-xs);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.grid {
+		list-style: none;
+		margin-block-start: var(--space-lg);
+		padding: 0;
+		display: grid;
+		gap: var(--space-lg) var(--space-md);
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+	}
+
+	.book {
+		display: grid;
+		grid-template-columns: 4.5rem 1fr;
+		gap: var(--space-sm);
+		align-items: start;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	/*
+	 * Covers vary wildly in aspect ratio, so a fixed box with object-fit keeps
+	 * the grid aligned. The 2:3 ratio is the commonest trade paperback shape.
+	 */
+	.cover {
+		width: 4.5rem;
+		aspect-ratio: 2 / 3;
+		object-fit: cover;
+		border: 1px solid var(--rule);
+		border-radius: var(--radius);
+		background: var(--sheet-raised);
+	}
+
+	.cover-missing {
+		display: block;
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		min-width: 0;
+	}
+
+	.book-title {
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: var(--text-base);
+		line-height: 1.25;
+		letter-spacing: -0.01em;
+		text-wrap: pretty;
+	}
+
+	.book:hover .book-title {
+		color: var(--carbon);
+	}
+
+	.book-author {
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.book-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem var(--space-xs);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.rating {
+		letter-spacing: 0.05em;
+		color: var(--ink);
+	}
+</style>
