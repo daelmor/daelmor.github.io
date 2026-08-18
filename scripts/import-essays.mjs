@@ -61,6 +61,15 @@ const ESSAYS = [
 		// The document opens with a Word field-code table of contents that
 		// extraction renders as "TOC \o 1-3 \h \z \u Introducción PAGEREF ..."
 		dropTableOfContents: true,
+		// Taken from that same table of contents, which lists the sections and
+		// their nesting. Using the document's own outline rather than guessing.
+		headings: {
+			2: [
+				'El interés de Beethoven en la India',
+				'Descifrando la Resonancia de Beethoven en la India',
+			],
+			3: ['Lucha personal y búsqueda del Dharma', 'Influencia en su música'],
+		},
 	},
 	{
 		work: 'blavatsky-y-la-musica',
@@ -100,6 +109,29 @@ const ESSAYS = [
 		title: 'Budismo aplicado para entender la vida',
 		slug: 'budismo-aplicado',
 		date: '2018-01-28',
+		/**
+		 * This essay is built on a grid — three domains of suffering, each read
+		 * through the four noble truths, each truth with its focusing questions
+		 * and a reflection. None of that structure survives extraction, because
+		 * Word marked it with styling rather than numbering, so the levels are
+		 * declared here.
+		 */
+		headings: {
+			2: [
+				'Antes de empezar',
+				'Medicina',
+				'El miedo a la soledad, y otros dolores emocionales',
+				'Problemas financieros',
+			],
+			3: [
+				'Consejos para encontrar la causa del dolor',
+				'La existencia del dolor',
+				'La causa del dolor',
+				'La cesación del dolor',
+				'El camino del óctuple sendero',
+			],
+			4: ['Preguntas de enfoque', 'Reflexión'],
+		},
 	},
 	{
 		work: 'plotino-y-la-politica',
@@ -278,6 +310,18 @@ function toMarkdown(raw, essay, report) {
 			continue;
 		}
 
+		// Headings the document marks only by being short and standalone. These
+		// carry no styling that survives extraction, so they are listed per essay
+		// in `headings` rather than guessed at. Without them, an essay built on a
+		// repeating structure reads as one undifferentiated wall of paragraphs.
+		const explicit = explicitLevel(line, essay);
+		if (explicit) {
+			flush();
+			out.push(`${'#'.repeat(explicit)} ${line.replace(/[:]$/, '')}`);
+			headings += 1;
+			continue;
+		}
+
 		// Section headings: a known word, or a short all-caps line.
 		const isKnown = HEADING_WORDS.includes(line.replace(/[.:]$/, ''));
 		const isShoutedShort =
@@ -377,6 +421,30 @@ function sentenceCase(label) {
 	const lower = label.toLowerCase();
 	// Capitalise the first actual letter, skipping any leading ¿ or ¡.
 	return lower.replace(/\p{L}/u, (c) => c.toUpperCase());
+}
+
+/**
+ * The heading level for a line an essay declares explicitly, or 0.
+ *
+ * Compared without accents or case so a stray diacritic in the source does not
+ * cause a heading to be missed silently.
+ */
+function explicitLevel(line, essay) {
+	if (!essay.headings) return 0;
+	const key = normaliseForMatch(line);
+	for (const [level, lines] of Object.entries(essay.headings)) {
+		if (lines.some((l) => normaliseForMatch(l) === key)) return Number(level);
+	}
+	return 0;
+}
+
+function normaliseForMatch(s) {
+	return s
+		.normalize('NFD')
+		.replace(/[̀-ͯ]/g, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, ' ')
+		.trim();
 }
 
 /** Loose match so "BLAVATSKY Y LA MÚSICA" matches "Blavatsky y la música". */

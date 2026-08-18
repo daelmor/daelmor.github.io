@@ -19,7 +19,7 @@ La investigación se adentra en cómo los ideales de ascetismo, la noción de un
 
 El documento también considera el contexto cultural y literario de la época, la disponibilidad de textos sobre la India en Europa, y cómo la crisis personal de Beethoven y su búsqueda de un ethos personal están intrínsecamente relacionadas con sus reflexiones sobre la espiritualidad y ética hindú.
 
-El interés de Beethoven en la India
+## El interés de Beethoven en la India
 
 Para abordar el interés de Beethoven por la India y las evidencias que respaldan dicho interés, debemos dirigir nuestra atención hacia un período específico de su vida, comprendido entre 1812 y 1818. Durante estos años, Beethoven mantuvo un registro personal, conocido como Tagebuch o Diario. Sin embargo, este no era un diario en el sentido convencional, lleno de entradas diarias meticulosamente fechadas; en su lugar, se trataba de una compilación de reflexiones, muchas de las cuales eran extractos de lecturas que el compositor exploraba en ese momento, salpicadas con sus propios pensamientos y comentarios. Este registro podría describirse más acertadamente como una colección de meditaciones espirituales que como un diario tradicional.
 
@@ -39,7 +39,7 @@ El camino hacia este entendimiento es complejo y multifacético. Comienza con la
 
 La interpretación más convincente de las anotaciones de Beethoven en su Diario se logra considerando dos factores principales: las ansiedades sociales que motivaron el interés de los alemanes educados por la India y la crisis personal de Beethoven. Los alemanes de la época accedían al conocimiento sobre la India principalmente a través de fuentes británicas, pero interpretadas a la luz de sus propias experiencias sociales y políticas. En cuanto a Beethoven, los textos indios le sirvieron a Beethoven como una guía espiritual, ofreciéndole consejos ascéticos y heroicos para navegar los dilemas morales que enfrentaba durante sus años de crisis.
 
-Descifrando la Resonancia de Beethoven en la India
+## Descifrando la Resonancia de Beethoven en la India
 
 El Diario de Beethoven, conocido como Tagebuch, no solo es famoso entre quienes estudian su vida y música, sino que también fue accesible para quienes escribieron sobre él por primera vez. Este diario ha sido clave para entender a Beethoven más a fondo. Maynard Solomon fue el primero en publicarlo, de manera formal, añadiendo comentarios que ayudan a su mejor comprensión. Después, Sieghard Brandenburg tomó la batuta y ofreció una versión aún más completa que la de Solomon, incluyendo imágenes del diario original. Gracias al trabajo de Solomon y Brandenburg, podemos sentir más cerca la época en la que Beethoven vivió, a través de las palabras directas del compositor y el análisis detallado de estos expertos.
 
@@ -47,7 +47,7 @@ Dentro de la literatura académica sobre el Diario, en los últimos años los mu
 
 Más allá de los comentarios aislados de Solomon, Bernhard Appel ha escrito de manera específica sobre Beethoven y la India. Hizo el espectacular descubrimiento de que todas las referencias de Beethoven se remontan a un único estudio del pasado y el presente de la India. Esta fuente apareció en una serie más amplia, “Taschenbuch der Reisen oder unterhaltende Darstellung der Entdeckungen des 18. Jahrhunderts, de Eberhard August Wilhelm Zimmermann, en Rücksicht der Länder-, Menschen- und Productenkunde, für jede Klasse von Lesern” (Libro de bolsillo de viajes o boceto entretenido del siglo XVIII - Descubrimientos del siglo, en materia de geografía, población y economía, para todas las clases de lectores). Casi todos los extractos de Beethoven provienen del segundo volumen de la India, que está fechado en 1813.
 
-Lucha personal y búsqueda del Dharma
+### Lucha personal y búsqueda del Dharma
 
 Las siete entradas del Diario que tratan de la India datan de finales de 1815 y 1816 (Solomon, 1977). Para interpretarlos, podemos comenzar con una visión general de sus temas. Tres describen prácticas ascéticas brahmanes (por ejemplo, un largo período de silencio para los noviciados que ingresan al sacerdocio). Beethoven también incluye una descripción de la Creación; dos párrafos que describen respectivamente la majestad y la inmaterialidad de Dios; uno sobre purificación espiritual; uno sobre la reacción de un sacerdote católico ante un lingam o escultura de piedra fálica; y otro sobre la poliandria en la actual Kerala. Extraemos un fragmento de esta anotación:
 
@@ -115,7 +115,7 @@ En resumen, para Beethoven, la música era la canalización de lo divino hacia l
 
 “Cuando abro los ojos, suspiro, pues todo lo que veo es contrario a mi culto, me veo forzado a despreciar a este mundo incapaz de comprender que la música es una revelación superior a toda sapiencia y toda filosofía. Sí, como un vino generoso, la música da la inspiración, y yo soy el Baco que vendimia el vino con que la humanidad se embriaga. Una vez en ayunas, no hay en ella más que una mezcla indigesta de ideas confusas. No tengo amigos, mi vida debe transcurrir solitaria, pero sé que Dios está más cerca de mí en mi arte que de los demás. Marcho sin temor con él, pues siempre le he reconocido y comprendido. En cuanto a mi música, no siento ninguna inquietud por ella, nada malo puede sucederle. El que la ha comprendido una vez debe sentirse libre de todas las miserias en que los demás se debaten.”
 
-Influencia en su música
+### Influencia en su música
 
 Es posible que la función de la música de la etapa más profunda y reflexiva de Beethoven sea comunicar estados espirituales valiosos, y estos estados dan testimonio de la profundidad de la naturaleza del artista y de la calidad de su experiencia de vida. Por lo general, estos estados no pueden correlacionarse con situaciones específicas y, por esta razón, no se puede dar ninguna interpretación concreta para ellos. Son frutos de innumerables experiencias del artista, y entran en la textura misma de su ser espiritual.
 

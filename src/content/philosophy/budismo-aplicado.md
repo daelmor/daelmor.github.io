@@ -18,9 +18,9 @@ El término “aplicado” es utilizado normalmente en la ciencia, pero lo utili
 
 Es mi objetivo, es este trabajo, que logremos identificarnos con nosotros mismos en el ejercicio de reflexión, a través de las enseñanzas del Buda. Cito unas palabras
 
-Antes de empezar
+## Antes de empezar
 
-Consejos para encontrar la causa del dolor
+### Consejos para encontrar la causa del dolor
 
 “Es fundamental entender que lo que nos pasa tiene una razón, y que el destino, la
 
@@ -36,15 +36,15 @@ Debemos hacer un trabajo profundo para encontrar lo más cercano a una causa pri
 
 Somos dueños de nuestro destino, y, como decía el Buda: “las circunstancias en las que nos encontramos hoy son el resultado de lo que NOSOTROS hemos pensado”.
 
-Medicina
+## Medicina
 
-La existencia del dolor
+### La existencia del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Cuál es la enfermedad?, ¿Cuál es el problema aquí?, ¿Cuál es el dolor?
 
-Reflexión
+#### Reflexión
 
 Partimos de la noción de que todo en este mundo es dolor, que el dolor existe y por lo tanto es un parte de un proceso “normal”. La enfermedad, por lo tanto, es una manifestación de esa dinámica universal. Citando a Dethlefsen, en “La enfermedad como camino”:
 
@@ -52,47 +52,47 @@ Partimos de la noción de que todo en este mundo es dolor, que el dolor existe y
 
 “... la enfermedad no tiene más que un fin: ayudarnos a subsanar nuestras <<faltas>> y hacernos sanos.”
 
-La causa del dolor
+### La causa del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué lo causó?, ¿Se puede curar?
 
-Reflexión
+#### Reflexión
 
 La búsqueda de la causa de una enfermedad, nos debería llevar, tras repeticiones cada vez más profundas, al terreno psíquico, donde deberíamos encontrar el concepto o idea que inició todo. “El cuerpo nunca está enfermo ni sano, ya que en él solo se manifiestan las informaciones de la mente. El cuerpo no hace nada por sí mismo… lo que ocurre en el el cuerpo de un ser viviente es expresión de una información o concreción de la imagen correspondiente (imagen en grieGo es eidon y se refiere también al concepto de <<idea>>).” [2].
 
-La cesación del dolor
+### La cesación del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué es la salud? ¿Qué es lo que se trata de lograr?
 
-Reflexión
+#### Reflexión
 
 Hay que reflexionar en el objetivo que se desea lograr. Seguramente un enfermo desea alcanzar la salud para cesar el dolor. “Para la compresión de la enfermedad y la curación es importante entender qué significa realmente curación. Si perdemos de vista que curación significa siempre acercamiento a la salud cifrada en la unidad, buscaremos el objetivo de la curación dentro de la polaridad, y el fracaso es seguro”. Así pues, la curación, la salud, es una búsqueda de armonía y equilibrio, si bien materializada en el plano etero-físico-pránico, lograda a través de armonía y equilibrio en el plano psíquico (emocional-mental).
 
 La manera de librarse de un dolor, conocida su causa, es el desapego. Si entendemos el elemento causante del desequilibrio psíquico que nos llevó a un estado de desarmonía física, debemos desapegarnos al deseo de ese elemento.
 
-El camino del óctuple sendero
+### El camino del óctuple sendero
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué palabras, pensamientos, actitudes y acciones que me llevaron a este estado debo cambiar para lograr el equilibrio y armonía en mi mente y cuerpo?
 
-Reflexión
+#### Reflexión
 
 “La cuarta noble verdad proporciona un esquema terapéutico, el Óctuple Sendero, para aliviar el sufrimiento y alcanzar un estado de salud ideal. El Octuple Sendero comprende: palabra recta, acción recta, medios de subsistencia rectos, esfuerzo recto, atención recta, concentración recta, visión recta y pensamiento recto. Estas ocho prácticas tienden a animar y perfeccionar los tres fundamentos de la formación y de la doctrina budista y precisamente: 1) conducta ética, 2) disciplina mental y 3) sabiduría”. [3]
 
-El miedo a la soledad, y otros dolores emocionales
+## El miedo a la soledad, y otros dolores emocionales
 
-La existencia del dolor
+### La existencia del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué es lo que siento? ¿Cómo describir mis sentimientos en este momento?
 
-Reflexión
+#### Reflexión
 
 “La depresión significa opresión, encogimiento o abatimiento. Describe un trastorno del estado de ánimo, transitorio o permanente, caracterizado por sentimientos de abatimiento, infelicidad y culpabilidad, además de provocar una incapacidad total o parcial para disfrutar de las cosas y de los acontecimientos de la vida cotidiana (anhedonia). Los trastornos depresivos pueden estar, en mayor o menor grado, acompañados de ansiedad.” [4]. Debemos reflexionar para poder describir y ponerle nombre a ese dolor:
 
@@ -104,13 +104,13 @@ Si observamos cómo se manifiesta el miedo a la soledad constataremos que está 
 
 El final de la parábola es evidente: el grano de mostaza, ese grano tan especial, jamás aparecerá, y el dolor de la madre se verá mitigado, en parte, al comprobar cuántos y cuán grandes son también los sufrimientos de todos los demás seres humanos. Pero el hecho de que todos los hombres sufran no quita ni explica la realidad del sufrimiento. Y otra vez nos preguntamos, ¿por qué?” (Delia Steingberg Guzmán) [8]
 
-La causa del dolor
+### La causa del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Porqué me siento así?, ¿Qué lo originó?, ¿Qué pasa si realmente alguna vez nos quedamos sin la persona querida, sin hijos, sin amigos, sin apoyo y sin comprensión? ¿Significa esto que la vida para nosotros ha terminado?
 
-Reflexión
+#### Reflexión
 
 Tal como la enfermedad física, la depresión es sólamente la capa externa de un iceberg, cuya razón de ser es mucho más profunda. Es aquí donde tras mucha reflexión debemos llegar lo más cercano a la causa raíz del problema. Los problemas en las relaciones, son sólo síntomas. Citando a Sikirich:
 
@@ -118,49 +118,49 @@ Tal como la enfermedad física, la depresión es sólamente la capa externa de u
 
 Si queremos conocer el verdadero amor, la amistad y la felicidad tenemos que resolver problemas fundamentales relacionados con las necesidades de nuestra propia Alma. Y estas necesidades no están determinadas por la opinión de los demás, ni por su manera de tratarnos, sino que dependen exclusivamente de nosotros mismos, de nuestra capacidad de entender el sentido profundo de la vida y las Leyes de la Naturaleza, del Hombre y del Universo.” [5]
 
-La cesación del dolor
+### La cesación del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿A qué me debo desapegar para eliminar el dolor?, ¿Qué ideas de mí mismo debo ajustar para librarme del deseo?
 
-Reflexión
+#### Reflexión
 
 Una vez identificado el dolor y su causa, es necesario ir más allá y estar dispuestos a desapegarnos de aquel deseo que nos lleva a este círculo de dolor. La tercera noble verdad es la afirmación de que el malestar puede ser transformado. Esto es algo positivo, es la buena noticia de que es posible transformar el malestar. Lo que en el lenguaje antiguo es el cese del malestar. El cese del origen del malestar. Hay esperanza, hay algo seguro, porque algunos de nosotros somos capaces de transformar ese malestar, ese sufrimiento. Algunos de entre nosotros hemos superado la depresión. Esa es también una verdad que debes aceptar.
 
 Buda ha subrayado la clara visión de la realidad tal como es, sin la mínima distorsión e interpretación. Desde el punto de vista técnico, Buda ha evitado construcciones teóricas y metafísicas que son difíciles de medir y/o tienen una discutible utilidad para con los problemas de la vida cotidiana. Todo el acercamiento de buda tiende a hacer que la persona viva más plenamente el aquí y ahora. De modo que las prácticas budistas, y en particular la meditación, llevan a una visión más clara y directa del presente, reduciendo el tiempo que la persona pierde en sus recuerdos del pasado y en la anticipación o en el ansia por el futuro. La meditación es pues, uno de los mejores antídotos para los pacientes deprimidos.
 
-El camino del óctuple sendero
+### El camino del óctuple sendero
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué palabras, pensamientos, actitudes y acciones que me llevaron a este estado debo cambiar para lograr el equilibrio y armonía emocional?
 
-Reflexión
+#### Reflexión
 
 “La cuarta noble verdad proporciona un esquema terapéutico, el Óctuple Sendero, para aliviar el sufrimiento y alcanzar un estado de salud ideal. El Octuple Sendero comprende: palabra recta, acción recta, medios de subsistencia rectos, esfuerzo recto, atención recta, concentración recta, visión recta y pensamiento recto. Estas ocho prácticas tienden a animar y perfeccionar los tres fundamentos de la formación y de la doctrina budista y precisamente: 1) conducta ética, 2) disciplina mental y 3) sabiduría”. [3]
 
-Problemas financieros
+## Problemas financieros
 
-La existencia del dolor
+### La existencia del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿En qué situación estoy?, ¿Qué es lo que me duele o me molesta de esta situación?, ¿Qué es lo “malo” que me pasó?
 
-Reflexión
+#### Reflexión
 
 Para analizar el dolor existente, es necesario ser honestos y exponer la realidad tácita de nuestra situación para identificar los puntos que “no están bien” financieramente. Puede que el problema sea que “no nos alcanza el dinero”, sin embargo habría que ir más al detalle para poder describir concretamente el problema, por ejemplo “no tengo suficiente dinero para pagar las cuentas de alimentación”, o “el dinero es poco para mis necesidades básicas”, etc.
 
 También puede ser que el dolor esté en que no puedo comprar las cosas que “quisiera”. Otros problemas financieros que implican esta clase de dolor pueden ser: desempleo, fraude, gastos imprevistos, etc.
 
-La causa del dolor
+### La causa del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Cómo llegué a este estado?, ¿Qué decisiones tomé?, ¿Qué ilusiones tomé como realidades?, ¿A qué o a quiénes no les puedo decir que no?
 
-Reflexión
+#### Reflexión
 
 Los problemas financieros, al igual que muchos otros problemas (dolores) de nuestra personalidad no vienen por sí sólos. Nosotros hemos tomado decisiones que nos han llevado a esta realidad que nos duele. Todos estos estados, como dijo Buda, comienzan en la mente. Y las decisiones que nos llevaron a este dolor, tiene que ver con “ideas” falsas, que entran en dos categorías:
 
@@ -174,9 +174,9 @@ Otro ejemplo es la percepción de que al comprar algo con crédito (tarjeta de c
 
 Un caso muy frecuente es que queramos comprar cosas que no van con nuestro estilo de vida, porque vivimos en una constante ilusión de tener más de lo que necesitamos para la vida que deberíamos llevar. Esto nos lleva a gastar cada vez más, o a reflejar nuestras compras en lo que los medios de comunicación y la sociedad consumista nos exige que adquiramos.
 
-La cesación del dolor
+### La cesación del dolor
 
-Preguntas de enfoque
+#### Preguntas de enfoque
 
 ¿Qué debo soltar?, ¿Qué placer debo aplacar?, ¿Cuáles son mis prioridades?, ¿Cuáles mis responsabilidades urgentes, importantes, básicas y triviales?
 
