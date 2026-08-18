@@ -12,14 +12,24 @@ interface Props {
 	publishedTime?: Date;
 	/** The homepage's own H1 is the name, so it suppresses the wordmark. */
 	hideWordmark?: boolean;
+	/** Overrides the document language. Set by pages whose body is not English. */
+	lang?: string;
 }
 
-const { title, description, image, type, publishedTime, hideWordmark = false } = Astro.props;
+const {
+	title,
+	description,
+	image,
+	type,
+	publishedTime,
+	hideWordmark = false,
+	lang = SITE_LANG,
+} = Astro.props;
 const year = new Date().getUTCFullYear();
 ---
 
 <!doctype html>
-<html lang={SITE_LANG}>
+<html lang={lang}>
 	<head>
 		<BaseHead
 			title={title}

@@ -3,7 +3,7 @@ import { type CollectionEntry, render } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
 import Base from '../../layouts/Base.astro';
-import { getPublished } from '../../lib/content';
+import { getPublished, getTranslations } from '../../lib/content';
 
 /** Generates nothing today; every one of these four collections is empty. */
 export async function getStaticPaths() {
@@ -36,7 +36,20 @@ const source = 'source' in data ? data.source : undefined;
 // Old enough that reading it as current advice would be a mistake, so the age
 // is stated plainly rather than left for the reader to infer from the date.
 const age = new Date().getUTCFullYear() - data.date.getUTCFullYear();
-const isDated = age >= 5;
+// Only technical writing goes stale this way. A 2017 essay on Plotinus is not
+// out of date, so the notice is scoped to the tech collection.
+const isDated = section === 'tech' && age >= 5;
+
+// Essay fields. Absent on collections that do not spread `essay`.
+const lang = 'lang' in data ? data.lang : undefined;
+const translation = 'translation' in data ? data.translation : undefined;
+const prize = 'prize' in data ? data.prize : undefined;
+const venue = 'venue' in data ? data.venue : undefined;
+const composer = 'composer' in data ? data.composer : undefined;
+
+const otherLanguages = await getTranslations(section, entry);
+
+const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' };
 ---
 
 <Base
@@ -44,19 +57,54 @@ const isDated = age >= 5;
 	description={data.summary}
 	type="article"
 	publishedTime={data.date}
+	lang={lang}
 >
 	<article>
 		<header class="head">
 			<p class="back"><a href={`/${section}/`}>← {SECTION_LABELS[section]}</a></p>
 			<h1>{data.title}</h1>
 			{bookAuthor && <p class="byline">{bookAuthor}</p>}
-			<p class="meta"><FormattedDate date={data.date} /></p>
+			<p class="meta">
+				<FormattedDate date={data.date} />
+				{composer && <span class="dot">·</span>}
+				{composer && <span>{composer}</span>}
+			</p>
+
+			{
+				(prize || venue) && (
+					<p class="credit">
+						{prize && <strong>{prize}</strong>}
+						{prize && venue && <span class="dot">·</span>}
+						{venue}
+					</p>
+				)
+			}
+
+			{
+				otherLanguages.length > 0 && (
+					<p class="langs">
+						{otherLanguages.map((t) => (
+							<a href={t.href} hreflang={t.lang} lang={t.lang} rel="alternate">
+								Read in {LANGUAGE_NAMES[t.lang] ?? t.lang}
+							</a>
+						))}
+					</p>
+				)
+			}
 			<p class="summary">{data.summary}</p>
 		</header>
 
 		{
-			(isDated || sourceArchive) && (
+			(isDated || sourceArchive || translation) && (
 				<aside class="provenance" aria-label="About this article">
+					{translation && (
+						<p>
+							<strong>This is a translation.</strong> The original was written in{' '}
+							{LANGUAGE_NAMES[translation.from] ?? translation.from} by David Elizondo;
+							this English version was produced by {translation.by} and has
+							{translation.reviewed ? ' been reviewed by him' : ' not been reviewed by him'}.
+						</p>
+					)}
 					{isDated && (
 						<p>
 							Written {age} years ago and kept as published. The versions and APIs it
@@ -130,6 +178,25 @@ const isDated = age >= 5;
 
 	.provenance p + p {
 		margin-block-start: var(--space-2xs);
+	}
+
+	.credit {
+		margin-block-start: var(--space-xs);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.dot {
+		color: var(--rule);
+		margin-inline: 0.4ch;
+	}
+
+	.langs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-md);
+		margin-block-start: var(--space-sm);
+		font-size: var(--text-sm);
 	}
 
 	.summary {

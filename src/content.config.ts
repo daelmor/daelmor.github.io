@@ -40,6 +40,48 @@ const common = {
 	draft: z.boolean().default(false),
 };
 
+/**
+ * Fields for the essays, which exist in more than one language and sometimes
+ * belong under more than one section.
+ */
+const essay = {
+	/**
+	 * Language of THIS file. Every essay was written in Spanish; the English
+	 * versions are translations and say so.
+	 */
+	lang: z.enum(['es', 'en']),
+	/**
+	 * Stable id shared by every language version of the same piece. This is how
+	 * the Spanish original and its translation find each other — filenames
+	 * differ between languages, so they cannot be the link.
+	 */
+	work: z.string().min(1),
+	/**
+	 * Set on translations only, and rendered as a visible notice. Nothing on
+	 * this site should read as David's English prose when it is not.
+	 */
+	translation: z
+		.object({
+			from: z.enum(['es', 'en']),
+			/** Who or what produced it. Stated on the page, not buried. */
+			by: z.string().min(1),
+			reviewed: z.boolean(),
+		})
+		.optional(),
+	/**
+	 * Other sections this piece should also be listed under. The file's own
+	 * collection stays canonical, and the cross-listing links to that URL, so
+	 * the same text is never served from two addresses.
+	 */
+	alsoIn: z.array(z.enum(['tech', 'philosophy', 'books', 'music'])).default([]),
+	/** An award this piece won, exactly as it should be credited. */
+	prize: z.string().min(1).optional(),
+	/** Where it was written for or first presented. */
+	venue: z.string().min(1).optional(),
+	/** Source document in projects/philosophy-writings/, for provenance. */
+	sourceFile: z.string().min(1).optional(),
+};
+
 const projects = defineCollection({
 	loader: glob({ base: './src/content/projects', pattern: '**/*.{md,mdx}' }),
 	schema: ({ image }) =>
@@ -113,7 +155,7 @@ const tech = defineCollection({
 
 const philosophy = defineCollection({
 	loader: glob({ base: './src/content/philosophy', pattern: '**/*.{md,mdx}' }),
-	schema: z.object({ ...common }),
+	schema: z.object({ ...common, ...essay }),
 });
 
 const books = defineCollection({
@@ -123,10 +165,25 @@ const books = defineCollection({
 			...common,
 			/** The book's author, as distinct from the author of the notes. */
 			bookAuthor: z.string().min(1),
-			/** Year the book was published, not the year it was read. */
+			/** Year of this edition, not the year it was read. Absent for 10 of 78. */
 			published: z.number().int().optional(),
 			cover: image().optional(),
 			coverAlt: z.string().min(1).optional(),
+			/** Which Goodreads shelf this sits on. Drives the grouping on the page. */
+			shelf: z.enum(['read', 'currently-reading', 'to-read']),
+			/** David's own rating out of five. 0 on Goodreads means "not rated". */
+			rating: z.number().int().min(1).max(5).optional(),
+			pages: z.number().int().positive().optional(),
+			isbn: z.string().min(1).optional(),
+			/**
+			 * The publisher's blurb, carried over from Goodreads and always
+			 * rendered with its attribution. It is not David's writing, so
+			 * `synopsisSource` is required alongside it rather than optional.
+			 */
+			synopsis: z.string().min(1).optional(),
+			synopsisSource: z.string().min(1).optional(),
+			/** Canonical Goodreads page for the edition. */
+			goodreads: z.url().optional(),
 		}),
 });
 
@@ -134,8 +191,8 @@ const music = defineCollection({
 	loader: glob({ base: './src/content/music', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		...common,
-		/** e.g. a specific opera, score or album under analysis. */
-		work: z.string().min(1).optional(),
+		...essay,
+		/** The composer or figure the piece is about, where there is one. */
 		composer: z.string().min(1).optional(),
 	}),
 });

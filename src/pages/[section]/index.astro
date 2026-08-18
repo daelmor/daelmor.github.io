@@ -2,12 +2,11 @@
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SECTION_LABELS, WRITING_SECTIONS, type WritingSection } from '../../consts';
 import Base from '../../layouts/Base.astro';
-import { entryPath, getPublished } from '../../lib/content';
+import { getSectionEntries } from '../../lib/content';
 
 /**
- * Index for the four collections that are still empty. `projects` is excluded
- * deliberately — it has its own route rather than relying on Astro giving
- * static paths priority over dynamic ones.
+ * Index for every section except `projects`, which has its own route because it
+ * carries hero images, a stack and an engagement span.
  */
 export async function getStaticPaths() {
 	return WRITING_SECTIONS.map((section) => ({ params: { section }, props: { section } }));
@@ -19,7 +18,11 @@ interface Props {
 
 const { section } = Astro.props;
 const label = SECTION_LABELS[section];
-const entries = await getPublished(section);
+
+// Includes pieces that live elsewhere but name this section in `alsoIn`.
+const entries = await getSectionEntries(section);
+
+const isBooks = section === 'books';
 ---
 
 <Base title={label}>
@@ -30,17 +33,30 @@ const entries = await getPublished(section);
 			<p class="empty">Nothing here yet.</p>
 		) : (
 			<ul class="list">
-				{entries.map((entry) => (
-					<li>
-						<a class="row" href={entryPath(section, entry.id)}>
-							<span class="row-title">{entry.data.title}</span>
-							<span class="row-date">
-								<FormattedDate date={entry.data.date} />
-							</span>
-						</a>
-						<p class="row-summary">{entry.data.summary}</p>
-					</li>
-				))}
+				{entries.map((item) => {
+					const lang = 'lang' in item.data ? item.data.lang : undefined;
+					const bookAuthor = 'bookAuthor' in item.data ? item.data.bookAuthor : undefined;
+					return (
+						<li>
+							<a class="row" href={item.href} hreflang={lang}>
+								<span class="row-title" lang={lang}>
+									{item.data.title}
+								</span>
+								<span class="row-meta">
+									{lang === 'es' && <span class="badge">Español</span>}
+									{item.crossListed && (
+										<span class="badge">in {SECTION_LABELS[item.collection]}</span>
+									)}
+									<FormattedDate date={item.data.date} monthOnly={!isBooks} />
+								</span>
+							</a>
+							{bookAuthor && <p class="row-byline">{bookAuthor}</p>}
+							<p class="row-summary" lang={lang}>
+								{item.data.summary}
+							</p>
+						</li>
+					);
+				})}
 			</ul>
 		)
 	}
@@ -61,6 +77,8 @@ const entries = await getPublished(section);
 
 	.list li + li {
 		margin-block-start: var(--space-lg);
+		padding-block-start: var(--space-lg);
+		border-block-start: 1px solid var(--rule);
 	}
 
 	.row {
@@ -68,7 +86,7 @@ const entries = await getPublished(section);
 		flex-wrap: wrap;
 		align-items: baseline;
 		justify-content: space-between;
-		gap: 0.25rem var(--space-md);
+		gap: 0.35rem var(--space-md);
 		color: inherit;
 		text-decoration: none;
 	}
@@ -77,19 +95,44 @@ const entries = await getPublished(section);
 		font-family: var(--font-display);
 		font-weight: 600;
 		font-size: var(--text-lg);
+		letter-spacing: -0.01em;
+		max-width: 42ch;
 	}
 
 	.row:hover .row-title {
 		color: var(--carbon);
 	}
 
-	.row-date {
+	.row-meta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-xs);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+		white-space: nowrap;
+	}
+
+	/* Quiet, factual labels — language, or that a piece lives in another section. */
+	.badge {
+		font-size: var(--text-xs);
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--graphite);
+		border: 1px solid var(--rule);
+		border-radius: var(--radius);
+		padding: 0.1em 0.4em;
+	}
+
+	.row-byline {
+		margin-block-start: var(--space-2xs);
+		font-family: var(--font-display);
 		font-size: var(--text-sm);
 		color: var(--graphite);
 	}
 
 	.row-summary {
-		margin-block-start: var(--space-2xs);
+		margin-block-start: var(--space-xs);
 		color: var(--graphite);
+		text-wrap: pretty;
 	}
 </style>
