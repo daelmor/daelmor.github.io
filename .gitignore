@@ -25,3 +25,6 @@ Thumbs.db
 
 # editors
 .idea/
+
+# Internet Archive fetch cache (scripts/import-llblgen.mjs)
+.cache/

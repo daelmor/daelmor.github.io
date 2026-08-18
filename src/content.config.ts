@@ -100,6 +100,14 @@ const tech = defineCollection({
 			...common,
 			hero: image().optional(),
 			heroAlt: z.string().min(1).optional(),
+			/**
+			 * Where a recovered post was originally published. Dead for the
+			 * LLBLGening posts — llblgening.com no longer resolves — so it is
+			 * recorded but never linked.
+			 */
+			source: z.url().optional(),
+			/** The Wayback snapshot the text was recovered from. This one is linkable. */
+			sourceArchive: z.url().optional(),
 		}),
 });
 

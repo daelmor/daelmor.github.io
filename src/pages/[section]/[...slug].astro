@@ -28,6 +28,15 @@ const { Content } = await render(entry);
 // `books` is the one collection with an extra required field. Narrowed rather
 // than cast, so adding a field to another collection cannot silently break it.
 const bookAuthor = 'bookAuthor' in data ? data.bookAuthor : undefined;
+
+// Recovered posts carry the snapshot they were rescued from.
+const sourceArchive = 'sourceArchive' in data ? data.sourceArchive : undefined;
+const source = 'source' in data ? data.source : undefined;
+
+// Old enough that reading it as current advice would be a mistake, so the age
+// is stated plainly rather than left for the reader to infer from the date.
+const age = new Date().getUTCFullYear() - data.date.getUTCFullYear();
+const isDated = age >= 5;
 ---
 
 <Base
@@ -44,6 +53,26 @@ const bookAuthor = 'bookAuthor' in data ? data.bookAuthor : undefined;
 			<p class="meta"><FormattedDate date={data.date} /></p>
 			<p class="summary">{data.summary}</p>
 		</header>
+
+		{
+			(isDated || sourceArchive) && (
+				<aside class="provenance" aria-label="About this article">
+					{isDated && (
+						<p>
+							Written {age} years ago and kept as published. The versions and APIs it
+							describes have moved on since.
+						</p>
+					)}
+					{sourceArchive && (
+						<p>
+							First published on {source ? new URL(source).hostname : 'a site'}, which no longer
+							exists. Recovered from the{' '}
+							<a href={sourceArchive} rel="nofollow noopener">Internet Archive</a>.
+						</p>
+					)}
+				</aside>
+			)
+		}
 
 		<div class="prose">
 			<Content />
@@ -86,6 +115,21 @@ const bookAuthor = 'bookAuthor' in data ? data.bookAuthor : undefined;
 		margin-block-start: var(--space-sm);
 		font-size: var(--text-sm);
 		color: var(--graphite);
+	}
+
+	/* Sits on the reading measure, quieter than the prose it precedes. */
+	.provenance {
+		max-width: var(--measure);
+		margin-inline: auto;
+		margin-block-end: var(--space-xl);
+		padding: var(--space-sm) var(--space-md);
+		border-inline-start: 2px solid var(--rule);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+	}
+
+	.provenance p + p {
+		margin-block-start: var(--space-2xs);
 	}
 
 	.summary {
