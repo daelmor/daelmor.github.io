@@ -136,3 +136,58 @@ export async function getTranslations(collection: CollectionKey, entry: { id: st
 	}
 	return out;
 }
+
+/** One work in a section listing, with every language it exists in. */
+export interface SectionGroup {
+	/** The version the row is titled and summarised from: the original. */
+	primary: SectionItem;
+	/** Every language version, original first. */
+	versions: { lang: string; href: string; isOriginal: boolean }[];
+	crossListed: boolean;
+}
+
+/**
+ * Section listing grouped by work, so a piece appears once rather than once per
+ * language.
+ *
+ * Listing every file separately meant seven works filled thirteen rows, with the
+ * Spanish original and its translation adjacent, identically dated and nothing
+ * marking them as the same piece — which is how a reader ends up asking where
+ * the translations are.
+ *
+ * The row is titled from the original, because that is what David wrote; the
+ * translation is offered beside it.
+ */
+export async function getSectionGroups(section: CollectionKey): Promise<SectionGroup[]> {
+	const entries = await getSectionEntries(section);
+	const groups = new Map<string, SectionItem[]>();
+
+	for (const item of entries) {
+		const work = 'work' in item.data && typeof item.data.work === 'string' ? item.data.work : null;
+		// Anything without a `work` id — a book, a recovered post — is its own group.
+		const key = work ?? `${item.collection}/${item.id}`;
+		groups.set(key, [...(groups.get(key) ?? []), item]);
+	}
+
+	const out: SectionGroup[] = [];
+	for (const members of groups.values()) {
+		const isOriginal = (i: SectionItem) => !('translation' in i.data && i.data.translation);
+		// Prefer the original as the row's representative; fall back to the first
+		// member so a translation-only work is still listed rather than dropped.
+		const primary = members.find(isOriginal) ?? members[0];
+		if (!primary) continue;
+
+		const versions = [...members]
+			.sort((a, b) => Number(isOriginal(b)) - Number(isOriginal(a)))
+			.map((i) => ({
+				lang: 'lang' in i.data && typeof i.data.lang === 'string' ? i.data.lang : '',
+				href: i.href,
+				isOriginal: isOriginal(i),
+			}))
+			.filter((v) => v.lang);
+
+		out.push({ primary, versions, crossListed: primary.crossListed });
+	}
+
+	return out.sort((a, b) => b.primary.data.date.valueOf() - a.primary.data.date.valueOf());
+}
