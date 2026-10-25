@@ -52,3 +52,20 @@ export const SECTION_LABELS: Record<SectionSlug, string> = Object.fromEntries(
  * files racing to build the same URL.
  */
 export const GENERIC_SECTIONS = WRITING_SECTIONS.filter((s) => s !== 'books');
+
+/** The three collections that make up the unified Writing index. */
+export const WRITING_CATEGORIES = ['tech', 'philosophy', 'music'] as const;
+
+/**
+ * Articles featured on the homepage, by collection and entry id. Real existing
+ * pieces, shown in this order; the English version is the default.
+ */
+export const SELECTED_WRITING = [
+	{ collection: 'philosophy', id: 'the-socratic-dialogue' },
+	{ collection: 'philosophy', id: 'plotinus-and-politics' },
+	{ collection: 'music', id: 'from-the-rhine-to-the-ganges' },
+	{ collection: 'tech', id: 'prefetchpaths-in-depth' },
+] as const;
+
+/** Footer and About links that already exist in the project. */
+export const GOODREADS_URL = 'https://www.goodreads.com/user/show/35915255';

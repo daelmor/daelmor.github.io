@@ -1,0 +1,15 @@
+---
+import WritingList from '../../components/WritingList.astro';
+import Base from '../../layouts/Base.astro';
+import { getWritingGroups } from '../../lib/content';
+
+const groups = await getWritingGroups();
+---
+
+<Base
+	title="Writing"
+	description="Essays on philosophy, music and software, in English and Spanish."
+>
+	<h1>Writing</h1>
+	<WritingList groups={groups} current="all" />
+</Base>

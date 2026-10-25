@@ -1,42 +1,36 @@
 /*
- * Design system.
+ * Design system: minimal editorial. Content first — quiet, serious, timeless.
  *
- * The organising idea is a time axis, not a card grid: these engagements
- * overlapped and three of them never ended, which is a fact a list cannot
- * state. Everything else stays quiet so the span chart carries the identity.
- *
- * Sans for headings, serif for reading — the inverse of the usual pairing.
+ * Serif for reading and major headings; sans for navigation, labels and
+ * metadata. One warm accent, used sparingly.
  */
 
 /* ── tokens ──────────────────────────────────────────────────────────────── */
 
 :root {
-	/* Ground. Pale and faintly cool-green, the tone of carbon-copy form stock.
-	   Cool on purpose: a warm cream here would land somewhere very familiar. */
-	--sheet: #edefea;
-	/* Near-black with a green cast. Never #000. 14.8:1 on --sheet. */
-	--ink: #191d18;
-	/* Metadata, captions, axis labels. 5.15:1 — AA, and only used at >=16px. */
-	--graphite: #5c6660;
-	/* Rules, table edges, the axis itself. Non-text, decorative. */
-	--rule: #c4cbc2;
-	/* Stamp blue. Links and focus rings. Almost nothing else. 7.36:1. */
-	--carbon: #2b4c7e;
+	--sheet: #faf9f6;
+	--ink: #252525;
+	/* Secondary text. */
+	--graphite: #777570;
+	/* Dividers. */
+	--rule: #e7e5e0;
+	/* Accent: links and focus rings. */
+	--carbon: #8b4945;
 
-	--sheet-raised: #f5f6f3;
+	--sheet-raised: #f5f4f0;
 
-	--font-display: var(--font-archivo), sans-serif;
-	--font-body: var(--font-literata), Georgia, serif;
+	--font-display: var(--font-source-serif), Georgia, serif;
+	--font-body: var(--font-source-serif), Georgia, serif;
+	--font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-	/* Fluid type. Body sits at 17px, which suits Literata's generous x-height. */
+	/* Modular scale, ratio ~1.2, body at 18px for long-form reading. */
 	--text-xs: 0.8125rem;
 	--text-sm: 0.9375rem;
-	--text-base: 1.0625rem;
-	--text-lg: 1.1875rem;
-	--text-xl: clamp(1.3rem, 0.9rem + 1.2vw, 1.6rem);
-	--text-2xl: clamp(1.6rem, 1rem + 2vw, 2.1rem);
-	/* The one genuinely large size, reserved for a page H1. */
-	--text-display: clamp(2.1rem, 1.2rem + 4.4vw, 3.9rem);
+	--text-base: 1.125rem;
+	--text-lg: 1.3rem;
+	--text-xl: clamp(1.4rem, 1.1rem + 1vw, 1.7rem);
+	--text-2xl: clamp(1.7rem, 1.2rem + 1.6vw, 2.1rem);
+	--text-display: clamp(2rem, 1.4rem + 2.6vw, 3rem);
 
 	--space-2xs: 0.25rem;
 	--space-xs: 0.5rem;
@@ -46,11 +40,10 @@
 	--space-xl: 3.25rem;
 	--space-2xl: 5rem;
 
-	/* One reading measure, used everywhere prose appears. */
-	--measure: 66ch;
+	/* Reading width, 680–740px. */
+	--measure: 44rem;
 	--page: 74rem;
 
-	/* Not a doctrinaire zero — just small enough to read as precise. */
 	--radius: 2px;
 }
 
@@ -80,12 +73,12 @@ body {
 	font-family: var(--font-body);
 	font-size: var(--text-base);
 	font-weight: 400;
-	line-height: 1.65;
+	line-height: 1.7;
 	font-optical-sizing: auto;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	/* Tabular figures everywhere: this site is mostly dates and quantities. */
-	font-variant-numeric: tabular-nums;
+	font-variant-numeric: normal;
 }
 
 img,
@@ -123,7 +116,7 @@ h3,
 h4 {
 	font-family: var(--font-display);
 	font-weight: 600;
-	line-height: 1.12;
+	line-height: 1.2;
 	text-wrap: balance;
 }
 
@@ -132,9 +125,8 @@ h4 {
    character actually lives. */
 h1 {
 	font-size: var(--text-display);
-	font-weight: 700;
-	font-variation-settings: 'wdth' 118;
-	letter-spacing: -0.022em;
+	font-weight: 600;
+	letter-spacing: -0.015em;
 }
 
 h2 {
@@ -256,10 +248,9 @@ pre {
 
 .wordmark {
 	font-family: var(--font-display);
-	font-weight: 700;
+	font-weight: 600;
 	font-size: var(--text-lg);
-	font-variation-settings: 'wdth' 112;
-	letter-spacing: -0.015em;
+	letter-spacing: -0.01em;
 	color: var(--ink);
 	text-decoration: none;
 }
@@ -275,6 +266,7 @@ pre {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	font-family: var(--font-ui);
 	font-size: var(--text-sm);
 }
 
@@ -301,7 +293,8 @@ main {
 	border-top: 1px solid var(--rule);
 	padding-block: var(--space-md);
 	color: var(--graphite);
-	font-size: var(--text-sm);
+	font-family: var(--font-ui);
+	font-size: var(--text-xs);
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-xs) var(--space-lg);
@@ -378,4 +371,92 @@ main {
 	grid-column: 1 / -1;
 	max-width: var(--measure);
 	margin-inline: auto;
+}
+
+/* ── interface text ──────────────────────────────────────────────────────── */
+
+/* Dates, labels, badges, breadcrumbs and provenance notes are interface, not
+   prose, so they take the sans face. */
+:is(.meta, .row-date, .row-meta, .badge, .langs, .back, .credit, .provenance) {
+	font-family: var(--font-ui);
+}
+
+.site-footer ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs) var(--space-md);
+	list-style: none;
+	padding: 0;
+}
+
+.site-footer a {
+	color: var(--graphite);
+}
+
+.site-footer a:hover {
+	color: var(--carbon);
+}
+
+/* ── prose details ───────────────────────────────────────────────────────── */
+
+.prose :is(p, li) {
+	text-wrap: pretty;
+}
+
+.prose blockquote {
+	font-style: italic;
+	color: var(--ink);
+	border-inline-start-color: var(--carbon);
+}
+
+.prose :not(pre) > code {
+	padding: 0.1em 0.3em;
+	background: var(--sheet-raised);
+	border-radius: var(--radius);
+}
+
+.prose pre {
+	overflow-x: auto;
+	padding: var(--space-md);
+	background: var(--sheet-raised);
+	border: 1px solid var(--rule);
+	border-radius: var(--radius);
+	font-size: var(--text-sm);
+	line-height: 1.55;
+	tab-size: 4;
+}
+
+.prose figure {
+	margin-block: var(--space-lg);
+}
+
+.prose figcaption {
+	margin-block-start: var(--space-xs);
+	font-family: var(--font-ui);
+	font-size: var(--text-xs);
+	color: var(--graphite);
+}
+
+.prose sup {
+	font-size: 0.75em;
+	line-height: 0;
+}
+
+.prose .footnotes,
+.prose section[data-footnotes] {
+	font-size: var(--text-sm);
+	color: var(--graphite);
+}
+
+.prose table {
+	border-collapse: collapse;
+	font-size: var(--text-sm);
+	display: block;
+	overflow-x: auto;
+}
+
+.prose :is(th, td) {
+	padding: var(--space-xs) var(--space-sm);
+	border-bottom: 1px solid var(--rule);
+	text-align: left;
 }

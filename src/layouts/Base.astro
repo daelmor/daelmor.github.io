@@ -2,7 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Nav from '../components/Nav.astro';
-import { SITE_LANG, SITE_TITLE } from '../consts';
+import { GOODREADS_URL, SITE_LANG, SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
@@ -61,7 +61,16 @@ const year = new Date().getUTCFullYear();
 
 		<footer class="site-footer shell">
 			<p>&copy; {year} {SITE_TITLE}</p>
-			<p><a href="/rss.xml">RSS</a></p>
+			<nav aria-label="Footer">
+				<ul>
+					<li><a href="/writing/">Writing</a></li>
+					<li><a href="/projects/">Projects</a></li>
+					<li><a href="/books/">Books</a></li>
+					<li><a href="/about/">About</a></li>
+					<li><a href={GOODREADS_URL} rel="me noopener">Goodreads</a></li>
+					<li><a href="/rss.xml">RSS</a></li>
+				</ul>
+			</nav>
 		</footer>
 
 		<style>

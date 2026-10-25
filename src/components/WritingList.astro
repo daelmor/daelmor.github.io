@@ -1,0 +1,151 @@
+---
+import { SECTION_LABELS } from '../consts';
+import type { SectionGroup } from '../lib/content';
+import FormattedDate from './FormattedDate.astro';
+
+/**
+ * A list of pieces, with the category navigation above it. Shared by the
+ * unified /writing/ index and each category page, so they cannot drift apart.
+ */
+interface Props {
+	groups: SectionGroup[];
+	/** The active category, or `all` for the unified index. */
+	current: 'all' | 'tech' | 'philosophy' | 'music';
+}
+
+const { groups, current } = Astro.props;
+
+const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' };
+const CATEGORIES = [
+	{ key: 'all', label: 'All', href: '/writing/' },
+	{ key: 'philosophy', label: SECTION_LABELS.philosophy, href: '/philosophy/' },
+	{ key: 'music', label: SECTION_LABELS.music, href: '/music/' },
+	{ key: 'tech', label: SECTION_LABELS.tech, href: '/tech/' },
+] as const;
+---
+
+<nav class="categories" aria-label="Writing categories">
+	<ul>
+		{
+			CATEGORIES.map((c) => (
+				<li>
+					<a href={c.href} aria-current={c.key === current ? 'page' : undefined}>
+						{c.label}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
+
+{
+	groups.length === 0 ? (
+		<p class="empty">Nothing here yet.</p>
+	) : (
+		<ul class="list">
+			{groups.map(({ primary, versions }) => {
+				const lang = 'lang' in primary.data ? primary.data.lang : undefined;
+				const prize = 'prize' in primary.data ? primary.data.prize : undefined;
+				return (
+					<li>
+						<h2 class="row-title" lang={lang}>
+							<a href={primary.href} hreflang={lang}>
+								{primary.data.title}
+							</a>
+						</h2>
+						<p class="row-meta">
+							<span>{SECTION_LABELS[primary.collection as keyof typeof SECTION_LABELS]}</span>
+							<FormattedDate date={primary.data.date} monthOnly />
+							<span>{primary.readingMinutes} min read</span>
+							{prize && <span>{prize}</span>}
+							{versions.length > 1 &&
+								versions.map((v) => (
+									<a href={v.href} hreflang={v.lang} lang={v.lang}>
+										{LANGUAGE_NAMES[v.lang] ?? v.lang}
+									</a>
+								))}
+							{versions.length === 1 && lang === 'es' && <span>Español only</span>}
+						</p>
+						<p class="row-summary" lang={lang}>
+							{primary.data.summary}
+						</p>
+					</li>
+				);
+			})}
+		</ul>
+	)
+}
+
+<style>
+	.categories ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs) var(--space-md);
+		list-style: none;
+		padding: 0;
+		margin-block-start: var(--space-lg);
+		font-family: var(--font-ui);
+		font-size: var(--text-sm);
+	}
+
+	.categories a {
+		color: var(--graphite);
+		text-decoration: none;
+	}
+
+	.categories a:hover,
+	.categories a[aria-current='page'] {
+		color: var(--ink);
+	}
+
+	.categories a[aria-current='page'] {
+		box-shadow: inset 0 -1px 0 var(--carbon);
+	}
+
+	.empty {
+		margin-block-start: var(--space-lg);
+		color: var(--graphite);
+	}
+
+	.list {
+		list-style: none;
+		margin-block-start: var(--space-xl);
+		padding: 0;
+		max-width: var(--measure);
+	}
+
+	.list li + li {
+		margin-block-start: var(--space-xl);
+	}
+
+	.row-title {
+		font-size: var(--text-xl);
+		font-weight: 600;
+		line-height: 1.25;
+		text-wrap: pretty;
+	}
+
+	.row-title a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.row-title a:hover {
+		color: var(--carbon);
+	}
+
+	.row-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--space-md);
+		margin-block-start: var(--space-2xs);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+	}
+
+	.row-summary {
+		margin-block-start: var(--space-xs);
+		color: var(--ink);
+		text-wrap: pretty;
+	}
+</style>

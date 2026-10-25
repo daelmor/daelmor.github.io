@@ -1,25 +1,28 @@
 ---
-import { getPopulatedSections } from '../lib/content';
-
-const sections = await getPopulatedSections();
 const path = Astro.url.pathname;
+
+const WRITING = ['/writing', '/tech', '/philosophy', '/music'];
+const LINKS = [
+	{ href: '/writing/', label: 'Writing', match: WRITING },
+	{ href: '/projects/', label: 'Projects', match: ['/projects'] },
+	{ href: '/books/', label: 'Books', match: ['/books'] },
+	{ href: '/about/', label: 'About', match: ['/about'] },
+];
 ---
 
-{
-	sections.length > 0 && (
-		<nav class="site-nav" aria-label="Sections">
-			<ul>
-				{sections.map((section) => (
-					<li>
-						<a
-							href={`/${section.slug}/`}
-							aria-current={path.startsWith(`/${section.slug}`) ? 'page' : undefined}
-						>
-							{section.label}
-						</a>
-					</li>
-				))}
-			</ul>
-		</nav>
-	)
-}
+<nav class="site-nav" aria-label="Main">
+	<ul>
+		{
+			LINKS.map((link) => (
+				<li>
+					<a
+						href={link.href}
+						aria-current={link.match.some((m) => path.startsWith(m)) ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>

@@ -1,70 +1,120 @@
 ---
-import SpanChart from '../components/SpanChart.astro';
-import { SITE_TITLE } from '../consts';
+import FormattedDate from '../components/FormattedDate.astro';
+import WorkList from '../components/WorkList.astro';
+import { SECTION_LABELS, SELECTED_WRITING, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
-import { entryPath, getPublished } from '../lib/content';
+import { entryPath, getPublished, getSectionGroups } from '../lib/content';
 
-const projects = await getPublished('projects');
+const projects = (await getPublished('projects')).slice(0, 5);
 
-// Pinned once so every bar and the lede agree, and so the build is stable.
-const now = new Date();
-
-// Derived, never asserted: if the content changes, the sentence changes with it.
-const firstYear = Math.min(...projects.map((p) => p.data.date.getUTCFullYear()));
-const years = now.getUTCFullYear() - firstYear;
-// Counts systems still in production, which is NOT the same as engagements
-// still running — Tigo's engagement ended years ago and its portal is still
-// serving customers. Only confirmed cases are counted; `inProduction: null`
-// means unknown and is deliberately left out of the claim.
-const live = projects.filter((p) => p.data.inProduction === true).length;
-
-const items = projects.map((project) => ({
-	href: entryPath('projects', project.id),
-	company: project.data.company,
-	title: project.data.title,
-	start: project.data.date,
-	end: project.data.end,
-	inProduction: project.data.inProduction,
-}));
+// Each pick is shown in English when a version exists, which is the site default.
+const picks = [];
+for (const { collection, id } of SELECTED_WRITING) {
+	const group = (await getSectionGroups(collection)).find((g) =>
+		g.primary.href === entryPath(collection, id) ||
+			g.versions.some((v) => v.href === entryPath(collection, id)),
+	);
+	if (group) picks.push({ collection, ...group });
+}
 ---
 
 <Base title={SITE_TITLE} hideWordmark>
 	<h1>{SITE_TITLE}</h1>
+	<p class="intro">
+		I work on software systems and write about philosophy, technology, and the connections
+		between them.
+	</p>
 
-	{
-		projects.length > 0 && (
-			<p class="lede">
-				Payments, invoicing and ledger infrastructure. {years} years,{' '}
-				{live} of these systems still running in production.
-			</p>
-		)
-	}
+	<section aria-labelledby="writing">
+		<h2 id="writing">Selected writing</h2>
+		<ul class="writing">
+			{
+				picks.map(({ primary, collection }) => (
+					<li>
+						<h3>
+							<a href={primary.href}>{primary.data.title}</a>
+						</h3>
+						<p class="meta">
+							<span>{SECTION_LABELS[collection]}</span>
+							<FormattedDate date={primary.data.date} monthOnly />
+							<span>{primary.readingMinutes} min read</span>
+						</p>
+						<p>{primary.data.summary}</p>
+					</li>
+				))
+			}
+		</ul>
+		<p class="more"><a href="/writing/">Browse all writing →</a></p>
+	</section>
 
-	{
-		projects.length > 0 ? (
-			<section class="chart-section" aria-labelledby="engagements">
-				<h2 id="engagements" class="visually-hidden">
-					Engagements
-				</h2>
-				<SpanChart items={items} now={now} />
-			</section>
-		) : (
-			<p>No entries yet.</p>
-		)
-	}
+	<section aria-labelledby="work">
+		<h2 id="work">Selected work</h2>
+		<WorkList projects={projects} />
+		<p class="more"><a href="/projects/">All projects →</a></p>
+	</section>
 </Base>
 
 <style>
-	.lede {
+	.intro {
 		max-width: 34ch;
 		margin-block-start: var(--space-md);
 		font-size: var(--text-xl);
-		line-height: 1.35;
+		line-height: 1.4;
 		color: var(--graphite);
 		text-wrap: pretty;
 	}
 
-	.chart-section {
+	section {
 		margin-block-start: var(--space-2xl);
+	}
+
+	section > h2 {
+		margin-block-end: var(--space-lg);
+		font-family: var(--font-ui);
+		font-size: var(--text-xs);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--graphite);
+	}
+
+	.writing {
+		list-style: none;
+		padding: 0;
+		max-width: var(--measure);
+	}
+
+	.writing li + li {
+		margin-block-start: var(--space-lg);
+	}
+
+	.writing h3 {
+		font-size: var(--text-lg);
+		line-height: 1.25;
+	}
+
+	.writing h3 a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.writing h3 a:hover {
+		color: var(--carbon);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--space-md);
+		margin-block: var(--space-2xs) var(--space-xs);
+		font-family: var(--font-ui);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+	}
+
+	.more {
+		margin-block-start: var(--space-lg);
+		font-family: var(--font-ui);
+		font-size: var(--text-sm);
 	}
 </style>

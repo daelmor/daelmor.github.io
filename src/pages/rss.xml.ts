@@ -11,7 +11,8 @@ function feedTitle(data: Record<string, unknown>): string {
 
 	if ('company' in data && data.company) return `${data.company}: ${title}`;
 
-	if ('translation' in data && data.translation) {
+	// English is the default, so only other languages need a marker.
+	if ('translation' in data && data.translation && data.lang !== 'en') {
 		const lang = typeof data.lang === 'string' ? data.lang : '';
 		const name = LANGUAGE_NAMES[lang] ?? lang;
 		return name ? `${title} (${name} translation)` : `${title} (translation)`;
@@ -34,11 +35,27 @@ export async function GET(context: APIContext) {
 	 */
 	const items = all.filter(({ collection }) => collection !== 'books');
 
+	// English is the default, so a Spanish original with an English version is
+	// left out of the feed; the English item links to it from the page.
+	const englishWorks = new Set(
+		items.flatMap(({ entry }) =>
+			'work' in entry.data && 'lang' in entry.data && entry.data.lang === 'en'
+				? [entry.data.work]
+				: [],
+		),
+	);
+	const feed = items.filter(
+		({ entry }) =>
+			!('work' in entry.data && 'lang' in entry.data) ||
+			entry.data.lang === 'en' ||
+			!englishWorks.has(entry.data.work),
+	);
+
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site ?? 'https://daelmor.github.io',
-		items: items.map(({ collection, entry }) => ({
+		items: feed.map(({ collection, entry }) => ({
 			// Feed readers show titles with no surrounding context, so a project
 			// carries its company. Without it three separate entries would all
 			// read as bare service names under the same author.

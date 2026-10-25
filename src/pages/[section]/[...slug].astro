@@ -3,7 +3,7 @@ import { type CollectionEntry, render } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { GENERIC_SECTIONS, SECTION_LABELS, type WritingSection } from '../../consts';
 import Base from '../../layouts/Base.astro';
-import { getPublished, getTranslations } from '../../lib/content';
+import { getPublished, getTranslations, readingMinutes } from '../../lib/content';
 
 /** Generates nothing today; every one of these four collections is empty. */
 export async function getStaticPaths() {
@@ -48,6 +48,12 @@ const venue = 'venue' in data ? data.venue : undefined;
 const composer = 'composer' in data ? data.composer : undefined;
 
 const otherLanguages = await getTranslations(section, entry);
+// Every language version in one control, English first, the current one unlinked.
+const languages = [
+	...(lang ? [{ lang, href: null as string | null }] : []),
+	...otherLanguages.map((t) => ({ lang: t.lang, href: t.href as string | null })),
+].sort((a, b) => Number(b.lang === 'en') - Number(a.lang === 'en'));
+const minutes = readingMinutes(entry.body);
 
 const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' };
 ---
@@ -65,7 +71,11 @@ const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' }
 			<h1>{data.title}</h1>
 			{bookAuthor && <p class="byline">{bookAuthor}</p>}
 			<p class="meta">
+				<span>{SECTION_LABELS[section]}</span>
+				<span class="dot">·</span>
 				<FormattedDate date={data.date} />
+				<span class="dot">·</span>
+				<span>{minutes} min read</span>
 				{composer && <span class="dot">·</span>}
 				{composer && <span>{composer}</span>}
 			</p>
@@ -81,14 +91,20 @@ const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' }
 			}
 
 			{
-				otherLanguages.length > 0 && (
-					<p class="langs">
-						{otherLanguages.map((t) => (
-							<a href={t.href} hreflang={t.lang} lang={t.lang} rel="alternate">
-								Read in {LANGUAGE_NAMES[t.lang] ?? t.lang}
-							</a>
-						))}
-					</p>
+				languages.length > 1 && (
+					<nav class="langs" aria-label="Language">
+						{languages.map((l) =>
+							l.href ? (
+								<a href={l.href} hreflang={l.lang} lang={l.lang} rel="alternate">
+									{LANGUAGE_NAMES[l.lang] ?? l.lang}
+								</a>
+							) : (
+								<span class="current" lang={l.lang} aria-current="true">
+									{LANGUAGE_NAMES[l.lang] ?? l.lang}
+								</span>
+							),
+						)}
+					</nav>
 				)
 			}
 			<p class="summary">{data.summary}</p>
@@ -189,6 +205,11 @@ const LANGUAGE_NAMES: Record<string, string> = { es: 'Español', en: 'English' }
 	.dot {
 		color: var(--rule);
 		margin-inline: 0.4ch;
+	}
+
+	.current {
+		color: var(--ink);
+		box-shadow: inset 0 -1px 0 var(--carbon);
 	}
 
 	.langs {

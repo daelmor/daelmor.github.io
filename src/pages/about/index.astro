@@ -1,0 +1,58 @@
+---
+import { GOODREADS_URL, SITE_TITLE } from '../../consts';
+import Base from '../../layouts/Base.astro';
+import { getPublished } from '../../lib/content';
+
+const projects = await getPublished('projects');
+const roles = [...new Set(projects.map((p) => p.data.role))];
+---
+
+<Base title="About" description="About David Elizondo: software architect and writer.">
+	<h1>About</h1>
+
+	<div class="about prose">
+		<p>
+			{SITE_TITLE} works on software systems and writes about philosophy, technology, and the
+			connections between them.
+		</p>
+
+		{/* TODO(david): a short personal biography, in your own words. */}
+		<p class="todo">Editorial TODO: personal biography to be written by the author.</p>
+
+		<h2>Professional background</h2>
+		<p>
+			Roles held across {projects.length} engagements in payments, digital invoicing and fintech
+			infrastructure: {roles.join('; ')}. The details are under <a href="/projects/">Selected
+			work</a>.
+		</p>
+		{/* TODO(david): a sentence or two of professional narrative. */}
+
+		<h2>Intellectual interests</h2>
+		<p>
+			Philosophy, music and science are the subjects of the <a href="/writing/">writing</a>,
+			and the <a href="/books/">books</a> page tracks what I read.
+		</p>
+		{/* TODO(david): confirm or reword this description of your interests. */}
+
+		<h2>Elsewhere</h2>
+		<ul>
+			<li><a href={GOODREADS_URL} rel="me noopener">Goodreads</a></li>
+			<li><a href="/rss.xml">RSS feed</a></li>
+		</ul>
+		{/* TODO(david): add a contact address and any other profiles you want listed. */}
+		<p class="todo">Editorial TODO: contact details and other profiles.</p>
+	</div>
+</Base>
+
+<style>
+	.about {
+		margin-block-start: var(--space-lg);
+	}
+
+	.todo {
+		font-family: var(--font-ui);
+		font-size: var(--text-sm);
+		color: var(--graphite);
+		font-style: italic;
+	}
+</style>

@@ -1,0 +1,87 @@
+---
+import { entryPath, type getPublished } from '../lib/content';
+import ProjectPeriod from './ProjectPeriod.astro';
+
+/**
+ * Professional engagements as a restrained editorial list: name, role, date
+ * range, a line about the work. No chart — overlapping engagements are simply
+ * listed with their own dates, and each states its own span.
+ */
+interface Props {
+	projects: Awaited<ReturnType<typeof getPublished<'projects'>>>;
+}
+
+const { projects } = Astro.props;
+---
+
+<ol class="work">
+	{
+		projects.map(({ id, data }) => (
+			<li>
+				<h3 class="name">
+					<a href={entryPath('projects', id)}>
+						<span class="company">{data.company}</span>
+						<span class="sep" aria-hidden="true">·</span>
+						{data.title}
+					</a>
+				</h3>
+				<p class="meta">
+					<span>{data.role}</span>
+					<ProjectPeriod start={data.date} end={data.end} inProduction={data.inProduction} />
+				</p>
+				<p class="summary">{data.summary}</p>
+			</li>
+		))
+	}
+</ol>
+
+<style>
+	.work {
+		list-style: none;
+		padding: 0;
+		max-width: var(--measure);
+	}
+
+	.work li + li {
+		margin-block-start: var(--space-lg);
+	}
+
+	.name {
+		font-size: var(--text-lg);
+		line-height: 1.25;
+	}
+
+	.name a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.name a:hover {
+		color: var(--carbon);
+	}
+
+	.company {
+		color: var(--graphite);
+		font-weight: 500;
+	}
+
+	.sep {
+		margin-inline: 0.4ch;
+		color: var(--rule);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--space-md);
+		margin-block-start: var(--space-2xs);
+		font-family: var(--font-ui);
+		font-size: var(--text-xs);
+		color: var(--graphite);
+	}
+
+	.summary {
+		margin-block-start: var(--space-xs);
+		text-wrap: pretty;
+	}
+</style>

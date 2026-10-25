@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry, type CollectionKey } from 'astro:content';
-import { SECTIONS } from '../consts';
+import { SECTIONS, WRITING_CATEGORIES } from '../consts';
 
 /**
  * Drafts render in `astro dev` so work-in-progress is previewable, and are
@@ -61,6 +61,12 @@ export async function getPopulatedSections() {
 	return counts.filter((section) => section.count > 0);
 }
 
+/** Whole minutes at 220 words a minute, never less than one. */
+export function readingMinutes(body: string | undefined) {
+	const words = (body ?? '').split(/\s+/).filter(Boolean).length;
+	return Math.max(1, Math.round(words / 220));
+}
+
 /** An entry as it appears in a section listing, canonical or cross-listed. */
 export interface SectionItem {
 	id: string;
@@ -70,6 +76,7 @@ export interface SectionItem {
 	/** True when it is shown here but lives in another section. */
 	crossListed: boolean;
 	href: string;
+	readingMinutes: number;
 }
 
 /**
@@ -87,6 +94,7 @@ export async function getSectionEntries(section: CollectionKey): Promise<Section
 		data: entry.data,
 		crossListed: false,
 		href: entryPath(section, entry.id),
+		readingMinutes: readingMinutes(entry.body),
 	}));
 
 	const others: SectionItem[] = [];
@@ -105,6 +113,7 @@ export async function getSectionEntries(section: CollectionKey): Promise<Section
 				data: entry.data,
 				crossListed: true,
 				href: entryPath(other, entry.id),
+				readingMinutes: readingMinutes(entry.body),
 			});
 		}
 	}
@@ -139,9 +148,9 @@ export async function getTranslations(collection: CollectionKey, entry: { id: st
 
 /** One work in a section listing, with every language it exists in. */
 export interface SectionGroup {
-	/** The version the row is titled and summarised from: the original. */
+	/** The version the row is titled and summarised from: English when it exists. */
 	primary: SectionItem;
-	/** Every language version, original first. */
+	/** Every language version, English first. */
 	versions: { lang: string; href: string; isOriginal: boolean }[];
 	crossListed: boolean;
 }
@@ -155,8 +164,8 @@ export interface SectionGroup {
  * marking them as the same piece — which is how a reader ends up asking where
  * the translations are.
  *
- * The row is titled from the original, because that is what David wrote; the
- * translation is offered beside it.
+ * The row is titled from the English version, the site's default; the other
+ * language is offered beside it.
  */
 export async function getSectionGroups(section: CollectionKey): Promise<SectionGroup[]> {
 	const entries = await getSectionEntries(section);
@@ -172,15 +181,19 @@ export async function getSectionGroups(section: CollectionKey): Promise<SectionG
 	const out: SectionGroup[] = [];
 	for (const members of groups.values()) {
 		const isOriginal = (i: SectionItem) => !('translation' in i.data && i.data.translation);
-		// Prefer the original as the row's representative; fall back to the first
-		// member so a translation-only work is still listed rather than dropped.
-		const primary = members.find(isOriginal) ?? members[0];
+		const langOf = (i: SectionItem) =>
+			'lang' in i.data && typeof i.data.lang === 'string' ? i.data.lang : '';
+		// English is the site's default language, so it represents the row when it
+		// exists, then the original, then whatever is left, so a Spanish-only work
+		// is still listed rather than dropped.
+		const primary =
+			members.find((i) => langOf(i) === 'en') ?? members.find(isOriginal) ?? members[0];
 		if (!primary) continue;
 
 		const versions = [...members]
-			.sort((a, b) => Number(isOriginal(b)) - Number(isOriginal(a)))
+			.sort((a, b) => Number(langOf(b) === 'en') - Number(langOf(a) === 'en'))
 			.map((i) => ({
-				lang: 'lang' in i.data && typeof i.data.lang === 'string' ? i.data.lang : '',
+				lang: langOf(i),
 				href: i.href,
 				isOriginal: isOriginal(i),
 			}))
@@ -190,4 +203,18 @@ export async function getSectionGroups(section: CollectionKey): Promise<SectionG
 	}
 
 	return out.sort((a, b) => b.primary.data.date.valueOf() - a.primary.data.date.valueOf());
+}
+
+/**
+ * Every piece of writing in one list: Tech, Philosophy and Music together.
+ *
+ * Cross-listed entries are dropped here, since each file already appears once
+ * under its own collection.
+ */
+export async function getWritingGroups(): Promise<SectionGroup[]> {
+	const lists = await Promise.all(WRITING_CATEGORIES.map((c) => getSectionGroups(c)));
+	return lists
+		.flat()
+		.filter((g) => !g.crossListed)
+		.sort((a, b) => b.primary.data.date.valueOf() - a.primary.data.date.valueOf());
 }
