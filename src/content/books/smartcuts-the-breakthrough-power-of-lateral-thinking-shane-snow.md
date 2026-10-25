@@ -17,6 +17,8 @@ synopsis: |-
   One way or another, they do it like computer hackers. They employ what psychologists call "lateral to rethink convention and break "rules" that aren't rules.
   These are not shortcuts, which produce often dubious short-term gains, but ethical "smartcuts" that eliminate unnecessary effort and yield sustainable momentum. In Smartcuts, Snow shatters common wisdom about success, revealing how conventions like "paying dues" prevent progress, why kids shouldn't learn times tables, and how, paradoxically, it's easier to build a huge business than a small one.
   From SpaceX to The Cuban Revolution, from Ferrari to Skrillex, Smartcuts is a narrative adventure that busts old myths about success and shows how innovators and icons do the incredible by working smarter—and how perhaps the rest of us can, too.
+  Based on hundreds of interviews and the latest cognitive science, Smartcuts decodes the patterns of these outliers, offering a new framework for accelerating
+  Hacking the  Learn why US presidents get to the top faster than senators and how to bypass 'paying your dues' by switching ladders and trading up.Training with  Discover how mentors accelerated the careers of comedian Jimmy Fallon and other icons—and how to find (or become) one.Rapid  See how top performers turn failure into an advantage, transforming mistakes into crucial data that fuels momentum.10x  Go inside the counterintuitive mindset of game-changers like Elon Musk who prove it's often easier to achieve a massive goal than a small one.
 synopsisSource: "Goodreads"
 synopsisLang: "en"
 ---

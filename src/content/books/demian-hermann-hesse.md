@@ -12,7 +12,7 @@ coverAlt: "Cover of Demian by Hermann Hesse"
 summary: |-
   Read · Hermann Hesse · 1919
 synopsis: |-
-  Demian. Història de la joventut d'Emile Sinclair, escrita l'any 1919 després d'una forta crisi de l'autor, aborda l'estreta relació d'amistat de dos adolescents en el seu camí cap al món adult. Els protagonistes, Emil Sinclair i Max Demian, es proposen de viure per sobre de la mediocritat que els envolta i assagen la realització personal a través de la intel·ligència. Les discussions religioses, els debats sobre el Bé i el Mal, l'exploració de l'inconscient i l'experiència de la guerra porten els dos joves pel camí de la descoberta interior i la individualitat creativa. La novel·la presenta l'opció vitalista, sovint irracional, com l'única possible en un món en crisi.
+  Emil Sinclair is a young boy raised in a bourgeois home, amidst what is described as a Scheinwelt, a play on words that means "world of light" as well as "world of illusion". Emil's entire existence can be summarized as a struggle between two worlds: the show world of illusion (related to the Hindu concept of maya) and the real world, the world of spiritual truth. In the course of the novel, accompanied and prompted by his mysterious classmate 'Max Demian', he detaches from and revolts against the superficial ideals of the world of appearances and eventually awakens into a realization of self.
 synopsisSource: "Goodreads"
-synopsisLang: "es"
+synopsisLang: "en"
 ---

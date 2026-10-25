@@ -2,7 +2,7 @@
 title: "The Hitchhiker's Guide to the Galaxy"
 bookAuthor: "Douglas Adams"
 tags:
-  - "Hitchhiker's Guide to the Galaxy, #1"
+  - "The Hitchhiker's Guide to the Galaxy, #1"
 shelf: "read"
 date: 2015-11-02
 published: 1979

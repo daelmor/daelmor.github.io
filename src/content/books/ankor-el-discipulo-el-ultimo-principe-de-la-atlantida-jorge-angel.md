@@ -1,15 +1,15 @@
 ---
 title: "Ankor el Discípulo: El último príncipe de la Atlántida"
 bookAuthor: "Jorge Ángel Livraga Rizzi"
-shelf: "currently-reading"
-date: 2017-10-31
+shelf: "read"
+date: 2026-10-25
 published: 2002
 pages: 189
 goodreads: "https://www.goodreads.com/review/show/2146393830"
 cover: "../../assets/books/ankor-el-discipulo-el-ultimo-principe-de-la-atlantida-jorge-angel.jpg"
 coverAlt: "Cover of Ankor el Discípulo: El último príncipe de la Atlántida by Jorge Ángel Livraga Rizzi"
 summary: |-
-  Currently reading · Jorge Ángel Livraga Rizzi · 2002
+  Read · Jorge Ángel Livraga Rizzi · 2002
 synopsis: |-
   Todo hombre se pregunta de dónde viene y adónde va. Aquella breve parte de nuestro pasado que recordamos se llama experiencia; más allá, un nebuloso hálito de vida nos indica que debemos haber existido de sde mucho antes de nacer en este mundo.
   Cuando los que recuerdan son muchos hombres, ese recuerdo preciso se llama Historia, y el presentir que somos mucho más viejos que lo que nos indica la no muy segura ciencia contemporánea, se titula, bajo cierto aspecto, Mitología.

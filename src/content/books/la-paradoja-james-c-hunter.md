@@ -3,8 +3,8 @@ title: "La Paradoja"
 bookAuthor: "James C. Hunter"
 tags:
   - "Narrativa empresarial"
-shelf: "currently-reading"
-date: 2022-04-08
+shelf: "read"
+date: 2026-10-25
 published: 1998
 pages: 171
 isbn: "8417545271"
@@ -12,7 +12,7 @@ goodreads: "https://www.goodreads.com/review/show/2973184023"
 cover: "../../assets/books/la-paradoja-james-c-hunter.jpg"
 coverAlt: "Cover of La Paradoja by James C. Hunter"
 summary: |-
-  Currently reading · James C. Hunter · 1998
+  Read · James C. Hunter · 1998
 synopsis: |-
   ¿Qué cualidades se necesitan para ser un buen jefe? ¿Cómo se consiguen la autoridad y la credibilidad necesarias para dirigir de forma efectiva? Este libro responde a estas y a otras muchas preguntas, y nos recuerda los principios universales que nos permiten colaborar con los demás, ya sea en el trabajo o en el ámbito familiar:
   -No hay autoridad sin respeto.

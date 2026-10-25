@@ -1,8 +1,8 @@
 ---
 title: "The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win"
 bookAuthor: "Gene Kim"
-shelf: "currently-reading"
-date: 2016-07-19
+shelf: "read"
+date: 2026-10-25
 published: 2013
 pages: 450
 isbn: "0988262576"
@@ -10,7 +10,7 @@ goodreads: "https://www.goodreads.com/review/show/1702975438"
 cover: "../../assets/books/the-phoenix-project-a-novel-about-it-devops-and-helping-your-business.jpg"
 coverAlt: "Cover of The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win by Gene Kim"
 summary: |-
-  Currently reading · Gene Kim · 2013
+  Read · Gene Kim · 2013
 synopsis: |-
   Bill is an IT manager at Parts Unlimited. It's Tuesday morning and on his drive into the office, Bill gets a call from the CEO.
   The company's new IT initiative, code named Phoenix Project, is critical to the future of Parts Unlimited, but the project is massively over budget and very late. The CEO wants Bill to report directly to him and fix the mess in ninety days or else Bill's entire department will be outsourced.

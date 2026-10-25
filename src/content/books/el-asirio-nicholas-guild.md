@@ -1,8 +1,8 @@
 ---
 title: "El asirio"
 bookAuthor: "Nicholas Guild"
-shelf: "currently-reading"
-date: 2018-05-27
+shelf: "read"
+date: 2026-10-25
 published: 1987
 pages: 810
 isbn: "841633174X"
@@ -10,7 +10,7 @@ goodreads: "https://www.goodreads.com/review/show/2404142956"
 cover: "../../assets/books/el-asirio-nicholas-guild.jpg"
 coverAlt: "Cover of El asirio by Nicholas Guild"
 summary: |-
-  Currently reading · Nicholas Guild · 1987
+  Read · Nicholas Guild · 1987
 synopsis: |-
   Siglo VII a. C.
   Tiglath Assur y Asarhadón, hermanastros, excelentes amigos e hijos del rey de Asiria, comparten sueños y secretos, aunque saben que parten muy atrás en la línea de sucesión a la corona.

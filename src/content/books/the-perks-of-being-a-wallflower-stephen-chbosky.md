@@ -4,7 +4,7 @@ bookAuthor: "Stephen Chbosky"
 shelf: "to-read"
 date: 2016-01-11
 published: 1999
-pages: 213
+pages: 240
 goodreads: "https://www.goodreads.com/review/show/1505776062"
 cover: "../../assets/books/the-perks-of-being-a-wallflower-stephen-chbosky.jpg"
 coverAlt: "Cover of The Perks of Being a Wallflower by Stephen Chbosky"
