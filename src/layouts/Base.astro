@@ -2,7 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Nav from '../components/Nav.astro';
-import { GOODREADS_URL, SITE_LANG, SITE_TITLE } from '../consts';
+import { PROFILES, SITE_LANG, SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
@@ -67,7 +67,15 @@ const year = new Date().getUTCFullYear();
 					<li><a href="/projects/">Projects</a></li>
 					<li><a href="/books/">Books</a></li>
 					<li><a href="/about/">About</a></li>
-					<li><a href={GOODREADS_URL} rel="me noopener">Goodreads</a></li>
+					{
+						PROFILES.map((p) => (
+							<li>
+								<a href={p.href} rel="me noopener">
+									{p.label}
+								</a>
+							</li>
+						))
+					}
 					<li><a href="/rss.xml">RSS</a></li>
 				</ul>
 			</nav>

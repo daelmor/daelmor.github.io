@@ -69,3 +69,12 @@ export const SELECTED_WRITING = [
 
 /** Footer and About links that already exist in the project. */
 export const GOODREADS_URL = 'https://www.goodreads.com/user/show/35915255';
+
+/** Personal profiles, in the order they are listed. */
+export const PROFILES = [
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/daelmo' },
+	{ label: 'GitHub', href: 'https://github.com/daelmor' },
+	{ label: 'X', href: 'https://x.com/daelmo' },
+	{ label: 'LessWrong', href: 'https://www.lesswrong.com/users/david-elizondo' },
+	{ label: 'Goodreads', href: GOODREADS_URL },
+] as const;

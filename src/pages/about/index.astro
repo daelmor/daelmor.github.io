@@ -1,5 +1,5 @@
 ---
-import { GOODREADS_URL, SITE_TITLE } from '../../consts';
+import { PROFILES, SITE_TITLE } from '../../consts';
 import Base from '../../layouts/Base.astro';
 import { getPublished } from '../../lib/content';
 
@@ -36,11 +36,19 @@ const roles = [...new Set(projects.map((p) => p.data.role))];
 
 		<h2>Elsewhere</h2>
 		<ul>
-			<li><a href={GOODREADS_URL} rel="me noopener">Goodreads</a></li>
+			{
+				PROFILES.map((p) => (
+					<li>
+						<a href={p.href} rel="me noopener">
+							{p.label}
+						</a>
+					</li>
+				))
+			}
 			<li><a href="/rss.xml">RSS feed</a></li>
 		</ul>
-		{/* TODO(david): add a contact address and any other profiles you want listed. */}
-		<p class="todo">Editorial TODO: contact details and other profiles.</p>
+		{/* TODO(david): add a contact email address if you want one listed. */}
+		<p class="todo">Editorial TODO: a contact email, if wanted.</p>
 	</div>
 </Base>
 
