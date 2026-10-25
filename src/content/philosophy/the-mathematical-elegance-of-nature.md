@@ -6,7 +6,6 @@ lang: en
 work: "la-elegancia-matematica-de-la-naturaleza"
 alsoIn:
   - "music"
-prize: "Premiado"
 penName: "Pirómenes de Decápolis"
 category: "Categoría Hdos"
 subtitle: "From Pythagoras to contemporary science: the golden ratio, harmony and the structure of the cosmos"

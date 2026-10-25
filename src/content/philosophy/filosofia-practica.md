@@ -5,7 +5,6 @@ date: 2019-01-27
 lang: es
 work: "filosofia-practica"
 venue: "Organización Internacional Nueva Acrópolis — Guatemala"
-prize: "Premiado"
 sourceFile: "FILOSOFÍA PRÁCTICA, EJERCICIOS DE AYER, HOY Y MAÑANA - David Elizondo.pdf"
 ---
 ## Introducción

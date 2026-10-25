@@ -6,7 +6,6 @@ lang: es
 work: "la-elegancia-matematica-de-la-naturaleza"
 alsoIn:
   - "music"
-prize: "Premiado"
 penName: "Pirómenes de Decápolis"
 category: "Categoría Hdos"
 subtitle: "De Pitágoras a la ciencia contemporánea: proporción áurea, armonía y estructura del cosmos"

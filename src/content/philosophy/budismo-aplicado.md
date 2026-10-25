@@ -4,7 +4,6 @@ summary: "En su primer sermón, Buda enseño las Cuatro Nobles Verdades: la verd
 date: 2018-01-28
 lang: es
 work: "budismo-aplicado"
-prize: "Premiado"
 sourceFile: "Monografia_DavidElizondo_BudismoAplicado.docx"
 ---
 #### David Elizondo

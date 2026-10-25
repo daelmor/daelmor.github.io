@@ -45,7 +45,6 @@ const CATEGORIES = [
 		<ul class="list">
 			{groups.map(({ primary, versions }) => {
 				const lang = 'lang' in primary.data ? primary.data.lang : undefined;
-				const prize = 'prize' in primary.data ? primary.data.prize : undefined;
 				return (
 					<li>
 						<h2 class="row-title" lang={lang}>
@@ -57,7 +56,6 @@ const CATEGORIES = [
 							<span>{SECTION_LABELS[primary.collection as keyof typeof SECTION_LABELS]}</span>
 							<FormattedDate date={primary.data.date} monthOnly />
 							<span>{primary.readingMinutes} min read</span>
-							{prize && <span>{prize}</span>}
 							{versions.length > 1 &&
 								versions.map((v) => (
 									<a href={v.href} hreflang={v.lang} lang={v.lang}>

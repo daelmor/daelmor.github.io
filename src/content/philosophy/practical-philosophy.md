@@ -5,7 +5,6 @@ date: 2019-01-27
 lang: en
 work: "filosofia-practica"
 venue: "Organización Internacional Nueva Acrópolis — Guatemala"
-prize: "Premiado"
 translation:
   from: "es"
   by: "Claude (Anthropic)"

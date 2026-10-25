@@ -74,8 +74,6 @@ const essay = {
 	 * the same text is never served from two addresses.
 	 */
 	alsoIn: z.array(z.enum(['tech', 'philosophy', 'books', 'music'])).default([]),
-	/** An award this piece won, exactly as it should be credited. */
-	prize: z.string().min(1).optional(),
 	/** Where it was written for or first presented. */
 	venue: z.string().min(1).optional(),
 	/** A second line of title, where the document carries one. */

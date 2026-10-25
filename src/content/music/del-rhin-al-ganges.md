@@ -7,7 +7,6 @@ work: "del-rhin-al-ganges"
 alsoIn:
   - "philosophy"
 composer: "Ludwig van Beethoven"
-prize: "Premiado"
 sourceFile: "BethoveenYLaIndia.docx"
 ---
 ## Introducción

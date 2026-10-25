@@ -7,7 +7,6 @@ work: "blavatsky-y-la-musica"
 alsoIn:
   - "philosophy"
 composer: "Helena Petrovna Blavatsky"
-prize: "Premiado"
 sourceFile: "HPB y la Musica.pdf"
 ---
 ## Introducción
