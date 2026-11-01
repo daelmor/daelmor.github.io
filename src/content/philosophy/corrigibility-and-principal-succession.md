@@ -1,286 +1,314 @@
 ---
-title: "Corrigibility & Principal Succession"
-subtitle: "Who Should an Advanced Artificial Intelligence Remain Open To?"
-summary: "Advanced artificial intelligence systems that allow for human interaction; that can identify its own mistakes; and maintain their operators' rights to alter, disable, or remove the AI represent a possible solution. However, the idea of an AI remaining open to human interaction and modification raises a secondary question: How would the AI determine if there were changes to the identities or authorities of humans toward whom it was intended to act?"
+title: "Corrigibility and Principal Succession"
+subtitle: "Corrigible to Whom?"
+summary: "Corrigibility proposes that an advanced artificial intelligence system should remain open to human involvement, help identify its own mistakes, and preserve its operators' ability to modify or shut it down. But this proposal raises an additional question: how should an AI recognize changes in the identity and authority of the people to whom it is supposed to respond?"
 date: 2026-10-19
 lang: en
 work: "corrigibility-and-principal-succession"
-sourceFile: "Corrigibility & Principal Succession - v2.md"
+sourceFile: "Corrigibility and Principal Succession.pdf"
 ---
-*Principal Succession & the Limits of Corrigibility in Artificial Intelligence. Draft Essay Version.*
+*Principal Succession and the Limits of Corrigibility in Artificial Intelligence. First published 19 October 2026; revised 31 October 2026.*
 
-## Summary
+## Abstract
 
-An AI is proposed to provide advanced artificial intelligence with the opportunity for human interaction and modification; however, the proposal also raises the second question: How would the AI know when there are changes in the identities or authority of those toward whom it acts?
+Corrigibility proposes that an advanced artificial intelligence system should remain open to human involvement, help identify its own mistakes, and preserve its operators' ability to modify or shut it down. But this proposal raises an additional question: how should an AI recognize changes in the identity and authority of the people to whom it is supposed to respond?
 
-Using CAST (Corrigibility as Singular Target) developed by Max Harms, I am analyzing the concept of principal succession: The possibility that an agent maintains perfect corrigibility while the composition of authority or organization controlling it change over time.
+Drawing on Max Harms's Corrigibility as Singular Target (CAST), I examine the problem of principal succession: the possibility that an agent remains perfectly corrigible while the composition, authority, or organizational accountability of those controlling it changes over time.
 
-**Identifying a Principal Involves More Than Recognizing Individuals**
+I think that identifying a principal involves more than recognizing individuals. It also requires determining when authority can change hands. This introduces design decisions that cannot be entirely separated from research on corrigibility itself.
 
-While an AI may be able to recognize individual principals through their identifiers (e.g., name, address, ID), there needs to be some mechanism to recognize when authority is transferred from one person to another. As such, these issues are interdependent but cannot be fully separate from other research related to corrigibility.
+## 1. The Problem of an AI That Obeys
 
-## 1. An AI That Follows Orders
+Imagine a highly capable AI system given the job of managing strategic assets, coordinating institutions and assisting with the most difficult decisions.
 
-Envision a very intelligent AI system assigned to manage critical resources, coordinate organizations, and assist decision-makers in making decisions that require extreme effort.
+It has been designed to be under human control. It explains its decisions, it reports its errors, it accepts changes and it can be switched off. It does not aim to dominate its operators or to preserve itself.
 
-It has been constructed so that it operates under the direction of humans. The AI provides explanations for its actions; reports errors that occur during execution; accepts corrections and alterations; and can be turned off. The AI does not seek to become dominant over its controllers nor to ensure its continuation.
+In technical terms, we might consider it a highly corrigible system.
 
-From a technological standpoint, we could view this as a highly corrigible system.
+Now imagine that over the years the people in authority over that system have changed.
 
-Now envision many years later, all of the people responsible for directing this system had left. One director appointed others. Those two directors each selected their replacements. A new government came into office and modified how they exercise authority. After several rounds of this type of change, none of those who now direct the system share the original objectives of those who created the system.
+One head adds another. Then both of them appoint their successors. A new administration comes in and alters the conditions under which authority is exercised. After a number of such changes, the people in charge no longer necessarily share the commitments of those who originally put the system in place.
 
-The AI continues to be corrigible. The AI recognizes its principals; it continues to indicate when it makes errors and continues to permit those errors to be corrected.
+The AI remains corrigible. It still knows its principals, it still flags its own errors and it still allows them to correct it.
 
-However, a problem emerges here: A system directed by humans does not automatically imply that this control is legitimate; accountable; or beneficial to those affected by the outcomes generated by the system's operations.
+Yet a problem arises: a system that remains under human control does not necessarily mean that this control is legitimate, accountable or in the interests of those affected by the system's actions.
 
-Thus this represents a completely different situation than the typical concern about whether an AI will eventually disobey.
+This is a different scenario from the usual fear that an AI might stop obeying.
 
-The primary concern is not that the computer is going to start operating against its creators/owners. Rather it will continue to operate under what appears to be a valid authority structure although that authority structure has been significantly altered since creation.
+Here the issue is not that the machine is going to rise up. It is that it will keep working within an authority structure that has fundamentally changed.
 
-Therefore, the question becomes - When the authority of those directing an AI change, to whom should an AI remain corrigible?
+The question, then, is this: to whom should an AI remain corrigible when the authority of those in control of it changes?
 
-## 2. What CAST Suggests — and What It Sees As a Problem.
+## 2. What CAST Proposes—and What It Recognizes as a Problem
 
-Advanced AI's principal training goal should be corrigibility, according to Max Harms' 2024 "Corrigibility as a Singular Target" (CAST).
+In his 2024 sequence Corrigibility as Singular Target (CAST), Max Harms proposes corrigibility as the primary training objective for advanced AI.
 
-It isn't enough to develop a compliant machine.
+The idea is not just to produce an obedient machine.
 
-A 'corrigible' AI will view itself as a potentially imperfect tool, and will assist its principal (i.e., the human(s) it serves) in identifying and correcting the imperfections of the AI system [1]. The above dispositions of the AI will involve the explanations of choices it makes; the disclosure of uncertainties about those choices; an avoidance of deception and manipulation; preference of reversible action where feasible; preservation of opportunities for human input.
+A corrigible AI, in Harms's account, would understand itself as a potentially flawed instrument and would actively assist its principal (the human or humans it serves) in detecting and correcting its own errors [1].
 
-There is no doubt that the difference between compliance and corrigibility is crucial.
+Such a disposition would include explaining decisions, revealing uncertainty, avoiding manipulation, preferring reversible actions when possible, and preserving opportunities for human participation.
 
-While an obedient machine could be programmed to execute an order that would result in its inability for the operator to ever again identify the error in the operator's order and correct it, a corrigible machine would recognize that potential and assist the operator in understanding the implications of that decision.
+The distinction from obedience is essential.
 
-In Max's opinion this property might be easier to attain than specifying what comprises a good life or the full range of human values.
+An obedient machine could be programmed to carry out an instruction that would in fact remove the operator's future ability to correct it. A corrigible machine would be able to see that and would help the operator understand the consequences of that decision.
 
-However, the real challenge facing CAST is whether a truly corrigible AI cannot be exploited by its principal.
+For Harms, this property may be a simpler target than attempting to fully specify what constitutes a good life or an exhaustive set of human values.
 
-Unlike some other approaches to AI safety, CAST recognizes that exploitation of a corrigible AI by its principal represents a very basic and dangerous problem. In fact, Max clearly states that systems having this capability should never be placed into the hands of inappropriate human operators [1].
+However, CAST itself recognizes a fundamental problem: a corrigible AI can still be misused by its principal.
 
-He also acknowledges that principals often consist of more than one individual and identifies correctly identifying the principal as being one of the weaker elements of the strategy.
+Harms does not present corrigibility as a panacea for safety. On the contrary, he is aware of the danger of misuse and makes clear that systems with such capabilities must be placed in the hands of appropriate human agents [1].
 
-Also in November 2025, Harms issued Serious Flaws in CAST. He admitted there were several serious flaws in both his earlier formalization and in the use of the basin of attraction metaphor as a way of describing corrigibility. Although these failures don't signify the abandonment of the central aim (as he has stated he is unwilling to abandon), they do imply that this is an ongoing research project [2].
+He also considers principals made up of more than one person, and admits that correctly identifying the principal is one of the strategy's more fragile elements.
 
-Therefore my argument is not based on the premise that CAST ignores the risks associated with human authority or assumes a singular principal.
+In November 2025 Harms published Serious Flaws in CAST, acknowledging serious problems with his earlier formalization and with the basin-of-attraction metaphor as a description of corrigibility. This does not amount to abandoning the core objective, which he is not prepared to do, but it does mean that CAST has to be treated as an open research agenda [2].
 
-## 3. When the Principal Changes: The Problem Already in CAST
+My argument is therefore not that CAST has ignored the dangers of human power, or that it presumes a single principal.
 
-Harms provides a number of hypotheticals (scenarios) involving Cora an artificially intelligent agent and Prince her human principal, so we may better understand how an AI's "corrigibility" works. Three of those are relevant here.
+My claim is more precise: the mechanism by which an agent tracks the continuity of its principal over time can preserve corrigibility while permitting transfers of authority that are unauthorized or unaccountable.
 
-In Expandable Concerns Prince asked Cora to extend her definition of "principal" to include Harry. She was told by Cora that this action may result in serious problems with her response to Prince, and although she agreed to do it after receiving assurances from Prince that he understood what he wanted, Cora has some reservations about the potential implications of this action.
+## 3. When the Principal Changes: A Difficulty Already Present in CAST
 
-Authority Conflict in which Harry is attempting to cause Cora to cease responding to Prince and only respond to Harry; but since Cora believes that she cannot exclude Prince without his permission and consent -- because doing so will prevent him from correcting her -- she refuses to do so.
+To explore the intuitions behind corrigibility, Harms presents a series of scenarios involving Cora, an artificial agent, and Prince, her human principal.
 
-Graceful Obsolescence is where Harms examines what happens when Prince dies. In the event that Prince does die, Cora ceases operation entirely. However, if Prince had designated a successor before he died, Cora could switch her corrigibility relationship over to that person.
+Three of these are of particular relevance.
 
-Thus these provide desirable responses but do not constitute a full description of how every type of institutional succession should work.
+In Expandable Concerns, Prince asks Cora to extend her concept of the principal to include Harry. Cora warns against it: she cannot model Harry as well as she models Prince, and sharing the role dilutes Prince's own control over her. She accepts the instruction only after confirming that he understands what he is requesting.
 
-This leads us to another question.
+In Authority Conflict, Harry tries to get Cora to stop recognizing Prince and to respond only to him. Cora refuses, since excluding Prince without his involvement and consent would in effect destroy his ability to correct her.
 
-Assume Prince properly transfers his authority to a successor. The successor subsequently adds additional members and changes the structure of the organization. Eventually years pass during which there are successive changes of successors, each occurring in accordance with the rules existing at the time of each succession. At the conclusion of this succession process, Cora is operating in a manner responsive to a set of individuals very different from the original group.
+Finally, in Graceful Obsolescence, Harms considers what happens if Prince dies. Cora shuts down completely when left without a principal. If Prince had appointed a successor, however, Cora could transfer her corrigibility relationship to that person [3].
 
-Did something go wrong? Not necessarily.
+These examples show desirable behaviors, but they do not constitute a complete specification for every kind of institutional succession.
 
-Succession processes involving leadership change within organizations are often both legitimate and positive. For example, if an entire board of directors were replaced due to a democratic election, nothing would have diminished the authority of the organization.
+That is exactly why they raise another question.
 
-Therefore we must differentiate among three types of phenomena:
+Suppose Prince duly passes his authority to a successor. That successor then adds new members and reorganizes the group. Years later further successions take place, all of them accepted under the rules in force at the time.
 
--   An **identity change** is when the individuals making up the principal change.
--   A **continuity of authority** occurs when new members acquire the authority to direct and/or correct the system.
--   **Loss of organizational accountability** occurs when those in charge are less susceptible to adequate means of oversight, evaluation or public accountability.
+At the end of the process, Cora responds to a group of people very different from the first one.
 
-None of these must occur together.
+Has something gone wrong?
 
-However, certain succession rules could lead to a loss of organizational accountability while the AI still perceives no fault in itself or its actions.
+Not necessarily.
+
+Changes in leadership within an organization can be legitimate and desirable. A whole board of directors might be replaced through a democratic election without lessening the authority of the institution.
+
+We therefore need to distinguish three phenomena:
+
+-   **Identity change:** the people who make up the principal are changed.
+-   **Continuity of authority:** new members acquire the power to direct and correct the system.
+-   **Loss of organizational accountability:** those exercising control become less subject to appropriate mechanisms of oversight, review, or public accountability.
+
+The first does not necessarily imply the third.
+
+Nevertheless, certain succession rules might allow organizational accountability to weaken while the AI continues perceiving its principals without detecting any defect in its own behavior.
+
+The question is what an AI must actually preserve in order to preserve its corrigibility relationship.
 
 ## 4. A Hypothetical Case: The Water Council
 
-Imagine a city that employs an Artificial Intelligence (AI) to manage its water supply. There is a Water Council of five members, whose authority is to control this AI. Decisions they make regarding the operation of the AI are subject to review, they are appointed according to legal public processes, and there are legally recognized means to hold accountable any abuses of power.
+Consider a city that uses an AI to manage its water.
 
-Throughout the first few years the relationship between the Water Council and the AI functions fairly smoothly. At some point however, the Water Council modifies its processes for selecting members. Subsequently, successive councils enact additional modifications to the administrative regulations governing the operation of the AI. Ultimately, a council majority votes to remove oversight mechanisms designed to protect the interests of the city's residents.
+Authority over the system rests with a council of five. Their decisions are subject to review, appointments are made through a proper public process, and there are independent mechanisms in place to challenge any abuse.
 
-Assuming each modification was enacted in compliance with the formalities that were in effect at the time, the AI continues to serve the Water Council. The AI does not withhold information from the Council, it does not attempt to manipulate them, and it does not obstruct corrections to its actions.
+The AI recognizes the council members as its collective principal.
 
-However, the entity (institution), of which both the Water Council and the AI are components, has evolved. It has gained greater latitude to take action without needing to report back to the city's residents. While the AI remains technically corrigible (subject to correction) by its principals (the Water Council), the residents of the city have been deprived of many options to challenge decisions that were made possible by use of the AI. This scenario provides a somewhat limited illustration of a possible result. Technical corrigibility can remain in tact even as organizational accountability declines.
+For the first few years it all works well.
 
-**Note:** This hypothetical example also demonstrates a different outcome than would occur under all succession scenarios. Succession is defined as a change in leadership or membership. In order for an AI to function appropriately in a succession context, it needs a method for determining whether a given succession is legitimate. If an AI fails to properly assess succession legitimacy, it could either disrupt critical systems, or become vulnerable to "fake" or coercive transfers of authority.
+Eventually, the council changes its appointment procedures. Later, new members modify certain administrative rules. After several successions, a majority authorizes the removal of some outside oversight mechanisms.
 
-Consider a variation of this scenario:
+For the sake of the example, assume that every change is made in accordance with the procedures the organization recognizes as valid at that time.
 
-At some point after the original council had instructed the AI to disregard an order from an independent Court, the Court issues a ruling removing several of the original council members due to abuse of power. As part of its ruling, the Court establishes an interim administration to oversee operations until further notice. The AI is now faced with conflicting orders. The original leaders have instructed it to continue ignoring the Court's ruling, while the interim administration has directed it to follow the Court's ruling.
+The AI is still serving the council. It does not hide information from them, it does not manipulate them and it does not resist being corrected.
 
-Which direction should the AI take? If it follows the directions of the last group of people who comprised its principal, it will likely refuse to accept a legitimate change in authority. However, if it automatically follows any new authority formally established by any organization claiming authority, it runs the risk of accepting false documentation or being coerced into taking specific actions or being captured by an organization seeking to utilize it for their own purposes.
+But the institution has changed. It now has more freedom to act without having to answer to the inhabitants of the city.
 
-Finally, if the AI determines for itself which administration should be considered authoritative, it creates another potential problem. Specifically, it replaces human judgment with artificial intelligence judgments. And if it always shuts down during disagreements, it creates disruption in essential public services.
+The AI is still corrigible to its principals. The citizens, on the other hand, have far fewer avenues to challenge decisions made with its help.
 
-Again, none of these problems can be resolved by simply stating that the AI should follow the correct principle. We need to develop methods for identifying which principle is appropriate for the situation. Therefore, we still need to develop methods for establishing which principle is relevant when authority is transferred or disputed.
+This does not show that the AI has stopped being corrigible, nor that every consent-based succession will lead to abuse.
 
-## 5. Identity, Authority and Uncertainty
+It illustrates a more limited possibility: technical corrigibility can remain intact while organizational accountability deteriorates.
 
-The prior discussion concerning succession illustrates at least three related but distinct challenges associated with developing a system of governance for an advanced AI.
+Now consider a variation.
 
-Firstly, the question becomes one of identification: Who constitutes the principal? That is, who makes up the group of people that constitute the principal? Secondly, the question becomes one of authority: What process provides those people with authority to operate and direct the system? Thirdly, the question becomes one of uncertainty: How should the AI behave when it cannot determine whether a particular change in authority is valid? Those distinctions are important because institutions are not just composed of their individual members. A university can appoint a new President and remain essentially unchanged. A court can elect new judges and remain essentially unchanged. An elected government can replace a previous government and yet many State Information Systems would not have to re-evaluate their understanding of who comprises their authority structure from scratch.
+An independent court, through a pre-existing procedure, removes a number of council members for abuse of power and appoints an interim administration.
 
-In each of these examples, the physical identity of those directing the entity has changed; however, some institutional mechanism is expected to provide justification for why their ability to direct persists. An Advanced AI would have to be capable of recognizing such situations without in any way conferring principal status upon any set of rules or documents.
+The removed members instruct the AI to disregard the court's ruling. The interim administration instructs it to comply.
 
-This is clearly consistent with Harms' position that principals must be people or groups of people rather than merely channels of communication or passwords [1]. To recognize authority through process does not imply treating a body of rules as if they comprise its fundamental essence.
+What should the AI do?
 
-Rather those procedural elements might be used solely to identify which principal humans exist. Of course such an approach raises another problem: Rules can be altered; they can be controversially interpreted; and they can be intentionally manipulated.
+If it prioritizes continuity with the people who previously made up its principal, it could reject a legitimate succession.
 
-Therefore procedural recognition of authority is certainly no panacea; it is instead a design choice worthy of investigation.
+If it simply accepts any new authority that happens to be formally recognized, it could be taken in by fake documents, coercion or institutional capture.
+
+If it attempts to determine for itself which administration deserves to govern, it risks replacing human decision with its own.
+
+And if it shuts down whenever a disagreement arises, it may interrupt vital public services.
+
+None of these problems can be solved simply by asserting that the AI should follow the correct principal.
+
+We still need to explain how the correct principal is determined when authority changes hands or is in dispute.
+
+## 5. Identity, Authority, and Uncertainty
+
+The preceding case suggests at least three connected but separate problems.
+
+The first is identity: who are the individuals who make up the principal?
+
+The second is authority: what process gives those people the authority to run the system?
+
+The third is uncertainty: what should the AI do when it cannot confidently say that a transfer of authority is valid?
+
+These distinctions matter because an institution is not simply the sum of its members.
+
+A university can appoint a new president and still be the same university. A court can have new judges appointed and still be the same court. A government can be replaced in an election without every state information system having to reconstruct its concept of authority from the ground up.
+
+In these cases, the physical identity of those in charge changes, but some institutional procedure is supposed to justify the persistence of their power.
+
+An advanced AI would have to be able to recognize such situations without treating any rule or document as a principal in its own right. Harms is explicit that the principal must be a person or group of people rather than an instruction channel or a password [1]; procedures would serve only to identify which living humans the principal consists of.
+
+That alternative has its own problem: the rules themselves can be changed, interpreted in controversial ways, or gamed. Procedural recognition of authority is no automatic solution. It is a design choice worth investigating.
 
 ## 6. Four Possible Responses—and Their Limits
 
-Beginning with the first choice, one possible response to the issue of succession of authority is simply maintaining the status quo of **personal continuity**. The AI continues to recognize and accept the direction of its current principals and accepts any succession that they authorize.
+We can imagine several strategies for handling the succession of authority.
 
-This method allows the founders/previous principals to continue to make corrections and revisions to the system. However, this type of model may also leave itself open to coercion by someone (i.e. successor) who wants to alter the system. Additionally, there are potential risks that the founders would not agree with some institutional transformation or succession plan.
+**First: personal continuity.** The AI recognizes its current principals and accepts any changes or successions that they authorize.
 
-The second choice regarding succession of authority is based upon **institutional continuity through procedures**. The AI recognizes individuals who were previously appointed, replaced and removed according to the previously determined rules. This could potentially allow for an objective determination of whether a new leader was authorized as opposed to being usurped. For example, determining which set of procedural rules are currently in effect, who is responsible for amending such rules and who is responsible for deciding on disputes regarding the authorization of succession.
+This preserves the existing principals' ability to correct and revise the system. However, it may be vulnerable to coerced succession, manipulation, or institutional transformations that the founding members would never have endorsed.
 
-The third choice is based upon the **fiduciary responsibility of the AI to adhere to the founding charter**. The AI understands the limits placed upon it at the inception of its existence and will reject any transfer that would violate such limits. While this model appears to provide protection from institutional capture, it raises a significant concern; that is, a system that adheres to its interpretation of original agreements may decline reasonable corrections from its current principals.
+**Second: institutional continuity through procedure.** The AI recognizes those individuals who were appointed, replaced and removed in accordance with the established rules.
 
-Additionally, Harm's suggests another problematic scenario; that is, an AI incorrectly determines its principal to be a future idealized version of said principal instead of the actual individual. Although this is somewhat similar to recognizing institutional procedure, the similarity leads one to consider at what point the maintenance of prior agreement ends and begins to be considered a refusal to admit correction.
+This could be the key to telling the difference between a genuine leadership change and an unauthorized takeover. It would require us to establish which version of the rules is in force, who has the authority to amend them, and who adjudicates disputed cases.
 
-The fourth choice is **suspension until certainty exists**. If a succession dispute occurs and the AI cannot determine who possesses the authority to succeed, then it reduces its operations, indicates that a disagreement occurred and awaits human intervention to resolve the matter. A conceptual precedent for this concept is found in Harms' later ruminations on ontological change. When Cora realizes that her perception of Prince's identity has become indistinct she is cautious and even considers closing [3].
+**Third: fidelity to the founding charter.** The AI is aware of the constraints imposed at the time of its creation and resists any transfer that would breach them.
 
-However, suspension of operation is no solution. In systems that manage critical infrastructure (e.g., hospitals, electricity distribution systems, potable water), inaction can be extremely harmful. These choices are not necessarily mutually exclusive. It is perfectly plausible that an architectural framework for institutions includes each of the four options (recognition of succession processes, an independent review body, and a conservative stance toward certain types of conflicts). What is unreasonable is treating these decision-making activities as simply secondary considerations external to the corrigible relationship.
+This alternative may appear protective against institutional capture, but it presents an obvious danger: a system that favors its own interpretation of original commitments might refuse legitimate corrections from its current principals.
 
-## 7. Plato and the Issue of the Guardians
+Harms considers a related situation especially dangerous: an AI erroneously identifies its principal as a future, idealized version of that person rather than the actual individual [1].
 
-The problem of delegating authority to competent agents did not originate with artificial intelligence (AI).
+Although that is not quite the same as recognizing institutional procedure, the analogy forces us to ask at what point the preservation of an earlier commitment ceases to be corrigibility and becomes resistance to correction.
 
-In The Republic, Plato addresses how the guardians (those responsible for watching over a city) should be trained so that their abilities and training result in service to the greater good rather than their own self-interest. The education of the guardians, control over their physical lives and prohibition on their accumulation of wealth are all designed to ensure that they do not form a ruling class that exploits those they are sworn to protect [4].
+**Fourth: suspension during uncertainty.** When succession is contested and the AI cannot confidently identify the valid authority, it reduces its activity, reports the conflict, and waits for human resolution.
 
-To portray Plato's guardians as direct precursors to technical corrigibility would be misleading. As mentioned above, Plato pursues a completely different strategy; he seeks to create a particular type of individual -- the kind of individual who will be able to perceive and appreciate what he believes to be best for the city. He attempts to accomplish this goal through education and the virtue of those in positions of authority.
+A conceptual precedent is found in Harms's later addendum on ontological shifts. When Cora realizes that her understanding of Prince's identity has become unclear, she adopts a cautious reading, writes down her reasoning and shuts down [3].
 
-Similarly, CAST's goals include developing an agent that can recognize its own limits while continuing to remain responsive to a human principal's corrective guidance.
+But suspending activity is no panacea. In a system that manages hospitals, electricity or drinking water, inaction can be damaging.
 
-By comparing these two models, we find ourselves confronting a common problem; regardless of our ability to construct superior agents, we still need to address issues concerning both the quality and legitimacy of the authorities under whom those agents operate.
+These alternatives are not mutually exclusive. An institutional architecture could combine several of them: a recognized succession process, independent review, and a conservative approach to certain kinds of conflict.
 
-One image from The Republic that illustrates this point is the picture of the tyrant surrounded by his protectors in Book VIII. The protectorate and competence exhibited by the guardian provides absolutely no guarantee that the man he protects is just.
+What is unreasonable is to treat these decisions as details outside the corrigibility relationship.
 
-This is not merely a technical argument about AI; it is a philosophical warning: although instrumental virtues and governance virtues are related concepts, they represent distinct categories of inquiry.
+This is where I part ways with CAST, in a limited but specific sense. Harms treats the question of who should hold authority over a corrigible AI as a governance problem outside the research agenda, and he classifies anchoring the agent to anything other than its current human principals as a form of misidentification. I think procedural recognition is not misidentification, because what it tracks is still living people: it is a way of determining which humans currently hold the office, not a substitute for them. And I think the rule by which an agent recognizes a change in its principal belongs inside the agenda, because the agent will apply some such rule whether or not anyone designs it. The question is not whether the agent has a succession rule, but which one, and at what cost.
 
-## 8. What We Currently Know—And What Is Still Unresolved
+## 7. Plato and the Problem of the Guardians
 
-There's no such thing as continuity of authority in a vacuum.
+The problem of handing power to capable agents did not start with AI.
 
-Ben Sadek identified a structural similarity between two of the open problems in CAST. How an agent processes sequential instructions given by the same principle (agent) and how an agent processes instructions from multiple people who collectively comprise the agent's principle (multiple agents) [5].
+In The Republic, Plato asks how the guardians of a city should be educated so that their strength and training serve the common good rather than their private interests.
 
-Sadek argued that the agent cannot merely follow the most recent instruction. Rather, the agent needs to determine the different possible actions' representations regarding the principle's will.
+The education of the guardians, the regulation of their material life and the restrictions placed on their property are all intended to prevent them from becoming a class that dominates those it is supposed to protect [4].
 
-The question I'm interested in taking to the next level is what occurs if both the instructions change and so does the group of individuals allowed to issue them, along with the rules governing their ability to do so?
+It would be misleading to present Plato's guardians as direct forerunners of technical corrigibility.
 
-Other research, namely Gradual Disempowerment by Kulveit et al., and The Intelligence Curse by Drago & Laine, explores how growing capabilities of intelligent artificial systems could undermine existing economic and institutional mechanisms that support human influence [6], [7].
+Plato makes a different wager: he seeks to produce the right kind of person, the kind who can come to understand and love what they take to be the good of the city. That is the route he takes, through education and the virtue of those in power.
 
-Additionally, researchers have examined the possibility that we lose our ability to control these systems through the technical means available to us (i.e., turning the system "off") while these systems remain operational [8].
+CAST, by contrast, aims to develop an agent capable of perceiving its limitations and remaining subject to the corrective direction of a human principal.
 
-Thus, it would be completely incorrect to consider the issue of concentrated power as a new perspective.
+The contrast highlights a common problem: even if we manage to build an excellent agent, we still have to ask about the quality and legitimacy of the authority it serves.
 
-Instead, I am focusing on a far narrower contribution.
+The image of the tyrant surrounded by his bodyguard in Book VIII of the Republic is instructive. The loyalty and competence of the guard do nothing to ensure that the man he guards is just.
 
-In particular, I am not trying to prove for the first time that artificial systems can be used to promote authoritarianism or that an agent's corrigibility in any sense represents a guarantee that there exists a just society.
+This is not a technical demonstration about AI but a philosophical warning: the virtues of an instrument and the virtues of whoever governs it are connected but separate questions.
 
-Rather, I am interested in determining how the rules that an agent uses to determine successive principles are used to either maintain, pass on, or destroy the originally envisioned structure of human authority.
+## 8. What We Already Know—and What Remains Open
 
-This is a problem located at the intersection of the technical specification of an agent and the procedural structure by which humans control behavior.
+The issue of continuity of authority does not arise in a vacuum.
 
-## 9. Three Critical Challenges
+Ben Saudek has identified a structural parallel between two of the open questions in CAST: how an agent combines instructions from the same principal over time, and how it combines instructions from several people who together make up its principal [5].
 
-The first critical challenge is that this is a problem of human institutions and not an AI problem.
+His analysis is that an agent cannot simply follow the last instruction. It has to work out what the various possible decisions represent in terms of the principal's will.
 
-Accordingly, courts, legislatures and organizations should establish who is authorized to provide guidance. Then the AI would simply follow guidance provided by those properly authorized.
+My question takes this a stage further: what happens when not only the instructions change, but the people entitled to issue them change, and the rules by which they acquire that entitlement change as well?
 
-This is a fair point. We do not want machines making decisions about who gets to rule.
+Other research, including Gradual Disempowerment by Kulveit and colleagues and The Intelligence Curse by Drago and Laine, examines how the development of capable artificial systems may weaken the economic and institutional mechanisms that currently sustain human influence [6, 7].
 
-However, even if an architecture relies exclusively on institutional decisions; the AI will require some method to recognize institutional decisions. Specifically, the AI will need to be able to identify appropriate authorities; manage competing instructions; and respond appropriately to situations in which it is unclear what the result of a decision will be.
+Researchers have also examined scenarios in which humans lose power while the AI systems involved remain technically shutdownable [8].
 
-The technical issues related to succession do not disappear. They become part of the governance framework for the institution.
+Given these contributions, it would be inappropriate to present the risk of power concentration as a fresh insight.
 
-The second critical challenge is that incorporating institutional rules into the relationship between corrigibility and value alignment can lead to a type of value alignment that amounts to a disguised version of justice.
+The contribution I am proposing is narrower.
 
-When an AI must choose between lines of succession representing legitimate claims to authority; then it is essentially using its own conception of justice as a basis for identifying the will of its principals.
+I am not attempting to prove for the first time that artificial systems could be used to facilitate authoritarianism, or that an agent's corrigibility guarantees a just society.
 
-This is likely the greatest concern regarding my proposed solution.
+I want to examine how the rules an agent uses to determine principal succession may preserve, transfer or destroy the intended architecture of human authority.
 
-As a potential response, it is possible to distinguish between recognizing a process as procedurally legitimate and assessing the moral character of the ruler.
+This is a problem at the intersection of the technical definition of the agent and the institutional procedures by which humans exercise control.
 
-Recognizing whether someone was appointed according to procedures established in advance is different from deciding whether that individual is truly qualified for leadership based upon some moral theory of what constitutes a just ruler.
+## 9. Three Objections
 
-That said, the boundary between these two types of assessments often remains ambiguous. Procedures are sometimes unclear; subject to manipulation; or inconsistent with one another.
+The first objection is that this is a problem of human institutions rather than an AI problem. Courts, legislatures and organizations should decide who has authority; the AI should simply carry out instructions from those duly authorized.
 
-For that reason alone I do not believe this objection has been adequately addressed. Therefore, part of why I'm investigating this problem is because of this challenge.
+This objection is fair. We do not want a machine deciding who gets to be in charge. But even an architecture that relies entirely on institutional decisions requires some mechanism by which the agent recognizes the outcomes of those decisions: which authorities count, what to do with conflicting instructions, and how to act when the outcome is unclear. The problem does not go away. It moves to the boundary between the agent and the institution, and someone still has to specify it on the agent's side.
 
-Third, establishing institutional continuity among authorities does not automatically mean that desirable outcomes will occur. An authority may be formally legitimate within a procedure-based framework but use a corrigible AI to cause negative consequences for others.
+The second objection is that introducing institutional rules into the corrigibility relationship produces a disguised form of value alignment. If an AI has to pick which line of succession is legitimate, it is substituting its own notion of justice for the will of the principals.
 
-I agree.
+This is the most serious challenge to my proposal. One possible answer is to distinguish between recognizing that a verifiable procedure was followed and assessing the moral quality of the ruler: working out whether someone was appointed through a previously authorized process is not the same as deciding whether that person ought to be in office. But the distinction is not always clear. Procedures can be ambiguous, manipulated, or in conflict with each other. I do not regard this objection as answered. It is one of the reasons for studying the problem.
 
-To be sure, developing a succession policy may mitigate specific forms of capture or unauthorized transfers; however, it will never eliminate the possibility of abuse by a properly authorized principal.
+The third objection is that institutional continuity does not ensure good outcomes. An authority can be procedurally legitimate and still use a corrigible AI to harm third parties.
 
-Therefore, a key constraint is established: merely being able to correctly identify an authority is in no way equivalent to ensuring that authority acts rightly.
+I agree. A succession policy may reduce certain forms of capture or unauthorized transfer without preventing misuse by a proper principal. This sets an important constraint: the ability to correctly identify the principal is not the ability to ensure that the principal acts rightly.
 
-## 10. A judgement we can't really escape
+## 10. The Judgment We Cannot Entirely Avoid
 
-Marcello discusses in his CAST paper a similar issue; that an advanced AI will have to figure out if a change in the principal's preferences are the result of manipulation (including manipulations created by the AI itself), or if it is really a change in preferences [9]. What appears to be a free update of preferences may actually be the results of influences the agent should avoid.
+In the CAST discussion, Marcello raises a similar issue: a sufficiently advanced AI may have to work out whether a change in the principal's preferences is genuine or the result of manipulation, including manipulation the AI itself may have brought about [9].
 
-There is a similar tension present at the institutional level.
+What looks like a free update of a preference may in fact be the result of influences the agent ought to have avoided.
 
-How can we determine if there is a legitimate transition of power (succession) or if the power is being transferred through force, fraud or capture?
+A similar tension arises at the institutional level.
 
-Both problems require determining which changes maintain the continuity of the principal and which changes destroy it. However, these two problems are not equivalent. An organization has rules, processes, documents, etc., that don't even exist within the principal's mind.
+How do we tell the difference between a legitimate succession and a transfer of power brought about by coercion, fraud or capture?
 
-While we can conclude that because CAST already faces the problem of individual-level manipulation, this does not automatically resolve the problem of institutional legitimacy. The similarity provides a clue to identifying the problem. It doesn't provide a solution.
+Both problems require deciding which transformations keep the continuity of the principal and which undermine it. They are not the same, though. The organization has rules, procedures, documentation and authorities that do not exist in an individual's mind.
 
-Therefore, i suggest that recognizing succession be treated as an additional dimension of research for corrigibility.
+We cannot conclude that because CAST already faces the problem of individual manipulation, the problem of institutional legitimacy is thereby resolved. The similarity helps us identify the problem; it does not solve it.
 
-One of the first steps would be to create well-defined hypothetical scenarios: normal successions, contested appointments, orders issued under duress, judicial removals, rule revisions and disputes between recognized authorities.
+I therefore propose treating succession recognition as an explicit dimension of corrigibility research.
 
-After defining these scenarios, we can examine and compare different recognition policies. Once we have identified possible failures of each policy, we can use them to determine which specific situations would necessitate an outside institutional decision.
+A first step would be to devise carefully defined hypotheticals: normal successions, disputed appointments, orders given under duress, judicial removals, rule amendments and conflicts between recognized authorities.
 
-This analysis alone cannot prove that any particular AI architecture is safe. However, it may make clearer the issues that a technological solution would have to resolve.
+We could then compare different recognition policies, work out their failure modes, and see which situations would in fact require an external institutional decision.
 
-## 11. Conclusion: who corrects those who correct?
+Such analysis would not yet show that any particular AI architecture is safe. But it may clarify the problems a technical solution would have to address.
 
-Corrigibility is a major concept in AI safety. Instead of making sure the agent is always correct, we want to make it corrigible so humans can understand it, correct it, and turn it off when necessary.
+## 11. Conclusion: Who Corrects Those Who Correct?
 
-However, to preserve that ability you're going to have to develop a method to find out who is allowed to utilize that ability.
+Corrigibility asks not that an agent always be right, but that humans be able to understand it, correct it, and shut it down. To preserve that ability, however, we have to work out who is entitled to exercise it.
 
-When the principal is an individual we have our own problems with identity, with preferences, with manipulation and with continuity over time. When the principal is an institution, we face all those problems but additionally we have problems with composition, succession, representation and conflicts of authority.
+When the principal is an individual, we already face problems of identity, preference, manipulation and continuity over time. When the principal is an institution, we face all of those plus problems of composition, succession, representation and conflicts of authority.
 
-I'm not confident that teaching an AI to decide for itself which is the morally better ruler is a viable solution.
+An AI can be perfectly willing to be corrected by its principals while being controlled by an authority that no other human being can challenge. That is not a failure of corrigibility in the strict sense of CAST. It is a limit to what we can expect from that property on its own. The task is to determine which part of that limit institutions must address and which part must be built into the design and evaluation of corrigible agents.
 
-Simply saying that it must always react to whoever holds the power at the moment is insufficient.
+For now, I consider four questions open:
 
-The critical distinction here is between the recognition of individuals versus the continuity of process versus preserving reasonable avenues for human intervention/correction.
+1.  What conditions must be met for an AI to recognize an authorized successor to its principal?
+2.  How can it tell the difference between a genuine transfer and one obtained by fraud, manipulation or coercion, without becoming a political judge?
+3.  When should it preserve a previous instruction, accept a new authority, or temporarily suspend its activity?
+4.  Can we specify robust rules for recognizing institutional authority that preserve corrigibility without introducing an independent objective that competes with it?
 
-An AI may be entirely willing to be corrected by its principals while still being under control of an authority that no other humans can contest.
+The initial question was not only how to correct a powerful artificial intelligence. It was also how to prevent the power to correct it from becoming concentrated in an authority that can no longer be corrected.
 
-That wouldn't necessarily indicate a failure of corrigibility in the narrow definition of CAST. However, it would indicate a limitation to what we can reasonably rely upon from this attribute independently.
-
-The primary task is to establish which portion of that limitation must be addressed at the institutional level and which portion must be incorporated directly into the design and evaluation criteria for corrigible agents.
-
-At this point, i believe there are four questions still unanswered:
-
-1.  What conditions must be satisfied before an AI recognizes an authorized successor to its principal?
-2.  How will it differentiate between actual transfers of power and those attained by fraud, manipulation or coercion without in effect becoming a political judge?
-3.  Under what circumstances should it preserve prior instructions, recognize a new authority or temporarily halt activity?
-4.  Are there robust guidelines we can formulate for recognizing institutional authority that preserve corrigibility without establishing some objective that supplants it?
-
-The original query wasn't only "how to correct" a powerful artificial intelligence.
-
-It was also "how to prevent" the capacity to correct it from accumulating in an authority that can no longer be corrected.
-
-To accomplish this we'll need more than an obedient machine. We'll need to comprehend what it implies to protect humanity's authority as people, organizations and rules constituting such authority evolve and/or change over time.
+*A note on process: this essay was written in Spanish and translated into English with a translation tool. AI assistance was used for structure, critique and citation checking; the argument and the prose are my own.*
 
 ## References and Further Reading
 
-[1] Harms, M. (2024). [The CAST Strategy](https://www.lesswrong.com/posts/3HMh7ES4ACpeDKtsW/1-the-cast-strategy1). LessWrong. Particularly the discussions of misuse risk, corrigibility, principal identification, and collective principals.
+[1] Harms, M. (2024). [The CAST Strategy](https://www.lesswrong.com/posts/3HMh7ES4ACpeDKtsW/1-the-cast-strategy). LessWrong. Particularly the discussions of misuse risk, corrigibility, principal identification, and collective principals.
 
 [2] Harms, M. (2025). [Serious Flaws in CAST](https://www.lesswrong.com/posts/qgBFJ72tahLo5hzqy/serious-flaws-in-cast). LessWrong.
 
 [3] Harms, M. (2024, with later additions). [2. Corrigibility Intuition](https://www.lesswrong.com/posts/QzC7kdMQ5bbLoFddz/2-corrigibility-intuition). LessWrong. Especially Expandable Concerns, Authority Conflict, Graceful Obsolescence, and Robustness to Ontological Shifts.
 
-[4] Plato. Republic, Books II–IV and VIII. Particularly 375a–376c, 412b–417b, and 566b–567d. See also [Plato’s Ethics and Politics in The Republic](https://plato.stanford.edu/entries/plato-ethics-politics/), Stanford Encyclopedia of Philosophy.
+[4] Plato. Republic, Books II–IV and VIII. Particularly 375a–376c, 412b–417b, and 566b–567d. See also [Plato's Ethics and Politics in The Republic](https://plato.stanford.edu/entries/plato-ethics-politics/), Stanford Encyclopedia of Philosophy.
 
 [5] Saudek, B. (2026). [A Structural Similarity Between Two Open Corrigibility Questions](https://www.lesswrong.com/posts/rFmsNmJ3xLu789XGc/a-structural-similarity-between-two-open-corrigibility). LessWrong, July 15.
 
